@@ -1,4 +1,4 @@
-Create a git template for this repo:-
+Project: Noble Prizes SM1975 by @SirrorsMoore1975
 
 Thank you. We appreciated for your contribution. Fill in the following before making a pull request:
 
