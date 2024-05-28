@@ -130,5 +130,5 @@ dist
 .pnp.*
 
 # HTTPS local certificate
-cert/
-server/cert/
+certs/
+server/certs/
