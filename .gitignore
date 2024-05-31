@@ -132,3 +132,12 @@ dist
 # HTTPS local certificate
 certs/
 server/certs/
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
