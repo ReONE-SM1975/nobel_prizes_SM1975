@@ -141,3 +141,8 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+
+# pycache changes should be ignored:
+server/noble_prizes_SM1975/__pycache__/
+__pycache__/
+
