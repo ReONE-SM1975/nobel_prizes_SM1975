@@ -56,7 +56,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'noble_prizes_SM1975.urls'
+ROOT_URLCONF = 'nobel_prizes_SM1975.urls'
 
 TEMPLATES = [
     {
@@ -74,7 +74,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'noble_prizes_SM1975.wsgi.application'
+WSGI_APPLICATION = 'nobel_prizes_SM1975.wsgi.application'
 
 
 # Database
