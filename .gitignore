@@ -146,3 +146,5 @@ venv.bak/
 server/noble_prizes_SM1975/__pycache__/
 __pycache__/
 
+# ignore vscode settings on local machine
+.vscode/
