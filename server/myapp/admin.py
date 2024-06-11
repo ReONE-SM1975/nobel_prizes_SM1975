@@ -1,5 +1,5 @@
 from django.contrib import admin
-from models import Category, Country, City, AdminUser, Affiliation, Laureates, Winner
+from .models import Category, Country, City, AdminUser, Affiliation, Laureates, Winner
 
 
 # Register your models here.
