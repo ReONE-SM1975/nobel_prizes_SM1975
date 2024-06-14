@@ -12,11 +12,11 @@ export default function Home(){
                     <Header appTitle="The Nobel Prizes Database" />
                 </div>
                 <div className="Home__Pannel">
-                    {"Under Constructions\n"}
-                    {"Under Constructions\n"}
-                    {"Under Constructions\n"}
-                    {"Under Constructions\n"}
-                    {"Under Constructions\n"}
+                    {"Under Constructions\n"}<br/>
+                    {"Under Constructions\n"}<br/>
+                    {"Under Constructions\n"}<br/>
+                    {"Under Constructions\n"}<br/>
+                    {"Under Constructions\n"}<br/>
                 </div>
                 <div className="Home__Footer">
                     <Footer mainText={
