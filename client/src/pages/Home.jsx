@@ -6,7 +6,7 @@ import axios from "axios"
 
 
 export default function Home(){
-    const [hello, setHello] = useState({});
+    const [hello, setHello] = useState([]);
     useEffect(()=>{
         const response = axios.create({baseURL:"http://localhost:8000"})
         const header = {
@@ -38,7 +38,7 @@ export default function Home(){
                     {"Under Constructions\n"}<br/>
                     {"Under Constructions\n"}<br/>
                     {"Under Constructions\n"}<br/>
-                    {`${JSON.stringify(hello)}`}<br/>
+                    {`${hello.map(item=> JSON.stringify(item))}`}<br/>
                 </div>
                 <div className="Home__Footer">
                     <Footer mainText={

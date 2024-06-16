@@ -6,4 +6,5 @@ from django.http import JsonResponse
 
 # @require_http_methods(['GET'])
 def hello_world(request):
-    return JsonResponse({'message':'Hello, world!'})
+    data = list([{'message':'Hello, world!'},{'message':'Edge of Tomorrow World!'}])
+    return JsonResponse(data, safe=False)
