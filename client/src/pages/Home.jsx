@@ -38,7 +38,7 @@ export default function Home(){
                     {"Under Constructions\n"}<br/>
                     {"Under Constructions\n"}<br/>
                     {"Under Constructions\n"}<br/>
-                    {`${hello.map(item=> JSON.stringify(item))}`}<br/>
+                    { hello && `${hello.map(item=> JSON.stringify(item))}`}<br/>
                 </div>
                 <div className="Home__Footer">
                     <Footer mainText={
