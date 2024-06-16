@@ -1,10 +1,31 @@
 import React from "react";
-// import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import axios from "axios"
 
 
 export default function Home(){
+    const [hello, setHello] = useState({});
+    useEffect(()=>{
+        const response = axios.create({baseURL:"http://localhost:8000"})
+        const header = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': false,
+        }
+        const fetchData = async () => {
+            try {
+                await response.get("/api/hello/", header);
+                console.log(response.data);
+                setHello(response.data)
+
+            } catch (error){
+                console.error(error);
+            }
+        };
+        fetchData();
+    }, []);
     return (
         <div>
             <div className="Home">
@@ -17,6 +38,7 @@ export default function Home(){
                     {"Under Constructions\n"}<br/>
                     {"Under Constructions\n"}<br/>
                     {"Under Constructions\n"}<br/>
+                    {`${JSON.stringify(hello)}`}<br/>
                 </div>
                 <div className="Home__Footer">
                     <Footer mainText={
@@ -26,5 +48,5 @@ export default function Home(){
 
             </div>
         </div>
-    )
+    );
 }
