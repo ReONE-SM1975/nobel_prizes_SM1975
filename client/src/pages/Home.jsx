@@ -6,7 +6,7 @@ import axios from "axios"
 
 
 export default function Home(){
-    const [hello, setHello] = useState([]);
+    const [hello, setHello] = useState([{"text":"hello"}]);
     useEffect(()=>{
         const response = axios.create({baseURL:"http://localhost:8000"})
         const header = {
@@ -18,7 +18,9 @@ export default function Home(){
             try {
                 await response.get("/api/hello/", header);
                 console.log(response.data);
-                setHello(response.data)
+                setHello( h =>
+                    h.concat(response.data)
+                )
 
             } catch (error){
                 console.error(error);
