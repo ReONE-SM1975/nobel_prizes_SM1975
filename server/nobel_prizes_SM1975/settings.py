@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'myapp',
     'rest_framework',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -56,6 +57,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'nobel_prizes_SM1975.urls'
@@ -141,3 +145,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
+
+# DJANGO_CORS_HEADERS
+CORS_ALLOWED_ORIGINS = [
+
+"http://localhost:8000",
+"http://localhost:3000",
+"http://127.0.0.1:8000",
+"http://127.0.0.1:3000",
+"https://localhost:8000",
+"https://localhost:3000",
+"https://127.0.0.1:8000",
+"https://127.0.0.1:3000"
+]
