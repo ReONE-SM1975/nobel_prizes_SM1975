@@ -23,6 +23,6 @@ def hello_world(request):
         )
 
 @api_view(['GET'])
-def get_prizes(request):
-    # response = 
+def get_allPrizes(request):
+    response = requests.get('https://api.nobelprize.org/v1/prize.json')
     pass
