@@ -25,4 +25,9 @@ def hello_world(request):
 @api_view(['GET'])
 def get_allPrizes(request):
     response = requests.get('https://api.nobelprize.org/v1/prize.json')
-    pass
+    return Response(response.json())
+
+@api_view(['GET'])
+def get_allLaureate(request):
+    response = request.get('https://api.nobelprize.org/v1/laureate.json')
+    return Response(response.json())
