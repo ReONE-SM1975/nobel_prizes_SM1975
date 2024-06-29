@@ -29,5 +29,10 @@ def get_allPrizes(request):
 
 @api_view(['GET'])
 def get_allLaureate(request):
-    response = request.get('https://api.nobelprize.org/v1/laureate.json')
+    response = requests.get('https://api.nobelprize.org/v1/laureate.json')
+    return Response(response.json())
+
+@api_view(['GET'])
+def get_allCountries(request):
+    response = requests.get('https://api.nobelprize.org/v1/country.json')
     return Response(response.json())
