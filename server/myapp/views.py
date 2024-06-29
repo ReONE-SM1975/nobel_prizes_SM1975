@@ -5,6 +5,8 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
+import requests
+
 
 # Create your views here.
 
@@ -19,3 +21,8 @@ def hello_world(request):
         data 
         #safe=False
         )
+
+@api_view(['GET'])
+def get_prizes(request):
+    # response = 
+    pass
