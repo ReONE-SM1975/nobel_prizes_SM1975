@@ -2,8 +2,10 @@ import React from "react";
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import MiddleBodyContent from "../components/MiddleBodyContent"
 import axios from "axios"
 
+import "../styles/Home.css"
 
 export default function Home(){
     const [hello, setHello] = useState([{"message":"should have 3 lines included this line"}]);
@@ -40,11 +42,8 @@ export default function Home(){
                     <Header appTitle="The Nobel Prizes Database" />
                 </div>
                 <div className="Home__Pannel">
-                    {"Under Constructions\n"}<br/>
-                    {"Under Constructions\n"}<br/>
-                    {"Under Constructions\n"}<br/>
-                    {"Under Constructions\n"}<br/>
-                    {"Under Constructions\n"}<br/>
+                    <MiddleBodyContent></MiddleBodyContent>
+                    
                     { hello && `${
                         hello.map(item => 
                             JSON.stringify(item.message))

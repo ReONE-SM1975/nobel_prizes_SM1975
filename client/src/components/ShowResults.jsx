@@ -6,7 +6,11 @@ export default function ShowResults(){
     return (
         <div>
             <div>
-
+                {"Under Constructions\n"}<br/>
+                {"Under Constructions\n"}<br/>
+                {"Under Constructions\n"}<br/>
+                {"Under Constructions\n"}<br/>
+                {"Under Constructions\n"}<br/>
             </div>
         </div>
     )
