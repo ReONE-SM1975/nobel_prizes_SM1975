@@ -5,6 +5,8 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
+import requests
+
 
 # Create your views here.
 
@@ -19,3 +21,18 @@ def hello_world(request):
         data 
         #safe=False
         )
+
+@api_view(['GET'])
+def get_allPrizes(request):
+    response = requests.get('https://api.nobelprize.org/v1/prize.json')
+    return Response(response.json())
+
+@api_view(['GET'])
+def get_allLaureate(request):
+    response = requests.get('https://api.nobelprize.org/v1/laureate.json')
+    return Response(response.json())
+
+@api_view(['GET'])
+def get_allCountries(request):
+    response = requests.get('https://api.nobelprize.org/v1/country.json')
+    return Response(response.json())
