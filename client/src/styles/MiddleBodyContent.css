@@ -2,13 +2,17 @@
     /* flex:1; */
     overflow-y: auto;
     height:70%;
+    display:block;
 }
 
-.left {
-    text-align:left
-
+.MiddleBodyContent__left {
+    text-align:left;
+    
+    display:inline-block;
 }
 
-.right {
-    text-align:right
+.MiddleBodyContent__right {
+    text-align:right;
+    
+    display:inline-block;
 }

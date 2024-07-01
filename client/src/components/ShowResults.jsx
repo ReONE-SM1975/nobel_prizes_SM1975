@@ -4,8 +4,8 @@ import React from "react";
 export default function ShowResults(){
 
     return (
-        <div>
-            <div>
+        <div className="ShowResults">
+            <div className="ShowResults__body">
                 {"Under Constructions\n"}<br/>
                 {"Under Constructions\n"}<br/>
                 {"Under Constructions\n"}<br/>

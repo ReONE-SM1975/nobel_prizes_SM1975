@@ -2,4 +2,14 @@
     height:100vh;
     display: flex;
     flex-direction: column;
+    color:antiquewhite;
+    background-color:cadetblue;
+    overflow:none;
+}
+
+.Home__Pannel {
+    height: 70vh;
+    align-items: flex;
+    /* color: red;
+    text-align:right; */
 }
