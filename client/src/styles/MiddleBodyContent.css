@@ -1,18 +1,19 @@
 .MiddleBodyContent {
-    /* flex:1; */
+    display: flex;
+    flex-wrap: nowrap;
     overflow-y: auto;
-    height:70%;
-    display:block;
+    height:70vh;
+    /* display:block; */
 }
 
 .MiddleBodyContent__left {
     text-align:left;
-    
-    display:inline-block;
+    flex:'1';
+    /* display:flex; */
 }
 
 .MiddleBodyContent__right {
     text-align:right;
-    
-    display:inline-block;
+    flex:'1';
+    /* display:flex; */
 }

@@ -1,3 +1,4 @@
 .SideControlBar {
     height: 70vh;
+    flex:'1';
 }

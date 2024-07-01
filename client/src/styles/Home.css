@@ -9,7 +9,7 @@
 
 .Home__Pannel {
     height: 70vh;
-    align-items: flex;
+    display: flex;
     /* color: red;
     text-align:right; */
 }
