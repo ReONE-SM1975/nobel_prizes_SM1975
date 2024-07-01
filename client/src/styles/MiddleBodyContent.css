@@ -9,11 +9,11 @@
 .MiddleBodyContent__left {
     text-align:left;
     flex:'1';
-    /* display:flex; */
+    display:flex;
 }
 
 .MiddleBodyContent__right {
     text-align:right;
     flex:'1';
-    /* display:flex; */
+    display:flex;
 }
