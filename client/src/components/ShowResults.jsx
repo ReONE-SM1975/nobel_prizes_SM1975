@@ -1,5 +1,6 @@
 import React from "react";
 //import axios from "axios"
+import "../styles/ShowResults.css"
 
 export default function ShowResults(){
 

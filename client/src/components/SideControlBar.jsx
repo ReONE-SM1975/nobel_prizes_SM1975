@@ -1,4 +1,5 @@
 import React from 'react';
+import "../styles/SideControlBar.css";
 
 export default function SideControlBar(){
 
