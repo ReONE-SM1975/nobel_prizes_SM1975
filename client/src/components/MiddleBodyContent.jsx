@@ -10,9 +10,9 @@ export default function MiddleBodyContent(){
             <div className="MiddleBodyContent">
                 <div className="MiddleBodyContent__left">
                     <SideControlBar></SideControlBar>
-                        <div className="MiddleBodyContent__right">
-                            <ShowResults></ShowResults>
-                        </div>
+                </div>
+                <div className="MiddleBodyContent__right">
+                        <ShowResults></ShowResults>
                 </div>
             </div>
         </div>
