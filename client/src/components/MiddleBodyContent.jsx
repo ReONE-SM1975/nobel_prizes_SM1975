@@ -7,14 +7,14 @@ import "../styles/MiddleBodyContent.css"
 export default function MiddleBodyContent(){
 
     return (
-        <div>
-            <div className="MiddleBodyContent">
-                <div className="MiddleBodyContent__left">
+        <div className="MiddleBodyContent">
+            <div className="MiddleBodyContent__body">
+                
                     <SideControlBar></SideControlBar>
-                    </div>
-                <div className="MiddleBodyContent__right">
-                        <ShowResults></ShowResults>
-                    </div>
+                    
+                
+                    <ShowResults></ShowResults>
+                
             </div>
                 
         </div>

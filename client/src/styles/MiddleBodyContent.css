@@ -1,19 +1,11 @@
 .MiddleBodyContent {
     display: flex;
-    flex-wrap: nowrap;
-    overflow-y: auto;
+    flex-direction:column;
     height:70vh;
-    /* display:block; */
+    overflow: none;
 }
 
-.MiddleBodyContent__left {
-    text-align:left;
-    flex:'1';
-    display:flex;
-}
-
-.MiddleBodyContent__right {
-    text-align:right;
-    flex:'1';
+.MiddleBodyContent__body {
+    text-align:center;
     display:flex;
 }

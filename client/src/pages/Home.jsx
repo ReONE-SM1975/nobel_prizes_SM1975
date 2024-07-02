@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-// import MiddleBodyContent from "../components/MiddleBodyContent"
+import MiddleBodyContent from "../components/MiddleBodyContent"
 import SideControlBar from "../components/SideControlBar";
 import ShowResults from "../components/ShowResults";
 import axios from "axios"
@@ -53,6 +53,7 @@ export default function Home(){
                     }\n`
                         }
                         <br/>
+                        <MiddleBodyContent/>
                 </div>
                 <div className="Home__Footer">
                     <Footer mainText={
