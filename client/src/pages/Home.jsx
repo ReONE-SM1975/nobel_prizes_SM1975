@@ -2,7 +2,9 @@ import React from "react";
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import MiddleBodyContent from "../components/MiddleBodyContent"
+// import MiddleBodyContent from "../components/MiddleBodyContent"
+import SideControlBar from "../components/SideControlBar";
+import ShowResults from "../components/ShowResults";
 import axios from "axios"
 
 import "../styles/Home.css"
@@ -42,11 +44,12 @@ export default function Home(){
                     <Header appTitle="The Nobel Prizes Database" />
                 </div>
                 <div className="Home__Pannel">
-                    <MiddleBodyContent></MiddleBodyContent>
                     
+                    <SideControlBar></SideControlBar>
+                    <ShowResults></ShowResults>
                     { hello && `${
                         hello.map(item => 
-                            JSON.stringify(item.message))
+                            console.log(JSON.stringify(item.message)))
                     }\n`
                         }
                         <br/>

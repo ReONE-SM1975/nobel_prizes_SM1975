@@ -1,5 +1,6 @@
 .SideControlBar {
-    height: 70vh;
+    /* height: 70vh;
     flex:'1';
-    display:flex;
+    display:flex; */
+    text-align: left;
 }
