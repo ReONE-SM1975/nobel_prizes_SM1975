@@ -1,4 +1,6 @@
 import React from 'react';
+
+import Input from "../components/Input"
 import "../styles/SideControlBar.css";
 
 export default function SideControlBar(){
@@ -9,7 +11,7 @@ export default function SideControlBar(){
                 {"Search By"}
                 <form>
                     <label>Year:</label>
-                    <input></input><br />
+                    <Input></Input><br />
                     <label>Categories:</label>
                     <input></input><br />
                     <label>Name:</label>

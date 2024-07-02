@@ -1,5 +1,7 @@
 import React from "react";
 
+import "../styles/Input.css"
+
 const Input = ({text, type, placeholder, onChange})=> {
 
     return (

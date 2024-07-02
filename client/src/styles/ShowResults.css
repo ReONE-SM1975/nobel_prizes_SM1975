@@ -2,4 +2,11 @@
     /* flex:'1';
     height:70vh;
     display:flex; */
+    width:60vh;
+}
+
+.ResultText {
+    font-size:calc(16px + 2vmin);
+    text-align: center;
+    
 }

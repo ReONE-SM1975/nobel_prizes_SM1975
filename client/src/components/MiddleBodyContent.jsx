@@ -2,6 +2,7 @@ import React from "react";
 import SideControlBar from "./SideControlBar";
 import ShowResults from "./ShowResults"
 
+import "../styles/MiddleBodyContent.css"
 
 export default function MiddleBodyContent(){
 
