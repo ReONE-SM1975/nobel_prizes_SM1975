@@ -7,7 +7,7 @@ const resultTexts = (resultNum = 0) => {
     if (resultNum !== 1){
         single = "s"
     }
-    return `Found ${resultNum} result${single}`
+    return `Found ${resultNum} result${single}.`
 }
 
 export default function ShowResults(){
