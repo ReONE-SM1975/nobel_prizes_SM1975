@@ -7,9 +7,10 @@ export default function SideControlBar(){
 
     return (
         <div className="SideControlBar">
+            {"Search By"}
             <div className="SideControlBar__body">
-                {"Search By"}
-                <form>
+                
+                <form htmlFor="searchTerms">
                     <label>Year:</label>
                     <Input></Input><br />
                     <label>Categories:</label>

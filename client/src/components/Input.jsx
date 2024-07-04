@@ -2,16 +2,17 @@ import React from "react";
 
 import "../styles/Input.css"
 
-const Input = ({text, type, placeholder, onChange})=> {
+const Input = ({id,text, type, placeholder, onChange})=> {
 
     return (
-        <div>
+        <>
             <input className="Input__style"
+            id={id}
             type= { type }
             value={ text }
             placeholder={ placeholder }
             onChange= { onChange }></input>
-        </div>
+        </>
     )
 }
 export default Input;
