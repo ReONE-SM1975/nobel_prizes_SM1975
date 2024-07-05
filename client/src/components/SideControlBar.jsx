@@ -1,6 +1,9 @@
 import React from 'react';
 
-import Input from "../components/Input"
+import Input from "../components/Input";
+import Button from "../components/Button";
+
+
 import "../styles/SideControlBar.css";
 
 export default function SideControlBar(){
@@ -11,21 +14,24 @@ export default function SideControlBar(){
             <div className="SideControlBar__body">
                 
                 <form htmlFor="searchTerms">
-                    <label>Year:</label>
-                    <Input></Input><br />
+                    <span>
+                        <label>Year:</label></span><span>
+                    <Input /><br />
+                        </span>
                     <label>Categories:</label>
-                    <input></input><br />
+                    <Input /><br />
                     <label>Name:</label>
-                    <input></input><br />
+                    <Input /><br />
                     <label>Country:</label>
-                    <input></input><br />
+                    <Input /><br />
                     <label>City:</label>
-                    <input></input><br />
+                    <Input /><br />
                     <label>Affiliation:</label>
-                    <input></input><br />
+                    <Input /><br />
                     <label>Keyword:</label>
-                    <input></input><br />
-                    <button>Submit</button><button>Reset</button>
+                    <Input /><br />
+                    <Button type="submit" text="Submit" className="SubmitBtn"/>
+                    <Button type="reset" text="Reset" className="ResetBtn"/>
                 </form>
             </div>
         </div>

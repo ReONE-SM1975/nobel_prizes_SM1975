@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import MiddleBodyContent from "../components/MiddleBodyContent"
-import SideControlBar from "../components/SideControlBar";
-import ShowResults from "../components/ShowResults";
+// import SideControlBar from "../components/SideControlBar";
+// import ShowResults from "../components/ShowResults";
 import axios from "axios"
 
 import "../styles/Home.css"
@@ -45,14 +45,14 @@ export default function Home(){
                 </div>
                 <div className="Home__Pannel">
                     
-                    <SideControlBar></SideControlBar>
-                    <ShowResults></ShowResults>
-                    { hello && `${
+                    {/* <SideControlBar></SideControlBar>
+                    <ShowResults></ShowResults> */}
+                    {/* { hello && `${
                         hello.map(item => 
                             console.log(JSON.stringify(item.message)))
                     }\n`
-                        }
-                        <br/>
+                        } */}
+                        
                         <MiddleBodyContent/>
                 </div>
                 <div className="Home__Footer">

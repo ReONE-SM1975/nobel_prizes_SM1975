@@ -2,7 +2,7 @@
     /* height: 70vh;
     flex:'1';
     display:flex; */
-    width:60vh;
+    width:80vh;
     text-align: left;
     height: 70vh;
     border-radius: 12px 12px;
@@ -12,6 +12,15 @@
 
 .SideControlBar__body {
     display: flex;
+    flex-direction:column;
     justify-content: space-between;
-    align-items: center;
+    /* align-items: center; */
+}
+
+.SubmitBtn {
+    color:green;
+}
+
+.ResetBtn {
+    color: red;
 }

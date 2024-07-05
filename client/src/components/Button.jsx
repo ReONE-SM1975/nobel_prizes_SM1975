@@ -1,15 +1,18 @@
-import React from "react"
+import React from "react";
 
-const Button = ({text, type})=> {
+import "../styles/Button.css";
+
+const Button = ({className, text, type, onClick})=> {
 
     return (
-        <div>
+        <>
             <button 
-                className="Button__sytle"
-                type={ type }>
+                className={`Button__styles ${className}`}
+                type={ type }
+                onClick={ onClick }>
                 { text }
             </button>
-        </div>
+        </>
     )
 }
 
