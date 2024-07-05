@@ -1,20 +1,33 @@
 .SideControlBar {
-    /* height: 70vh;
-    flex:'1';
-    display:flex; */
-    width:80vh;
+    
+    /* display:flex; */
+    width: 25vh;
     text-align: left;
     height: 70vh;
     border-radius: 12px 12px;
-    /* border-color: black; */
     border:1px solid darkgrey;
 }
 
 .SideControlBar__body {
     display: flex;
     flex-direction:column;
-    justify-content: space-between;
-    /* align-items: center; */
+    /* justify-content: space-between; */
+    align-items: flex-start;
+}
+
+.SideControlBar__body form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.SearchLabel {
+    margin-right: 1rem;
+    font-style:oblique;
+    font-size:calc(1.2vh + 2vmin)
+}
+
+.SearchTextBar {
+    flex-grow: 1;
 }
 
 .SubmitBtn {

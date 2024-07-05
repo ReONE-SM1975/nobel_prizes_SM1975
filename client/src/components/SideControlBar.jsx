@@ -14,10 +14,10 @@ export default function SideControlBar(){
             <div className="SideControlBar__body">
                 
                 <form htmlFor="searchTerms">
-                    <span>
-                        <label>Year:</label></span><span>
-                    <Input /><br />
-                        </span>
+                    
+                        <label className="SearchLabel">Year:</label>
+                    <Input className="SearchTextBar" /><br />
+                        
                     <label>Categories:</label>
                     <Input /><br />
                     <label>Name:</label>
