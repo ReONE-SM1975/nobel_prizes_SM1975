@@ -8,6 +8,7 @@ import "../styles/SideControlBar.css";
 
 export default function SideControlBar(){
     const [ searchYear, setSearchYear ] = useState("");
+    const [ searchYearTo, setSearchYearTo ] = useState("");
     const [ searchCat, setSearchCat ] = useState("");
     const [ searchFirstName, setSearchFirstName ] = useState("");
     const [ searchSurname, setSearchSurname ] = useState("");
@@ -47,6 +48,9 @@ export default function SideControlBar(){
 
     const handleSubmitSearch = (e) => {
         e.preventDefault();
+        if(searchYear){
+            
+        }
     }
     return (
         <div className="SideControlBar">
@@ -56,7 +60,7 @@ export default function SideControlBar(){
                 <form htmlFor="searchTerms">
                     
                         <label className="SearchLabel" htmlFor="year">Year:</label>
-                    <Input className="SearchTextBar" name="year" id="year" onChange={handleSearchYear} /><br />
+                    <Input className="SearchTextBar" name="year" id="year" patten={`[0-9]{4}-[0-9]{4}`} maxLength={"9"} onChange={handleSearchYear} /><br />
                         
                     <label>Categories:</label>
                     <Input /><br />
