@@ -16,6 +16,7 @@ export default function ShowResults(){
     useEffect(()=>{
         setSearchFound(resultTexts("foobar"))
     },[]) 
+    
     return (
         <div className="ShowResults">
             <div className="ShowResults__body">
