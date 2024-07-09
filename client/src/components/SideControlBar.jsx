@@ -6,6 +6,11 @@ import Button from "../components/Button";
 
 import "../styles/SideControlBar.css";
 
+const warningSearchYear = [
+    '',
+    
+]
+
 export default function SideControlBar(){
     const [ searchYear, setSearchYear ] = useState("");
     const [ searchYearTo, setSearchYearTo ] = useState("");
@@ -16,6 +21,9 @@ export default function SideControlBar(){
     const [ searchCity, setSearchCity ] = useState("");
     const [ searchAffilation, setSearchAffilation ] = useState("");
     const [ searchKeyword, setSearchKeyword ] = useState("");
+    
+    const [ searchYearContainer, setSearchYearContainer] = useState([]);
+    const [ attempttedSubmit, setAttempttedSubmit ] = useState(false);
 
     const handleSearchYear = (e) => {
         e.preventDefault();
@@ -49,8 +57,40 @@ export default function SideControlBar(){
     const handleSubmitSearch = (e) => {
         e.preventDefault();
         if(searchYear){
+            if(searchYear.length < 4){
+                setAttempttedSubmit(true)
+            } else if (searchYear.length === 4){
+                if(isNaN(searchYear)){
+                    setAttempttedSubmit(true)
+                } else {
+                    /* 
+                    send search year request to nobel prize
+                    */
+                    setAttempttedSubmit(false)
+                }
+            } else if (searchYear.length <9){
+                setAttempttedSubmit(true)
+            } else if (searchYear.length === 9){
+                if (searchYear[4] !== '-'){
+                    setAttempttedSubmit(true);
+                } else {
+                    setSearchYearContainer(searchYear.split("-"))
+                    /**
+                     * searchYearContainer[0] will be the year where start of range be
+                     */
+                    setAttempttedSubmit(false)
+                    if(isNaN(searchYearContainer[0]) || isNaN(searchYearContainer[1])){
+                        setAttempttedSubmit(true);
+                    }
+                    setSearchYearTo(searchYearContainer[1])
+                    /**
+                     * send search year and yearto request to nobel prize 
+                     */
+                    setAttempttedSubmit(false)
+                }
+            } 
             
-        }
+        } 
     }
     return (
         <div className="SideControlBar">
@@ -61,7 +101,7 @@ export default function SideControlBar(){
                     
                         <label className="SearchLabel" htmlFor="year">Year:</label>
                     <Input className="SearchTextBar" name="year" id="year" patten={`[0-9]{4}-[0-9]{4}`} maxLength={"9"} onChange={handleSearchYear} /><br />
-                        
+                        {attempttedSubmit && searchYear && <p className="searchYear__Warning">{`Warning: search year required four or nine charaters long in YYYY or YYYY-YYYY format`}</p>}
                     <label>Categories:</label>
                     <Input /><br />
                     <label>Firstname:</label>
