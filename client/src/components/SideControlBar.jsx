@@ -103,7 +103,7 @@ export default function SideControlBar(){
                     
                         <label className="SearchLabel" htmlFor="year">Year:</label>
                     <Input className="SearchTextBar" name="year" id="year" patten={`[0-9]{4}-[0-9]{4}`} maxLength={"9"} onChange={handleSearchYear} /><br />
-                        {attempttedSubmit && searchYear && <p className="searchYear__Warning">{`Warning: search year required four or nine charaters long in YYYY or YYYY-YYYY format`}</p>}
+                        {attempttedSubmit && searchYear && <p className="SearchYear__Warning">{`Warning: search year required four or nine charaters long in YYYY or YYYY-YYYY format`}</p>}
                     <label>Categories:</label>
                     <Input /><br />
                     <label>Firstname:</label>
