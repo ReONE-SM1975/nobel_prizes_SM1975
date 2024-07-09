@@ -2,13 +2,18 @@ import React, {useState} from 'react';
 
 import Input from "../components/Input";
 import Button from "../components/Button";
+import DropDownDataList from "./DropDownDataList";
 
 
 import "../styles/SideControlBar.css";
 
-const warningSearchYear = [
-    '',
-    
+const categories = [
+    "physics",
+    "chemistry",
+    "medicine",
+    "peace",
+    "literature",
+    "peace"
 ]
 
 export default function SideControlBar(){
@@ -102,10 +107,10 @@ export default function SideControlBar(){
                 <form htmlFor="searchTerms">
                     
                         <label className="SearchLabel" htmlFor="year">Year:</label>
-                    <Input className="SearchTextBar" name="year" id="year" patten={`[0-9]{4}-[0-9]{4}`} maxLength={"9"} onChange={handleSearchYear} /><br />
+                    <Input className="SearchTextBar" name="year" id="year" patten={`[0-9]{4}-[0-9]{4}`} placeholder={'YYYY or YYYY-YYYY'} maxLength={"9"} onChange={handleSearchYear} /><br />
                         {attempttedSubmit && searchYear && <p className="SearchYear__Warning">{`Warning: search year required four or nine charaters long in YYYY or YYYY-YYYY format`}</p>}
-                    <label>Categories:</label>
-                    <Input /><br />
+                    <label className="SearchLabel" htmlFor="search_cat">Categories:</label>
+                    <DropDownDataList className="SearchTextBar" list="searchCat" options={categories} name="search_cat" id="search_cat" placeholder="doubleclick avaliable"/><br />
                     <label>Firstname:</label>
                     <Input /><br />
                     <label>Surname:</label>

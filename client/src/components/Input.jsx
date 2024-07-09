@@ -14,7 +14,8 @@ const Input = ({id,text, className, name, type="text", placeholder, patten, maxL
             placeholder={ placeholder }
             patten = {patten}
             maxLength = {maxLength}
-            onChange= { onChange }></input>
+            onChange= { onChange }>
+            </input>
         </>
     )
 }
