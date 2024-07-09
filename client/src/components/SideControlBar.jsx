@@ -81,12 +81,14 @@ export default function SideControlBar(){
                     setAttempttedSubmit(false)
                     if(isNaN(searchYearContainer[0]) || isNaN(searchYearContainer[1])){
                         setAttempttedSubmit(true);
+                    } else {
+                        setSearchYearTo(searchYearContainer[1])
+                        /**
+                         * send search year and yearto request to nobel prize 
+                         */
+                        setAttempttedSubmit(false)
+
                     }
-                    setSearchYearTo(searchYearContainer[1])
-                    /**
-                     * send search year and yearto request to nobel prize 
-                     */
-                    setAttempttedSubmit(false)
                 }
             } 
             
