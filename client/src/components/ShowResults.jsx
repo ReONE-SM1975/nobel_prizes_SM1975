@@ -11,10 +11,10 @@ const resultTexts = (resultNum = 0) => {
     return ["Found ", `${resultNum}`, ` result${single}.`];
 }
 
-export default function ShowResults(){
+export default function ShowResults({data=[{}]}){
     const [searchFound, setSearchFound] = useState([])
     useEffect(()=>{
-        setSearchFound(resultTexts("foobar"))
+        setSearchFound(resultTexts(data.length))
     },[]) 
     
     return (
