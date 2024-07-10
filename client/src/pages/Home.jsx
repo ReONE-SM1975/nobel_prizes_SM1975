@@ -11,6 +11,9 @@ import "../styles/Home.css"
 
 export default function Home(){
     const [hello, setHello] = useState([{"message":"should have 3 lines included this line"}]);
+
+    const [ myDefault, setMyDefault ] = useState([]);
+
     useEffect(()=>{
         // const response = axios.create({baseURL:"http://localhost:8000"})
         // const header = {
@@ -35,6 +38,10 @@ export default function Home(){
         //     }
         // };
         //fetchData();
+
+        axios.get("http://localhost:8000/api/fullprizes/").then(response => {
+            setMyDefault(response.data).catch(error => console.error(error))
+        })
 
     }, []);
     return (
