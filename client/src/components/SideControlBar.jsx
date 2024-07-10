@@ -11,7 +11,7 @@ const categories = [
     "physics",
     "chemistry",
     "medicine",
-    "peace",
+    "economics",
     "literature",
     "peace"
 ]

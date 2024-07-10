@@ -40,8 +40,9 @@ export default function Home(){
         //fetchData();
 
         axios.get("http://localhost:8000/api/fullprizes/").then(response => {
-            setMyDefault(response.data).catch(error => console.error(error))
-        })
+            setMyDefault(response.data)
+            console.log(myDefault)
+        }).catch(error => console.error(error))
 
     }, []);
     return (
