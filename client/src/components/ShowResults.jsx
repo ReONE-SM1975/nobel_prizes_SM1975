@@ -11,10 +11,11 @@ const resultTexts = (resultNum = 0) => {
     return ["Found ", `${resultNum}`, ` result${single}.`];
 }
 
-export default function ShowResults({data=[{}]}){
+export default function ShowResults({data=[]}){
+    const [displayData, setDisplayData] = useState(data)
     const [searchFound, setSearchFound] = useState([])
     useEffect(()=>{
-        setSearchFound(resultTexts(data.length))
+        setSearchFound(resultTexts(displayData.length))
     },[]) 
     
     return (
@@ -25,6 +26,10 @@ export default function ShowResults({data=[{}]}){
                     <span className="ResultNumber">{`${searchFound[1]}`}</span>
                     {`${searchFound[2]}`}
                 </p>
+                <div>
+                    { displayData && displayData.map((ele) => { return <p>{`${ele}`}</p>}) } 
+                </div>
+                
                 {"Under Constructions\n"}<br/>
                 {"Under Constructions\n"}<br/>
                 {"Under Constructions\n"}<br/>

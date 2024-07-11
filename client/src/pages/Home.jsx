@@ -10,7 +10,7 @@ import axios from "axios"
 import "../styles/Home.css"
 
 export default function Home(){
-    const [hello, setHello] = useState([{"message":"should have 3 lines included this line"}]);
+    // const [hello, setHello] = useState([{"message":"should have 3 lines included this line"}]);
 
     const [ myDefault, setMyDefault ] = useState([]);
 
@@ -21,24 +21,12 @@ export default function Home(){
         //     'Content-Type': 'application/json',
         //     'Access-Control-Allow-Origin': false,
         // }
+        /*
         axios.get("http://localhost:8000/api/hello/").then(response => {
             setHello(h => h.concat(response.data))
         }).catch(error => console.error(error))
-        // const fetchData = async () => {
-        //     try {
-        //         await response.get("/api/hello/", header);
-        //         console.log(response.data);
-        //         setHello( 
-        //             h => h.concat(response.data)
-        //             //response.data
-        //         )
-
-        //     } catch (error){
-        //         console.error(error);
-        //     }
-        // };
-        //fetchData();
-
+        */
+    
         axios.get("http://localhost:8000/api/fullprizes/").then(response => {
             setMyDefault(response.data)
             console.log(myDefault)
@@ -61,7 +49,7 @@ export default function Home(){
                     }\n`
                         } */}
                         
-                        <MiddleBodyContent/>
+                        <MiddleBodyContent myDefault={myDefault}/>
                 </div>
                 <div className="Home__Footer">
                     <Footer mainText={

@@ -99,6 +99,7 @@ export default function SideControlBar(){
             
         } 
     }
+    
     return (
         <div className="SideControlBar">
             {"Search By"}
@@ -107,8 +108,8 @@ export default function SideControlBar(){
                 <form htmlFor="searchTerms">
                     
                         <label className="SearchLabel" htmlFor="year">Year:</label>
-                    <Input className="SearchTextBar" name="year" id="year" patten={`[0-9]{4}-[0-9]{4}`} placeholder={'YYYY or YYYY-YYYY'} maxLength={"9"} onChange={handleSearchYear} /><br />
-                        {attempttedSubmit && searchYear && <p className="SearchYear__Warning">{`Warning: search year required four or nine charaters long in YYYY or YYYY-YYYY format`}</p>}
+                    <Input className="SearchTextBar" name="year" id="year" pattern={`[0-9]{4}-[0-9]{4}`} placeholder={'YYYY or YYYY-YYYY'} maxLength={"9"} onChange={handleSearchYear} /><br />
+                        {attempttedSubmit && searchYear && <p className="SearchYear__Warning">{`Warning: search year required years in the form of YYYY or YYYY-YYYY format`}</p>}
                     <label className="SearchLabel" htmlFor="search_cat">Categories:</label>
                     <DropDownDataList className="SearchTextBar" list="searchCat" options={categories} name="search_cat" id="search_cat" placeholder="doubleclick avaliable"/><br />
                     <label>Firstname:</label>
@@ -124,7 +125,7 @@ export default function SideControlBar(){
                     <label>Keyword:</label>
                     <Input /><br />
                     <Button type="submit" text="Submit" className="SubmitBtn" onClick={handleSubmitSearch}/>
-                    <Button type="reset" text="Reset" className="ResetBtn"/>
+                    <Button type="reset" text="Reset" className="ResetBtn" />
                 </form>
             </div>
         </div>

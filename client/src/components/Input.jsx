@@ -2,7 +2,7 @@ import React from "react";
 
 import "../styles/Input.css"
 
-const Input = ({id,text, className, name, type="text", placeholder, patten, maxLength, onChange})=> {
+const Input = ({id,text, className, name, type="text", placeholder, pattern, maxLength, onChange})=> {
 
     return (
         <>
@@ -12,7 +12,7 @@ const Input = ({id,text, className, name, type="text", placeholder, patten, maxL
             type= { type }
             value={ text }
             placeholder={ placeholder }
-            patten = {patten}
+            pattern = {pattern}
             maxLength = {maxLength}
             onChange= { onChange }>
             </input>

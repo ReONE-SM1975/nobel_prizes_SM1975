@@ -1,11 +1,11 @@
-import React from "react";
+import React, {useState} from "react";
 import SideControlBar from "./SideControlBar";
 import ShowResults from "./ShowResults"
 
 import "../styles/MiddleBodyContent.css"
 
-export default function MiddleBodyContent(){
-
+export default function MiddleBodyContent({myDefault=[]}){
+    const [dataPass, setDataPass] = useState(myDefault)
     return (
         <div className="MiddleBodyContent">
             <div className="MiddleBodyContent__body">
@@ -13,7 +13,7 @@ export default function MiddleBodyContent(){
                     <SideControlBar></SideControlBar>
                     
                 
-                    <ShowResults></ShowResults>
+                    <ShowResults data={dataPass}></ShowResults>
                 
             </div>
                 
