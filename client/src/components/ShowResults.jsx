@@ -13,10 +13,11 @@ const resultTexts = (resultNum = 0) => {
 
 export default function ShowResults({data=[]}){
     const [displayData, setDisplayData] = useState(data)
-    const [searchFound, setSearchFound] = useState([])
+    const [searchFound, setSearchFound] = useState(0)
     useEffect(()=>{
         setSearchFound(resultTexts(displayData.length))
-    },[]) 
+        setDisplayData(data)
+    },[data]) 
     
     return (
         <div className="ShowResults">
@@ -27,7 +28,7 @@ export default function ShowResults({data=[]}){
                     {`${searchFound[2]}`}
                 </p>
                 <div>
-                    { displayData && displayData.map((ele) => { return <p>{`${ele}`}</p>}) } 
+                    { displayData && displayData.map((ele) => { return <p>{`${ele.year}:${ele.category}\n${ele.laureates}`}</p>}) } 
                 </div>
                 
                 {"Under Constructions\n"}<br/>

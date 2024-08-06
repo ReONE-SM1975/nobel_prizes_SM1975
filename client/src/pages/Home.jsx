@@ -27,10 +27,16 @@ export default function Home(){
         }).catch(error => console.error(error))
         */
     
-        axios.get("http://localhost:8000/api/fullprizes/").then(response => {
-            setMyDefault(response.data)
-            console.log(myDefault)
-        }).catch(error => console.error(error))
+        axios.get("http://localhost:8000/api/fullprizes/")
+        .then(response => {
+            console.log(response.data);
+            setMyDefault(response.data.prizes)
+        })
+        // .then(res => {
+        //     setMyDefault(res.data)
+        //     console.log(myDefault)
+        // })
+        .catch(error => console.error(error))
 
     }, []);
     return (
