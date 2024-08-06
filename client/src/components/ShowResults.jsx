@@ -22,19 +22,21 @@ export default function ShowResults({data=[]}){
     const laureatesDisplay = (items) => {
         return (
             <>
-            { items.map((winner, idc)=>
+            <ol>
+            { items && items.map((winner, idc)=>
             {
                 return (
-                    <div key={idc+1000}>
-                            <ol>
+                    <span key={idc+1000}>
+                            
                                 <li>
                                 {`[${winner.id}]`}
                                 {winner.surname ? `${winner.firstname} ${winner.surname}` : `${winner.firstname}`}<br />{`${winner.motivation}`}
                                 </li>
-                            </ol>
-                        </div>
+                            
+                        </span>
                 )
             })}
+            </ol>
             </>
         )
     }
@@ -43,7 +45,7 @@ export default function ShowResults({data=[]}){
         return (
             <div className="ResultBody">
                     {
-                    prizes.map((prize,idx) => { /*
+                    prizes && prizes.map((prize,idx) => { /*
                     <div key={idx}>
                     <h3>{`${prize.year} : ${prize.cateogry}`}</h3>
                     { prize.overallmotivation && <h3>{`${prize.overallmotivation}`}</h3>}
@@ -66,7 +68,7 @@ export default function ShowResults({data=[]}){
                         </h2>
                         <h2>{`Laureates:`}</h2>
                         {/* {prize.laureates} */}
-                    {/* {`${(laureatesDisplay(prize.laureates))}`} */}
+                    {prize.laureates && `${(laureatesDisplay(prize.laureates))}`}
             </div>
                 )
                 }
