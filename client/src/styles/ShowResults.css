@@ -5,7 +5,7 @@
     width:60vh;
 }
 
-.ResultText {
+.ResultHeader {
     font-size:calc(16px + 2vmin);
     text-align: center;
     

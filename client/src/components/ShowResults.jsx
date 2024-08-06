@@ -19,10 +19,14 @@ export default function ShowResults({data=[]}){
         setDisplayData(data)
     },[data]) 
     
+    const prizeDisplay = () => {
+
+    }
+
     return (
         <div className="ShowResults">
             <div className="ShowResults__body">
-                <p className="ResultText">
+                <p className="ResultHeader">
                     {`${searchFound[0]}`}
                     <span className="ResultNumber">{`${searchFound[1]}`}</span>
                     {`${searchFound[2]}`}
