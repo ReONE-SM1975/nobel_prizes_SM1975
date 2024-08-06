@@ -14,12 +14,14 @@ const resultTexts = (resultNum = 0) => {
 export default function ShowResults({data=[]}){
     const [displayData, setDisplayData] = useState(data)
     const [searchFound, setSearchFound] = useState(0)
+    
     useEffect(()=>{
         setSearchFound(resultTexts(data.length))
         setDisplayData(data)
     },[data]) 
     
     const laureatesDisplay = (items) => {
+        
         return (
             <>
             <ol>
