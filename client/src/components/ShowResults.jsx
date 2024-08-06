@@ -31,11 +31,7 @@ export default function ShowResults({data=[]}){
                     { displayData && displayData.map((ele) => { return <p>{`${ele.year}:${ele.category}\n${ele.laureates}`}</p>}) } 
                 </div>
                 
-                {"Under Constructions\n"}<br/>
-                {"Under Constructions\n"}<br/>
-                {"Under Constructions\n"}<br/>
-                {"Under Constructions\n"}<br/>
-                {"Under Constructions\n"}<br/>
+                
             </div>
         </div>
     )
