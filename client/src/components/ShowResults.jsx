@@ -15,7 +15,7 @@ export default function ShowResults({data=[]}){
     const [displayData, setDisplayData] = useState(data)
     const [searchFound, setSearchFound] = useState(0)
     useEffect(()=>{
-        setSearchFound(resultTexts(displayData.length))
+        setSearchFound(resultTexts(data.length))
         setDisplayData(data)
     },[data]) 
     
