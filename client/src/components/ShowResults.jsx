@@ -17,25 +17,28 @@ export default function ShowResults({data=[]}){
     //const [totalLaureates, setTotalLaureates] = useState(0)
     
     useEffect(()=>{
-        setSearchFound(resultTexts(data.length))
-        setDisplayData(data)
+        // setSearchFound(resultTexts(data.length))
+        
+            setDisplayData(data)
+            setSearchFound(resultTexts(data.length))
+        
+    
     },[data]) 
     
     const laureatesDisplay = (items) => {
-        
+        console.log("laureatesDisplay:",items)
         return (
-            <div>1000
-            <ol>
-            { items ? items.map((winner, idc)=>
+            <div className="laureatesHead">
+            <ol className="laureatesBody">
+            { items.map((winner, idc)=>
             {
-                // setTotalLaureates(totalLaureates+1)
+                //setTotalLaureates(totalLaureates+1)
                 return (
-                    <li key={idc}>
-                    {`[${winner.id}]`}
-                    {'WINNER:'}{winner.surname ? `${winner.firstname} ${winner.surname}` : `${winner.firstname}`}<br />{`${winner.motivation}`}
+                    <li key={winner.firstname}>
+                    {`[${winner.id}] : `}{'WINNER : '}{winner.surname ? `${winner.firstname} ${winner.surname}` : `${winner.firstname} `}{`${winner.motivation}`}
                     </li>            
                 )
-            }) : `Loading...`}
+            }) }
             </ol>
             </div>
         )
@@ -45,19 +48,7 @@ export default function ShowResults({data=[]}){
         return (
             <div className="ResultBody">
                     {
-                    prizes && prizes.map((prize,idx) => { /*
-                    <div key={idx}>
-                    <h3>{`${prize.year} : ${prize.cateogry}`}</h3>
-                    { prize.overallmotivation && <h3>{`${prize.overallmotivation}`}</h3>}
-                    <h2>{`Laureates:`}</h2>
-                    <ol>
-                    <h2>{prize.laureates.map((winner, inc) => {
-                        let fullname = winner.surname ? `${winner.firstname} ${winner.surname}` : `${winner.firstname}`;
-                            <li>{`${inc+1}:[${winner.id}] ${fullname}}`}<br />{`${winner.motivation}`}</li>
-                    })}</h2>
-                    </ol>
-                    </div>
-                   */ 
+                    prizes && prizes.map((prize,idx) => { 
                 return (
                     <div key={idx}>
                         <h3>
