@@ -14,6 +14,7 @@ const resultTexts = (resultNum = 0) => {
 export default function ShowResults({data=[]}){
     const [displayData, setDisplayData] = useState(data)
     const [searchFound, setSearchFound] = useState(0)
+    //const [totalLaureates, setTotalLaureates] = useState(0)
     
     useEffect(()=>{
         setSearchFound(resultTexts(data.length))
@@ -25,17 +26,14 @@ export default function ShowResults({data=[]}){
         return (
             <>
             <ol>
-            { items && items.map((winner, idc)=>
+            { items.map((winner, idc)=>
             {
+                // setTotalLaureates(totalLaureates+1)
                 return (
-                    <span key={idc+1000}>
-                            
-                                <li>
-                                {`[${winner.id}]`}
-                                {winner.surname ? `${winner.firstname} ${winner.surname}` : `${winner.firstname}`}<br />{`${winner.motivation}`}
-                                </li>
-                            
-                        </span>
+                    <li key={idc}>
+                    {`[${winner.id}]`}
+                    {'WINNER:'}{winner.surname ? `${winner.firstname} ${winner.surname}` : `${winner.firstname}`}<br />{`${winner.motivation}`}
+                    </li>            
                 )
             })}
             </ol>
