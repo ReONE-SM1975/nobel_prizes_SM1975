@@ -24,9 +24,9 @@ export default function ShowResults({data=[]}){
     const laureatesDisplay = (items) => {
         
         return (
-            <>
+            <div>1000
             <ol>
-            { items.map((winner, idc)=>
+            { items ? items.map((winner, idc)=>
             {
                 // setTotalLaureates(totalLaureates+1)
                 return (
@@ -35,9 +35,9 @@ export default function ShowResults({data=[]}){
                     {'WINNER:'}{winner.surname ? `${winner.firstname} ${winner.surname}` : `${winner.firstname}`}<br />{`${winner.motivation}`}
                     </li>            
                 )
-            })}
+            }) : `Loading...`}
             </ol>
-            </>
+            </div>
         )
     }
 
@@ -60,13 +60,13 @@ export default function ShowResults({data=[]}){
                    */ 
                 return (
                     <div key={idx}>
-                        <h2>
+                        <h3>
                             {`[${idx + 1}]: ${prize.year} : ${prize.category}`}
-                        </h2>
-                        <h2>
+                        </h3>
+                        <h3>
                             {prize.overallMotivation && `${prize.overallMotivation}`}
-                        </h2>
-                        <h2>{`Laureates:`}</h2>
+                        </h3>
+                        <h3>{`Laureates:`}</h3>
                         {/* {prize.laureates} */}
                     {prize.laureates && `${(laureatesDisplay(prize.laureates))}`}
             </div>
