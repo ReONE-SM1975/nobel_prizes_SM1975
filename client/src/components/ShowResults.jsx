@@ -61,7 +61,7 @@ export default function ShowResults({data=[]}){
                                     <div className="ResultsRow" >
                                         <div className="ResultsCell"><h3>{`[${idx + 1}]`}</h3></div>
                                         <div className="ResultsCell"><h3>{`${prize.year} `}</h3></div>
-                                        <div className="ResultsCell"><h3>{`${prize.category}`}</h3></div>
+                                        <div className="ResultsCell Capital"><h3>{`${prize.category}`}</h3></div>
                                     </div>
                                 </div>
                             </div>
@@ -69,7 +69,7 @@ export default function ShowResults({data=[]}){
                             <div className="ResultsTable">
                                 <div className="ResultsBody">
                                     <div className="ResultsRow">
-                                        <div className="ResultsCell"><h3>{prize.overallMotivation && `${prize. overallMotivation}`}</h3></div>
+                                        <div className="ResultsCell Extend"><h3>{prize.overallMotivation && `${prize.overallMotivation}`}</h3></div>
                                     </div>
                                 </div>
                             </div>: ""}
