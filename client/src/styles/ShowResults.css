@@ -2,7 +2,7 @@
     /* flex:'1';
     height:70vh;
     display:flex; */
-    width:60vh;
+    width:120vh;
 }
 
 .ResultsHeader {
@@ -30,9 +30,6 @@
 
 .ResultsCell {
     display: table-cell;
-    padding: 3px 10px;
+    padding: 5px 10px;
 }
 
-.Motivation {
-    width:100%
-}
