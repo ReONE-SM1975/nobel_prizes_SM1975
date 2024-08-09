@@ -43,9 +43,8 @@ export default function ShowResults({data=[]}){
                 { prizes && prizes.map((prize,idx) => { 
                 return (
                     <div key={idx}>
-                        <h3>{`[${idx + 1}]: ${prize.year} : ${prize.category}`}</h3>
-                        <h3>{prize.overallMotivation && `${prize.overallMotivation}`}</h3>
-                        <div>{`Laureates:`}</div>
+                        <div><h3>{`[${idx + 1}]: ${prize.year} : ${prize.category}`}</h3></div>
+                        <div><h3>{prize.overallMotivation && `${prize.overallMotivation}`}</h3></div>
                         <div>{prize.laureates && laureatesDisplay(prize.laureates)}</div>
                     </div>
                 );})
