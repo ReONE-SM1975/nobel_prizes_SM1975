@@ -5,7 +5,7 @@
     width:60vh;
 }
 
-.ResultHeader {
+.ResultsHeader {
     font-size:calc(16px + 2vmin);
     text-align: center;
     
@@ -13,4 +13,26 @@
 
 .ResultNumber {
     color: red;
+}
+
+.ResultsTable {
+    display: table;
+    width: 100%;
+}
+
+.ResultsBody {
+    display: table-row-group;
+}
+
+.ResultsRow {
+    display: table-row;
+}
+
+.ResultsCell {
+    display: table-cell;
+    padding: 3px 10px;
+}
+
+.Motivation {
+    width:100%
 }
