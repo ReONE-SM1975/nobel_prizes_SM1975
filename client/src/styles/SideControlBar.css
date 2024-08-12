@@ -3,9 +3,12 @@
     /* display:flex; */
     width: 35vh;
     text-align: left;
-    height: 70vh;
+    height: 75vh;
     border-radius: 12px 12px;
     border:1px solid darkgrey;
+    overflow: auto;
+    position:fixed;
+    float: none;
 }
 
 .SideControlBar__body {
