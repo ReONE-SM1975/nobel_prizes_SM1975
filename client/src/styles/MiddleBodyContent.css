@@ -1,0 +1,14 @@
+.MiddleBodyContent {
+    display: flex;
+    flex-direction:column;
+    height:70vh;
+    overflow: none;
+    width:300vh;
+}
+
+.MiddleBodyContent__body {
+    text-align:center;
+    display:flex;
+    /* justify-content:space-between; */
+    overflow-y:auto;
+}

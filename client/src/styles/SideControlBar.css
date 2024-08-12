@@ -1,0 +1,47 @@
+.SideControlBar {
+    
+    /* display:flex; */
+    width: 35vh;
+    text-align: left;
+    height: 75vh;
+    border-radius: 12px 12px;
+    border:1px solid darkgrey;
+    overflow: auto;
+    position:fixed;
+    float: none;
+}
+
+.SideControlBar__body {
+    display: flex;
+    flex-direction:column;
+    /* justify-content: space-between; */
+    align-items: flex-start;
+}
+
+.SideControlBar__body form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.SearchLabel {
+    margin-right: 1rem;
+    font-style:oblique;
+    font-size:calc(1.2vh + 2vmin)
+}
+
+.SearchTextBar {
+    flex-grow: 1;
+}
+
+.SearchYear__Warning {
+    color:red;
+    font-size:calc(0.3vh + 2vmin)
+}
+
+.SubmitBtn {
+    color:green;
+}
+
+.ResetBtn {
+    color: red;
+}

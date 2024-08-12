@@ -1,0 +1,6 @@
+.Button__styles {
+    padding: calc(2em + 2vmin) calc(1em +2vmin);
+    margin:calc(5px+2vmin) calc(5px+2vmin);
+    font-size:calc( 10px + 2vmin);
+    cursor:pointer;
+}

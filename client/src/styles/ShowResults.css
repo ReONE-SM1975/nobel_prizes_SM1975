@@ -1,0 +1,52 @@
+.ShowResults {
+    /* flex:'1';
+    height:70vh;
+    display:flex; */
+    width:120vh;
+    margin-left:40vh;
+}
+
+.ResultsHeader {
+    font-size:calc(16px + 2vmin);
+    text-align: center;
+    
+}
+
+.ResultNumber {
+    color: red;
+}
+
+.ResultsTable {
+    display: table;
+    table-layout: fixed;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.ResultsBody {
+    display: table-row-group;
+}
+
+.ResultsRow {
+    display: table-row;
+}
+
+.ResultsCell {
+    display: table-cell;
+    padding: 5px 10px;
+    text-align: left;
+    /* white-space: nowrap; */
+    /* vertical-align: middle; */
+    word-wrap: break-word;
+}
+
+.Extend {
+    width: 100%;
+    font-style:oblique;
+    border-collapse:collapse;
+}
+
+.Capital {
+    text-transform: capitalize;
+}
+
