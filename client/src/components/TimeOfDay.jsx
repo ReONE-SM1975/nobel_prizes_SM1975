@@ -30,6 +30,14 @@ export default function TimeOfDay(className) {
         console.log(`hours: `, hour, ` min: `, min, ` Date: `, date);
     }, [min]);
 
+    const MIN_MS = 60000;
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setTheMinutes(t.getMinutes())
+        }, MIN_MS)
+        return () => clearInterval(interval);
+    }, [])
+
     useEffect(() => {
         setRandomGreetingNum(Math.floor(Math.random() * (greetings.length)));
         setGreetingMessage(greetings[randomGreetingNum])
