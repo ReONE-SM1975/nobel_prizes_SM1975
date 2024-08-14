@@ -1,7 +1,7 @@
 import React,{useState, useEffect} from 'react';
 //import Input from './Input';
 
-function ShowTimePlusPlus(className){
+function ShowTimePlusPlus({className}){
     let t = new Date();
     const [theTime, setTheTime] = useState("");
     function showTime(){
