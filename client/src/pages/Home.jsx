@@ -43,7 +43,7 @@ export default function Home() {
         <div>
             <div className="Home">
                 <div className="Home__header">
-                    <Header appTitle="The Nobel Prizes Database" timeOfDay={true} showTime={true}/>
+                    <Header appTitle="The Nobel Prizes Database" timeOfDay={true} showTime={true} randomWinner={true} />
                 </div>
                 <div className="Home__Pannel">
 

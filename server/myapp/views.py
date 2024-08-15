@@ -24,13 +24,16 @@ def hello_world(request):
 
 @api_view(['GET'])
 def get_allPrizes(request):
-    text = ""
+    
     payload = request.body
     if payload:
+        text = []
+        char = "&"
         for key in payload:
-            text += f"{key}={payload[key]}&"
+            text.append(f"{key}={payload[key]}")
         # How do you remove the last "&" ?
-        response = requests.get(f"https://api.nobelprize.org/v1/prize.json?{text}")
+        print(text)
+        response = requests.get(f"https://api.nobelprize.org/v1/prize.json?{char.join(text)}")
     else:
         response = requests.get('https://api.nobelprize.org/v1/prize.json')
     return Response(response.json())
