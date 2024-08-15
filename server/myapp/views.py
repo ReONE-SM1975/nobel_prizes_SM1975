@@ -24,7 +24,15 @@ def hello_world(request):
 
 @api_view(['GET'])
 def get_allPrizes(request):
-    response = requests.get('https://api.nobelprize.org/v1/prize.json')
+    text = ""
+    payload = request.body
+    if payload:
+        for key in payload:
+            text += f"{key}={payload[key]}&"
+        # How do you remove the last "&" ?
+        response = request.get(f"https://api.nobelprize.org/v1/prize.json?{text}")
+    else:
+        response = requests.get('https://api.nobelprize.org/v1/prize.json')
     return Response(response.json())
 
 @api_view(['GET'])
