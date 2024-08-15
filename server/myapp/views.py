@@ -30,7 +30,7 @@ def get_allPrizes(request):
         for key in payload:
             text += f"{key}={payload[key]}&"
         # How do you remove the last "&" ?
-        response = request.get(f"https://api.nobelprize.org/v1/prize.json?{text}")
+        response = requests.get(f"https://api.nobelprize.org/v1/prize.json?{text}")
     else:
         response = requests.get('https://api.nobelprize.org/v1/prize.json')
     return Response(response.json())
