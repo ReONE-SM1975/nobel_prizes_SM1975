@@ -32,7 +32,7 @@ export default function RandomWinner() {
             "year": `${getRandom(1901, new Date().getFullYear() - 1)}`,
             "category": `${categories[getRandom(0, categories.length)]}`,
         })
-        axios.get("http://localhost:8000/api/fullprizes", payload).then(response => {
+        axios.post("http://localhost:8000/api/randomwinner/", payload).then(response => {
             setReturnData(response.data);
             setWinner(response.data.laureates[getRandom(0, response.data.laureates.length)])
         }).catch(error => console.error(error))
