@@ -50,7 +50,8 @@ def get_allCountries(request):
 
 @api_view(['POST'])
 def get_randomWinner(request):
-    payload = request.data
+    payload = request.body
+    print(payload)
     if payload:
         text = []
         char = "&"
