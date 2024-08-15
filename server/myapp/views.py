@@ -54,8 +54,8 @@ def get_randomWinner(request):
     if payload:
         text = []
         char = "&"
-        for key in payload:
+        for key in payload.data:
             text.append(f"{key}={payload[key]}")
         response = requests.get(f"https://api.nobelprize.org/v1/prize.json?{char.join(text)}")
         return Response(response.json())
-    return Response()
+    return Response(Exception)
