@@ -24,18 +24,7 @@ def hello_world(request):
 
 @api_view(['GET'])
 def get_allPrizes(request):
-    
-    payload = request.body
-    if payload:
-        text = []
-        char = "&"
-        for key in payload:
-            text.append(f"{key}={payload[key]}")
-        # How do you remove the last "&" ?
-        print(text)
-        response = requests.get(f"https://api.nobelprize.org/v1/prize.json?{char.join(text)}")
-    else:
-        response = requests.get('https://api.nobelprize.org/v1/prize.json')
+    response = requests.get('https://api.nobelprize.org/v1/prize.json')
     return Response(response.json())
 
 @api_view(['GET'])
@@ -50,13 +39,17 @@ def get_allCountries(request):
 
 @api_view(['POST'])
 def get_randomWinner(request):
-    payload = request.body
-    print(payload)
+    payload = request.data
     if payload:
         text = []
         char = "&"
-        for key in payload.data:
+        for key in payload:
             text.append(f"{key}={payload[key]}")
         response = requests.get(f"https://api.nobelprize.org/v1/prize.json?{char.join(text)}")
         return Response(response.json())
-    return Response(Exception)
+    message = {
+        "message" : "payload is empty",
+        "payload" : str(request.data),
+        "request" : str(request)
+    }
+    return Response(message)
