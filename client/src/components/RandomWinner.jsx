@@ -5,6 +5,7 @@ import axios from "axios";
 
 export default function RandomWinner() {
     const [winner, setWinner] = useState([]);
+    const [prizes, setPrizes] = useState({});
     const [payload, setPayload] = useState({});
     const [returnData, setReturnData] = useState({})
 
@@ -43,6 +44,7 @@ export default function RandomWinner() {
             try {
                 const response = await axios.post("http://localhost:8000/api/randomwinner/", payload);
                 setReturnData(response.data);
+                setPrizes(returnData.prizes);
                 if (response.data.prizes.laureates.length > 1) {
                     setWinner(response.data.prizes.laureates[getRandom(0, response.data.prizes.laureates.length - 1)])
                 } else {
@@ -53,8 +55,9 @@ export default function RandomWinner() {
             }
         };
         fetchData();
-        console.log(returnData)
-        console.log(winner)
+        console.log(prizes ? prizes : undefined)
+        console.log(returnData ? returnData : undefined)
+        console.log(winner ? winner : undefined)
     }, [])
 
 
