@@ -63,7 +63,8 @@ export default function RandomWinner() {
 
     return (
         <>
-            <h4>{`${winner["motivation"]} ${winner["firstname"]} ${winner["surname"] ? winner["surname"] : ""} (${payload["year"]}) in ${payload["category"]}`}</h4>
+            <h4>{returnData && `${winner["motivation"]} `} <span>{returnData && `${winner["firstname"]} ${winner["surname"] ? winner["surname"] : ""}`}</span> {`(${payload["year"]}) in ${payload["category"]}`}</h4>
+
         </>
 
     )
