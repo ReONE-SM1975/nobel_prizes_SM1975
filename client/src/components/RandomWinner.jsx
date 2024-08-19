@@ -37,18 +37,29 @@ export default function RandomWinner() {
             try {
                 const response = await axios.post("http://localhost:8000/api/randomwinner/", payload);
                 setReturnData(response.data)
-                console.log(returnData.prizes[0])
-                setRandomLaureates(returnData.prizes[0].laureates.length > 0 ? getRandom(0, returnData.prizes[0].laureates.length - 1) : -1)
-                setWinner(randomLaureates !== -1 ? returnData.prizes[0].laureates[randomLaureates] : { "id": "N/A", "year": `${payload.year}`, "category": `${payload.category}`, "motivation": "There is no nobel prizes at this category and year", "firstname": "N/A", "laureates": "N/A" })
+                //console.log("returnData.prizes:", returnData.prizes)
+                // setRandomLaureates(returnData.prizes[0].laureates.length > 0 ? getRandom(0, returnData.prizes[0].laureates.length - 1) : -1)
+                // setWinner(randomLaureates !== -1 ? returnData.prizes[0].laureates[randomLaureates] : { "id": "N/A", "year": `${payload.year}`, "category": `${payload.category}`, "motivation": "There is no nobel prizes at this category and year", "firstname": "N/A", "laureates": "N/A" })
             } catch (err) {
                 console.error(err);
             }
         };
         fetchData();
         console.log("payload:", payload)
-        console.log("winner:", winner)
+
         // console.log("returnData:", returnData ? returnData : undefined)
     }, [payload])
+
+    useState(() => {
+        const runUpdate = () => {
+            setRandomLaureates(returnData.prizes[0].laureates.length > 0 ? getRandom(0, returnData.prizes[0].laureates.length - 1) : -1)
+            setWinner(randomLaureates !== -1 ? returnData.prizes[0].laureates[randomLaureates] : { "id": "N/A", "year": `${payload.year}`, "category": `${payload.category}`, "motivation": "There is no nobel prizes at this category and year", "firstname": "N/A", "laureates": "N/A" })
+        }
+        if (returnData) {
+            runUpdate();
+            console.log("winner:", winner)
+        }
+    }, [returnData])
 
     return (
         <>
