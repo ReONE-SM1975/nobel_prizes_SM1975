@@ -5,9 +5,10 @@ import axios from "axios";
 
 export default function RandomWinner() {
     const [winner, setWinner] = useState([]);
-    const [prizes, setPrizes] = useState({});
+    //const [prizes, setPrizes] = useState({});
     const [payload, setPayload] = useState({});
     const [returnData, setReturnData] = useState({})
+    const [randomLaureates, setRandomLaureates] = useState(0)
 
     function getRandom(min, max) {
         if (min > max) {
@@ -43,27 +44,36 @@ export default function RandomWinner() {
         const fetchData = async () => {
             try {
                 const response = await axios.post("http://localhost:8000/api/randomwinner/", payload);
-                setReturnData(response.data);
-                setPrizes(returnData.prizes);
-                if (response.data.prizes.laureates.length > 1) {
-                    setWinner(response.data.prizes.laureates[getRandom(0, response.data.prizes.laureates.length - 1)])
-                } else {
-                    setWinner(response.data.prizes.laureates[0])
-                }
+                setReturnData(response.data) && returnData && setRandomLaureates(response.data.prizes.laureates.length > 0 ? getRandom(0, response.data.prizes.laureates.length - 1) : -1) && setWinner(response.data.laureates[randomLaureates])
+                // IT DOES NOT RUN BEYOND response.data !!!!!!!!!! 
+                // setPrizes(response.data.prizes);
+                // if (response.data.prizes.laureates.length > 0) {
+                //     setWinner(response.data.prizes.laureates[getRandom(0, response.data.prizes.laureates.length - 1)])
+                // } else {
+                //     // setWinner(response.data.prizes.laureates[0])
+                //     setWinner({ "motivation": "There is no nobel prizes at this category and year", "firstname": "N/A" })
+                // }
             } catch (err) {
                 console.error(err);
             }
         };
         fetchData();
-        console.log(prizes ? prizes : undefined)
-        console.log(returnData ? returnData : undefined)
-        console.log(winner ? winner : undefined)
-    }, [])
+        //console.log(prizes ? prizes : undefined)
+        console.log("returnData:", returnData ? returnData : undefined)
+        console.log("winner:", winner ? winner : undefined)
+    }, [payload])
+
+    useEffect(() => {
+        setWinner(winner)
+    }, [returnData])
 
 
     return (
         <>
-            <h4>{returnData && `${winner["motivation"]} `} <span>{returnData && `${winner["firstname"]} ${winner["surname"] ? winner["surname"] : ""}`}</span> {`(${payload["year"]}) in ${payload["category"]}`}</h4>
+            <h4>
+                {returnData && `${returnData.prizes.laureates[getRandom(0, returnData.prizes.laureates.length - 1)]["motivation"]} `}
+                <span>{returnData && `${winner["firstname"]} ${winner["surname"] ? winner["surname"] : ""}`}</span>
+                {`(${payload["year"]}) in ${payload["category"]}`}</h4>
 
         </>
 
