@@ -45,7 +45,8 @@ export default function RandomWinner() {
             }
         };
         fetchData();
-        console.log(payload)
+        console.log("payload:", payload)
+        console.log("winner:", winner)
         // console.log("returnData:", returnData ? returnData : undefined)
     }, [payload])
 
