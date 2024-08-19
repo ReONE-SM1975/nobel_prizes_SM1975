@@ -1,11 +1,46 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, /* useReducer */ } from "react";
 import axios from "axios";
+
+// const ACTION = {
+//     WINNER : 'winner',
+//     PAYLOAD : 'payload',
+//     RETURNDATA: 'returnData',
+//     RANDOMLAUREATES: 'randomLaureates'
+// }
+
+
+// function reducer (state, action) {
+    
+
+//     switch (action.type){
+//         default:
+//             return state;
+//         case ACTION.RETURNDATA:
+//             const fetch = "http://localhost:8000/api/randomwinner/"
+//             const response = await axios.post(fetch, payload)
+//             return { returnData : response }
+//     }
+// }
+
+
 
 export default function RandomWinner() {
     const [winner, setWinner] = useState({});
     const [payload, setPayload] = useState({});
-    const [returnData, setReturnData] = useState({})
-    const [randomLaureates, setRandomLaureates] = useState(0)
+    const [returnData, setReturnData] = useState({});
+    const [randomLaureates, setRandomLaureates] = useState(0);
+
+ /*   const [state, dispatch] = useReducer(reducer, {
+        winner: {},
+        payload: {},
+        returnData: {},
+        randomLaureates: 0,
+        error: null,
+    }) */
+
+/*    function handleUpdates(){
+        dispatch({type: ACTION.RETURNDATA})
+    } */
 
     function getRandom(min, max) {
         if (min > max) {
