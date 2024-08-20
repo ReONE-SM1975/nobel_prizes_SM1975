@@ -10,7 +10,7 @@ import axios from "axios";
 
 
 // function reducer (state, action) {
-    
+
 
 //     switch (action.type){
 //         default:
@@ -25,23 +25,23 @@ import axios from "axios";
 
 
 export default function RandomWinner() {
-    const [prizes, setPrizes] = useState([])
+    //const [prizes, setPrizes] = useState([])
     const [winner, setWinner] = useState({});
     const [payload, setPayload] = useState({});
     const [returnData, setReturnData] = useState({});
-    const [randomLaureates, setRandomLaureates] = useState(0);
+    //const [randomLaureates, setRandomLaureates] = useState(0);
 
- /*   const [state, dispatch] = useReducer(reducer, {
-        winner: {},
-        payload: {},
-        returnData: {},
-        randomLaureates: 0,
-        error: null,
-    }) */
+    /*   const [state, dispatch] = useReducer(reducer, {
+           winner: {},
+           payload: {},
+           returnData: {},
+           randomLaureates: 0,
+           error: null,
+       }) */
 
-/*    function handleUpdates(){
-        dispatch({type: ACTION.RETURNDATA})
-    } */
+    /*    function handleUpdates(){
+            dispatch({type: ACTION.RETURNDATA})
+        } */
 
     function getRandom(min, max) {
         if (min > max) {
@@ -65,62 +65,54 @@ export default function RandomWinner() {
             "year": `${getRandom(1901, new Date().getFullYear() - 1)}`,
             "category": `${categories[getRandom(0, categories.length - 1)]}`,
         })
-        
-    }, [payload])
+
+    }, []);
+
     useEffect(() => {
-        const fetchData = async() => {
+        const fetchData = async () => {
             try {
                 const response = await axios.post("http://localhost:8000/api/randomwinner/", payload)
                 setReturnData(response.data);
-            } catch(err) {console.error(err)}
+            } catch (err) { console.error(err) }
         }
         fetchData();
-        
-    },[payload])
-    // useEffect(() => {
+        console.log("payload:", payload)
+    }, [payload]);
 
-    //     const fetchData = async () => {
-    //         try {
-    //             const response = await axios.post("http://localhost:8000/api/randomwinner/", payload);
-    //             setReturnData(response.data)
-    //             setPrizes(response.data.prizes[0])
-    //             console.log(returnData)
-    //             //console.log("returnData.prizes:", returnData.prizes)
-    //             // setRandomLaureates(returnData.prizes[0].laureates.length > 0 ? getRandom(0, returnData.prizes[0].laureates.length - 1) : -1)
-    //             // setWinner(randomLaureates !== -1 ? returnData.prizes[0].laureates[randomLaureates] : { "id": "N/A", "year": `${payload.year}`, "category": `${payload.category}`, "motivation": "There is no nobel prizes at this category and year", "firstname": "N/A", "laureates": "N/A" })
-    //         } catch (err) {
-    //             console.error(err);
-    //         }
-    //     };
-    //     fetchData();
-    //     console.log("payload:", payload)
-
-    //     // console.log("returnData:", returnData ? returnData : undefined)
-    // }, [payload])
-
-    useState(() => {
-        const runUpdate = (p={"laureates":""}) => {
-        
-                if (p.laureates.length){
-                    setWinner(p.laureates[getRandom(0,p.laureates.length -1)])
-                } else {
-                    setWinner({"year":`${payload.year}`, "category":`${payload.category}`, "motivation":"No Prize at this category in this year", "firstname":"N/A"})
+    useEffect(() => {
+        setWinner((prev) => {
+            if (returnData.prizes) {
+                //const prize = returnData.prizes[0]
+                const { laureates } = returnData.prizes[0]
+                const randomCandidate = getRandom(0, laureates.length - 1);
+                const winnerDetails = laureates[randomCandidate]
+                const winnerSurname = winnerDetails["surname"] ? winnerDetails["surname"] : "";
+                return {
+                    ...prev,
+                    'motivation': winnerDetails["motivation"],
+                    'winner': `${winnerDetails["firstname"]} ${winnerSurname} `
                 }
 
-           
-        }
-        
-        runUpdate(returnData.prizes[0]);
+            } else {
+                return {
+                    ...prev,
+                    "motivation": "Loading...",
+                    "winner": "Loading..."
+                }
+            }
+        })
+        console.log("returnData:", returnData)
+    }, [returnData]);
+
+    useEffect(() => {
         console.log("winner:", winner)
-            
-        
-   }, [returnData,payload])
+    }, [winner])
 
     return (
         <>
             <h4>
                 {winner && `${winner["motivation"]} `}
-                {<span>{winner && `${winner["firstname"]} ${winner["surname"] ? winner["surname"] : ""}`}</span>}
+                {<span>{winner && `${winner["winner"]}`}</span>}
                 {`(${payload["year"]}) in ${payload["category"]}`}</h4>
 
         </>
