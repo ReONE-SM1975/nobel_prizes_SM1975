@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import '../styles/RandomWinner.css';
+import getRandom from '../utils/utils.js';
 
 export default function RandomWinner() {
     const [winner, setWinner] = useState({});
     const [payload, setPayload] = useState({});
     const [returnData, setReturnData] = useState({});
 
-    function getRandom(min, max) {
-        if (min > max) {
-            [min, max] = [max, min];
-        } else if (min === max) {
-            return max;
-        }
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
+    // function getRandom(min, max) {
+    //     if (min > max) {
+    //         [min, max] = [max, min];
+    //     } else if (min === max) {
+    //         return max;
+    //     }
+    //     return Math.floor(Math.random() * (max - min + 1)) + min;
+    // }
 
     useEffect(() => {
         const categories = [
