@@ -2,26 +2,7 @@ import React, { useEffect, useState } from 'react';
 import getRandom from '../utils/utils.js'
 
 export default function TimeOfDay({className}) {
-
-    
-    
-    // const [date, setTheDate] = useState(0)
-    // const [hour, setTheHours] = useState(0)
-    // const [min, setTheMinutes] = useState(0)
-    // const [month, setTheMonth] = useState(0)
-    // const [year, setTheYear] = useState(0)
     const [greetingMessage, setGreetingMessage] = useState({})
-
-    useEffect(() => {
-        //let t = new Date();
-        // setTheDate(t.getDate());
-        // setTheHours(t.getHours());
-        // setTheMinutes(t.getMinutes());
-        // setTheMonth(t.getMonth());
-        // setTheYear(t.getFullYear());
-
-        //console.log(`hours: `, hour, ` min: `, min, ` Date: `, date);
-    }, []);
 
     const MIN_MS = 60000;
     useEffect(() => {
@@ -110,16 +91,13 @@ export default function TimeOfDay({className}) {
         }
         handleGreetingMessage();
         const interval = setInterval(() => {
-            // setTheMinutes(t.getMinutes())
             handleGreetingMessage()
         }, MIN_MS)
         return () => clearInterval(interval);
     }, [])
 
-    
     useEffect(() => {
         console.log("TimeOfDay:",`[${new Date().getTime()}]`,greetingMessage)
-        
 
     }, [greetingMessage]);
 
