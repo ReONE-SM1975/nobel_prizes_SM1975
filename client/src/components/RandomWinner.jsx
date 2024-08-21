@@ -8,15 +8,6 @@ export default function RandomWinner() {
     const [payload, setPayload] = useState({});
     const [returnData, setReturnData] = useState({});
 
-    // function getRandom(min, max) {
-    //     if (min > max) {
-    //         [min, max] = [max, min];
-    //     } else if (min === max) {
-    //         return max;
-    //     }
-    //     return Math.floor(Math.random() * (max - min + 1)) + min;
-    // }
-
     useEffect(() => {
         const categories = [
             "physics",
