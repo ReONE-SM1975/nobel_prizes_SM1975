@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import getRandom from '../utils/utils.js'
 
-export default function TimeOfDay(className) {
+export default function TimeOfDay({className}) {
 
     
     
