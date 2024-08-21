@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import getRandom from '../utils/utils.js'
 
 export default function TimeOfDay(className) {
 
@@ -11,6 +12,7 @@ export default function TimeOfDay(className) {
         "Hi.",
         "Hello.",
         "At your service.",
+        "What are the goosip today?",
     ];
     let t = new Date();
     const [date, setTheDate] = useState(0)
@@ -18,7 +20,6 @@ export default function TimeOfDay(className) {
     const [min, setTheMinutes] = useState(0)
     const [month, setTheMonth] = useState(0)
     const [year, setTheYear] = useState(0)
-    const [randomGreetingNum, setRandomGreetingNum] = useState(0)
     const [greetingMessage, setGreetingMessage] = useState("")
 
     useEffect(() => {
@@ -39,9 +40,13 @@ export default function TimeOfDay(className) {
     }, [])
 
     useEffect(() => {
-        setRandomGreetingNum(Math.floor(Math.random() * (greetings.length)));
-        setGreetingMessage(greetings[randomGreetingNum])
-    }, []);
+
+        setGreetingMessage((prev = "") => {
+            let randomGreetingNum = getRandom(0, greetings.length - 1)
+            return greetings[randomGreetingNum]
+        })
+
+    }, [min]);
 
     const period = [
         "Good night!",
