@@ -1,17 +1,20 @@
 import React from 'react';
-
+import TimeOfDay from './TimeOfDay';
+import ShowTimePlusPlus from './ShowTimePlusPlus';
+import RandomWinner from './RandomWinner';
 import "../styles/Header.css"
 
-export default function Header({appTitle, welcomeText, randomWinner, timeOfDay}){
+export default function Header({ appTitle, showTime, randomWinner, timeOfDay }) {
     return (
         <div className="Header">
             <header className="Header__header">
-                { appTitle && <h1 className="header__title">{ appTitle }</h1>}
-                { welcomeText && <h2 className="header__welcomeText">{ welcomeText}</h2>}
-                { randomWinner && <b><div className="header__randomWinner">{ randomWinner}</div></b>}
-                { timeOfDay && <h3 className="header__timeOfDay"> {timeOfDay} </h3>}
+                {showTime && <ShowTimePlusPlus className="header__showTime" />}
+                {appTitle && <h1 className="header__title">{appTitle}</h1>}
+                {randomWinner && <b><div className="header__randomWinner"><RandomWinner /></div></b>}
+                {timeOfDay && <TimeOfDay className="header__timeOfDay" />}
 
             </header>
+
         </div>
     )
 }

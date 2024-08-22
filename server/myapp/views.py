@@ -36,3 +36,20 @@ def get_allLaureate(request):
 def get_allCountries(request):
     response = requests.get('https://api.nobelprize.org/v1/country.json')
     return Response(response.json())
+
+@api_view(['POST'])
+def get_randomWinner(request):
+    payload = request.data
+    if payload:
+        text = []
+        char = "&"
+        for key in payload:
+            text.append(f"{key}={payload[key]}")
+        response = requests.get(f"https://api.nobelprize.org/v1/prize.json?{char.join(text)}")
+        return Response(response.json())
+    message = {
+        "message" : "payload is empty",
+        "payload" : str(request.data),
+        "request" : str(request)
+    }
+    return Response(message)

@@ -9,12 +9,12 @@ import axios from "axios"
 
 import "../styles/Home.css"
 
-export default function Home(){
+export default function Home() {
     // const [hello, setHello] = useState([{"message":"should have 3 lines included this line"}]);
 
-    const [ myDefault, setMyDefault ] = useState([]);
+    const [myDefault, setMyDefault] = useState([]);
 
-    useEffect(()=>{
+    useEffect(() => {
         // const response = axios.create({baseURL:"http://localhost:8000"})
         // const header = {
         //     'Accept': 'application/json',
@@ -26,27 +26,27 @@ export default function Home(){
             setHello(h => h.concat(response.data))
         }).catch(error => console.error(error))
         */
-    
+
         axios.get("http://localhost:8000/api/fullprizes/")
-        .then(response => {
-            console.log(response.data);
-            setMyDefault(response.data.prizes)
-        })
-        // .then(res => {
-        //     setMyDefault(res.data)
-        //     console.log(myDefault)
-        // })
-        .catch(error => console.error(error))
+            .then(response => {
+                console.log(response.data);
+                setMyDefault(response.data.prizes)
+            })
+            // .then(res => {
+            //     setMyDefault(res.data)
+            //     console.log(myDefault)
+            // })
+            .catch(error => console.error(error))
 
     }, []);
     return (
         <div>
             <div className="Home">
                 <div className="Home__header">
-                    <Header appTitle="The Nobel Prizes Database" />
+                    <Header appTitle="The Nobel Prizes Database" timeOfDay={true} showTime={true} randomWinner={true} />
                 </div>
                 <div className="Home__Pannel">
-                    
+
                     {/* <SideControlBar></SideControlBar>
                     <ShowResults></ShowResults> */}
                     {/* { hello && `${
@@ -54,8 +54,8 @@ export default function Home(){
                             console.log(JSON.stringify(item.message)))
                     }\n`
                         } */}
-                        
-                        <MiddleBodyContent myDefault={myDefault}/>
+
+                    <MiddleBodyContent myDefault={myDefault} />
                 </div>
                 <div className="Home__Footer">
                     <Footer mainText={

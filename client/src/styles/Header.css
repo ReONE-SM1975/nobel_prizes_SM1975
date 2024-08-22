@@ -5,3 +5,9 @@
     justify-content: center;
     
 }
+
+.header__showTime {
+    display: flex;
+    align-items: flex-end;
+    justify-content:flex-end;
+}
