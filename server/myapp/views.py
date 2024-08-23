@@ -53,3 +53,21 @@ def get_randomWinner(request):
         "request" : str(request)
     }
     return Response(message)
+
+@api_view(['POST'])
+def searchofficial(request):
+    message = [
+        "No search data avaliable",
+        "Search subject not found",
+        ""
+    ]
+    payload = request.data
+    if (payload):
+        query_prize = ["year", "yearTo", "category"]
+        query_laureates = ["bornCity","diedCity","bornCountry","diedCountry", "affilation"]
+        query_others = ["firstname", "surname", "keyword"]
+        
+        my_dict = {
+    }
+        
+    
