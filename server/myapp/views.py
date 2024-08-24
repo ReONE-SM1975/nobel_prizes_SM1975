@@ -64,10 +64,11 @@ def searchofficial(request):
     payload = request.data
     if (payload):
         query_prize = ["year", "yearTo", "category"]
-        query_laureates = ["bornCity","diedCity","bornCountry","diedCountry", "affilation"]
+        query_laureates = ["bornCity","diedCity","bornCountry","diedCountry", "affiliation"]
         query_others = ["firstname", "surname", "keyword"]
         
         my_dict = {
-    }
-        
-    
+
+        }
+        return Response({"payload" : str(payload),"keys": str([{str(i):str(payload[i])} for i in payload if i in query_prize] + [{str(j):str(payload[j])} for j in payload if j in query_laureates] + [k for k in payload if k in query_others])})
+    return Response({"message": str(f"payload empty: {message[0]}")})

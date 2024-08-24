@@ -7,5 +7,5 @@ urlpatterns = [
     path("fulllaureate/", views.get_allLaureate, name="all_laureate"),
     path("fullcountriescode/", views.get_allCountries, name="all_countries_code"),
     path("randomwinner/", views.get_randomWinner, name="randomwinner"),
-    path("searchofficial/", views.search_official, name="searchofficial")
+    path("searchofficial/", views.searchofficial, name="searchofficial")
     ]
