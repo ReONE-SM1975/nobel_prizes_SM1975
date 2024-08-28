@@ -114,8 +114,16 @@ export default function SideControlBar() {
 
         // }
     }
-    function handleYearOnChange(obj){
-        setSearchData((prev)=>({...prev,obj}))
+    function handleYearOnChange(obj) {
+        setSearchData((prev) => {
+            const result = { ...prev }
+            for (const key in obj) {
+                if (obj[key]) {
+                    result[key] = obj[key]
+                }
+            }
+            return result
+        })
     }
 
     return (
