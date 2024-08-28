@@ -31,6 +31,7 @@ export default function SearchYearInput({ className, name, id, onChange }) {
                     setIncorrectTyping(true)
                 } else {
                     setResult((prev) => {
+                        setIncorrectTyping(false)
                         if (Number(searchYear) < 1901) {
                             return { ...prev, "year": 1901 }
                         } else if (Number(searchYear) > new Date().getFullYear()) {
@@ -39,7 +40,6 @@ export default function SearchYearInput({ className, name, id, onChange }) {
                             return { ...prev, "year": searchYear }
                         }
                         //writeSearchYear(prev, searchYear, "year");
-                        setIncorrectTyping(false)
                     })
                 }
             } else if (searchYear.length < 9) {
@@ -53,15 +53,21 @@ export default function SearchYearInput({ className, name, id, onChange }) {
                         setResult({ "year": "", "yearTo": "" })
                     } else {
                         setIncorrectTyping(false)
-                        setResult(() => {
+                        setResult((prev) => {
                             let start = Number(searchYear.slice(0, 4))
                             let end = Number(searchYear.slice(5, 9))
+
                             if (start > end) {
                                 [start, end] = [end, start]
                             } else if (start === end) {
                                 end = ""
                             }
+
+
+                            // writeSearchYear(prev, start, "year")
+                            //writeSearchYear(prev, end, "yearTo")
                             return {
+                                ...prev,
                                 "year": start,
                                 "yearTo": end
                             }
@@ -72,7 +78,7 @@ export default function SearchYearInput({ className, name, id, onChange }) {
 
         } else {
             setIncorrectTyping(false)
-            setResult({ "year": "", "yearTo": "" })
+            setResult(prev => ({ ...prev, "year": "", "yearTo": "" }))
         }
         console.log(result)
         onChange(result)
