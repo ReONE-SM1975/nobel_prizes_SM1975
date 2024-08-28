@@ -27,51 +27,74 @@ export default function SearchYearInput({ className, name, id, onChange }) {
         if (searchYear) {
             if (searchYear.length < 4) {
                 setIncorrectTyping(true)
+                setResult({"year":"", "yearTo":""})
             } else if (searchYear.length === 4) {
                 if (isNaN(Number(searchYear))) {
                     setIncorrectTyping(true)
+                    setResult({"year":"", "yearTo":""})
                 } else {
                     setIncorrectTyping(false)
-                    setResult((prev) => {
+                    setResult(() => {
                         if (Number(searchYear) < 1901) {
-                            return { ...prev, "year": 1901 }
+                            return { "year": 1901, "yearTo":"" }
                         } else if (Number(searchYear) > new Date().getFullYear()) {
-                            return { ...prev, "year": new Date().getFullYear() }
+                            return { "year": new Date().getFullYear(), "yearTo":"" }
                         } else {
-                            return { ...prev, "year": Number(searchYear) }
+                            return { "year": Number(searchYear), "yearTo":"" }
                         }
                         //writeSearchYear(prev, searchYear, "year");
                     })
                 }
-            } else if (searchYear.length < 9) {
+            } else if (searchYear.length > 4 && searchYear.length < 9) {
                 setIncorrectTyping(true)
+                setResult((prev) => ({...prev, "yearTo":""}))
             } else if (searchYear.length === 9) {
                 if (searchYear[4] !== "-") {
                     setIncorrectTyping(true)
+                    setResult({"year":"", "yearTo":""})
                 } else {
-                    if (isNaN(Number(searchYear.slice(0, 4))) || isNaN(Number(searchYear.slice(5, 9)))) {
+                    const temp = searchYear.split("-")
+                    if (isNaN(Number(temp[0])) || isNaN(Number(temp[1]))) {
                         setIncorrectTyping(true)
                         setResult({ "year": "", "yearTo": "" })
-                    } else {
+                    } else { // NOR: False && False = True
                         setIncorrectTyping(false)
-                        setResult((prev) => {
-                            let start = Number(searchYear.slice(0, 4))
-                            let end = Number(searchYear.slice(5, 9))
+                        setResult(() => {
+                            let start = Number(temp[0])
+                            let end = Number(temp[1])
+                            if (start < 1901) {
+                                start = 1901;
+                            } else if (start > new Date().getFullYear()){
+                                start = new Date().getFullYear();
+                            } 
+
+                            if (end > new Date().getFullYear()){
+                                end = new Date().getFullYear();
+                            } else if (end < 1901) {
+                                end = 1901;
+                            }
 
                             if (start > end) {
-                                [start, end] = [end, start]
+                                return {
+                                    "year":end, 
+                                    "yearTo":start
+                                }
                             } else if (start === end) {
-                                end = ""
+                                return {
+                                    "year":start,
+                                    "yearTo":""
+                                }
+                            } else {
+                                return {
+                                    "year": start,
+                                    "yearTo": end
+                                }
                             }
 
 
                             // writeSearchYear(prev, start, "year")
                             //writeSearchYear(prev, end, "yearTo")
-                            return {
-                                ...prev,
-                                "year": start,
-                                "yearTo": end
-                            }
+                            
                         })
                     }
                 }
@@ -79,7 +102,7 @@ export default function SearchYearInput({ className, name, id, onChange }) {
 
         } else {
             setIncorrectTyping(false)
-            setResult(prev => ({ ...prev, "year": "", "yearTo": "" }))
+            setResult({ "year": "", "yearTo": "" })
         }
         console.log(result)
         onChange(result)
