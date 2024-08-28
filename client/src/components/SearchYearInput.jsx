@@ -13,7 +13,7 @@ export default function SearchYearInput({ className, name, id, onChange }) {
 
     function writeSearchYear(init, year, key) {
         year = isNaN(Number(year)) ? year : Number(year)
-        if (Number(year) < 1901) {
+        if (Number(year) < 1901 || isNaN(year)) {
             return { ...init, [key]: 1901 }
         } else if (Number(year) > new Date().getFullYear()) {
             return { ...init, [key]: new Date().getFullYear() }
