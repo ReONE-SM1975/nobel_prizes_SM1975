@@ -88,15 +88,20 @@ export default function SearchYearInput({ className, name, id, onChange }) {
         }
     }, [searchYear])
 
-    // const handleOnChangeResult = useCallback(() => {onChange(result)}, [result])
+    // const handleOnChangeResult = (data) => onChange(data)
 
     useEffect(() => {
         console.log(result)
         onChange(result)
+        //handleOnChangeResult(result)
     }, [result])
 
     function handleOnChange(e) {
-        setSearchYear(e.target.value)
+        let inputValue = e.target.value;
+        // if ((/^\d{0,1}-\d{0,1}$/.test(inputValue))){
+            setSearchYear(inputValue);
+
+        // }
         // handleOnChangeResult()
     }
 
