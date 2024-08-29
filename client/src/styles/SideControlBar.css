@@ -33,6 +33,9 @@
     flex-grow: 1;
 }
 
+.SearchTextBar:invalid {
+    border: 3px solid red;
+}
 .SubmitBtn {
     color:green;
 }
