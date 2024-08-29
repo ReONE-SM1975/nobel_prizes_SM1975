@@ -108,7 +108,7 @@ export default function SearchYearInput({ className, name, id, onChange }) {
     return (
         <>
             <Input
-                className={className}
+                className={`${className} ${showHints ? "SearchYearInputInvalid": ""}`}
                 name={name}
                 id={id}
                 pattern={`[0-9]{4}-[0-9]{4}`}
