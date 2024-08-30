@@ -145,12 +145,12 @@ export default function SideControlBar() {
                     <label className="SearchLabel" htmlFor="year">Year:</label>
                     <SearchYearInput className="SearchTextBar" name="year" id="year" onChange={handleYearOnChange} /><br />
                     {/* {attempttedSubmit && searchYear && <p className="SearchYear__Warning">{`Warning: search year required years in the form of YYYY or YYYY-YYYY format`}</p>} */}
-                    <label className="SearchLabel" htmlFor="search_cat">Categories:</label>
+                    <label className="SearchLabel" htmlFor="cat_choice">Category:</label>
                     {/**
                      * category should have a component SearchCatInput.jsx; 
                      * DropDownDataList should be a component on its own that contained all the categories options, or it should be part of SearchCatInput.jsx
                      */}
-                    <SearchCatInput className="SearchTextBar" name="search_cat" id="search_cat" onChange={handleCatOnChange} /><br />
+                    <SearchCatInput className="SearchTextBar" name="cat_choice" list="catList" id="cat_choice" onChange={handleCatOnChange} /><br />
                     <label>Firstname:</label>
                     <Input /><br />
                     <label>Surname:</label>
