@@ -4,6 +4,7 @@ import Input from "../components/Input";
 import Button from "../components/Button";
 import DropDownDataList from "./DropDownDataList";
 import SearchYearInput from "./SearchYearInput";
+import SearchCatInput from "./SearchCatInput";
 
 
 import "../styles/SideControlBar.css";
@@ -126,6 +127,15 @@ export default function SideControlBar() {
             return result
         })
     }
+    function handleCatOnChange(obj) {
+        console.log("searchCatOnChange", obj)
+        setSearchData((prev) => {
+            return {
+                ...prev,
+                "category": obj.category
+            }
+        })
+    }
 
     return (
         <div className="SideControlBar">
@@ -140,7 +150,7 @@ export default function SideControlBar() {
                      * category should have a component SearchCatInput.jsx; 
                      * DropDownDataList should be a component on its own that contained all the categories options, or it should be part of SearchCatInput.jsx
                      */}
-                    <DropDownDataList className="SearchTextBar" list="searchCat" options={categories} name="search_cat" id="search_cat" placeholder="doubleclick avaliable" /><br />
+                    <SearchCatInput className="SearchTextBar" name="search_cat" id="search_cat" onChange={handleCatOnChange} /><br />
                     <label>Firstname:</label>
                     <Input /><br />
                     <label>Surname:</label>

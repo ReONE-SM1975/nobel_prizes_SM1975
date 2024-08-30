@@ -1,10 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Input from './Input';
 import Datalist from './Datalist';
 
 export default function SearchCatInput({ className, id, name, onChange }) {
+    const [showHints, setShowHints] = useState(false);
+    const [searchCat, setSearchCat] = useState("");
+    const [result, setResult] = useState({
+        "category": ""
+    })
+    useEffect(() => {
+        if (searchCat) {
 
-    const CATAGORY = {
+        } else {
+            setShowHints(false)
+            setResult({ "category": "" })
+        }
+    }, [searchCat])
+    const CATEGORY = {
         PHYSICS: "pyhsics",
         CHEMISTRY: "chemistry",
         MEDICINE: "medicine",
@@ -24,41 +36,45 @@ export default function SearchCatInput({ className, id, name, onChange }) {
     const options = [
         {
             "id": "catList1",
-            "item": CATAGORY.PHYSICS
+            "item": CATEGORY.PHYSICS
         },
         {
             "id": "catList2",
-            "item": CATAGORY.CHEMISTRY
+            "item": CATEGORY.CHEMISTRY
         },
         {
             "id": "catList3",
-            "item": CATAGORY.ECONOMICS
+            "item": CATEGORY.ECONOMICS
         },
         {
             "id": "catList4",
-            "item": CATAGORY.LITERATURE
+            "item": CATEGORY.LITERATURE
         },
         {
             "id": "catList5",
-            "item": CATAGORY.PEACE
+            "item": CATEGORY.PEACE
         },
         {
             "id": "catList6",
-            "item": CATAGORY.MEDICINE
+            "item": CATEGORY.MEDICINE
         }
     ]
-
+    function handleOnChange(e) {
+        const inputValue = e.target.value
+        setSearchCat(inputValue)
+    }
 
     return (
         <><Input
             className={`${className}`}
             id={id}
             name={name}
-            // onChange(onChange)
+            onChange={handleOnChange}
             placeholder="double click access list"
             list="catSearchList"
         />
             <Datalist list="catSearchList" options={options} />
+            {showHints ? <p className="Cat_Hints">{`Only use ${options.map(option => option.item).join(" ,")}`}</p> : ""}
         </>
 
     )
