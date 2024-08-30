@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import Input from './Input';
 import '../styles/SearchYearInput.css';
 
@@ -98,23 +98,50 @@ export default function SearchYearInput({ className, name, id, onChange }) {
 
     function handleOnChange(e) {
         let inputValue = e.target.value;
-        // if ((/^\d{0,1}-\d{0,1}$/.test(inputValue))){
-            setSearchYear(inputValue);
-
-        // }
-        // handleOnChangeResult()
+        // const regex = /^(?:\d{4} | \d{4}-\d{4})?$/
+        // setSearchYear(inputValue);
+        setSearchYear(() => {
+            function nanFilter(x, idx) {
+                if (idx === 4) {
+                    if (x === "-") {
+                        return x;
+                    } else {
+                        return "";
+                    }
+                } else if (isNaN(x)) {
+                    return "";
+                } else {
+                    return x;
+                }
+            }
+            let sample = [...inputValue]
+            const result = sample.filter(nanFilter)
+            console.log(result.join(""))
+            return result.join("")
+        })
     }
+    // function handleInput(e) {
+    //     let yearInput = e.target.value;
+    //     const regex = /^(?:\d{4} | \d{4}-\d{4})?$/
+    //     if (regex.test(yearInput)) {
+    //         // setSearchYear(inputValue);
+    //         setSearchYear(yearInput)
+    //         console.log(yearInput);
+    //     }
+    // }
 
     return (
         <>
             <Input
-                className={`${className} ${showHints ? "SearchYearInputInvalid": ""}`}
+                className={`${className} ${showHints ? "SearchYearInputInvalid" : ""}`}
                 name={name}
+                text={searchYear}
                 id={id}
                 pattern={`[0-9]{4}-[0-9]{4}`}
                 placeholder={'YYYY or YYYY-YYYY'}
                 maxLength={"9"}
                 onChange={handleOnChange}
+            // onInput={handleInput}
             /><br />
             {showHints && <p className="SearchYear__Warning">{`Hint: search year required years in the form of YYYY or YYYY-YYYY format`}</p>}
         </>
