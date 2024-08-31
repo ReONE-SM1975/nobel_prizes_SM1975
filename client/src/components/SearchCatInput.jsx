@@ -1,28 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import Input from './Input';
-import Datalist from './Datalist';
 
 export default function SearchCatInput({ className, list, id, name, onChange }) {
-    const [showHints, setShowHints] = useState(true);
+    const [showHints, setShowHints] = useState(false);
     const [searchCat, setSearchCat] = useState("");
     const [result, setResult] = useState({
         "category": ""
     })
-    const [optionList, setOptionList] = useState("")
     const [options, setOptions] = useState([])
     
-    useEffect(() => {
-        if (searchCat) {
-            setResult({"category":searchCat})
-        } else {
-            setShowHints(false)
-            setResult({ "category": "" })
-        }
-    }, [searchCat]);
     
-    useEffect(()=>{
-        onChange(result)
-    },[result]);
     
     useEffect(()=>{
         const CATEGORY = {
@@ -33,7 +20,7 @@ export default function SearchCatInput({ className, list, id, name, onChange }) 
             LITERATURE: "literature",
             PEACE: "peace"
         }
-        const options = [
+        const opts = [
             {
                 "id": "catList1",
                 "item": CATEGORY.PHYSICS
@@ -59,26 +46,42 @@ export default function SearchCatInput({ className, list, id, name, onChange }) 
                 "item": CATEGORY.MEDICINE
             }
         ]
-        setOptions(options)
-        setOptionList(()=>{
-            return options.map(option => option.item).join(", ")
+        setOptions(() => {
+            return opts.map(option => option.item)
         })
+        // setOptionList(()=>{
+        //     return options.map(option => option.item).join(", ")
+        // })
     },[])
 
-    
-    /**
-     * "physics",
-        "chemistry",
-        "medicine",
-        "economics",
-        "literature",
-        "peace"
-     */
+    useEffect(() => {
+        if (searchCat) {
+            setResult(()=> {
+                if (options.includes(searchCat)) {
+                    setShowHints(false)
+                    return {"category":searchCat}
 
+                } else {
+                    setShowHints(true)
+                    return {
+                        "category":""
+                    }
+                }
+            })
+                
+        } else {
+            setShowHints(false)
+            setResult({ "category": "" })
+        }
+    }, [searchCat, options]);
+    
+    useEffect(()=>{
+        onChange(result)
+    },[result]);
     
     function handleOnChange(e) {
-        // const inputValue = e.target.value
-        // setSearchCat(inputValue)
+        const inputValue = e.target.value
+        setSearchCat(inputValue)
     }
 
     return (
@@ -87,13 +90,13 @@ export default function SearchCatInput({ className, list, id, name, onChange }) 
             className={`${className}`}
             id={id}
             name={name}
-            // text={searchCat}
+            text={searchCat}
             onInput={handleOnChange}
             placeholder="double click access list"
             list={list}
-            options={options.map(option => option.item)}
+            options={options}
         />
-        {showHints ? <p className="Cat_Hints">{`Only use one category: `}</p> : null}
+        {showHints && <p className="Cat_Hints">{`Use only one if the following category: ${options.join(", ")}`}</p>}
 
         
             
