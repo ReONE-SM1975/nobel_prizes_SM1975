@@ -150,7 +150,10 @@ export default function SideControlBar() {
                      * category should have a component SearchCatInput.jsx; 
                      * DropDownDataList should be a component on its own that contained all the categories options, or it should be part of SearchCatInput.jsx
                      */}
-                    <SearchCatInput className="SearchTextBar" name="cat_choice" list="catList" id="cat_choice" onChange={handleCatOnChange} /><br />
+                     <SearchCatInput className="SearchTextBar" name="cat_choice" list="catList" id="cat_choice" onChange={handleCatOnChange} /><br />
+                     <label className="SearchLabel" htmlFor="cat_choice1">DropDownDataList:</label>
+                    <DropDownDataList className="SearchTextBar" name="cat_choice1" list="catList1" id="cat_choice1" options={categories} /><br />
+                    
                     <label>Firstname:</label>
                     <Input /><br />
                     <label>Surname:</label>

@@ -2,7 +2,7 @@ import React from "react";
 
 import "../styles/Input.css"
 
-const Input = ({id,text, className, name, type="text", placeholder, pattern, maxLength, onChange, onInput})=> {
+const Input = ({id,text, className, name, type="text", placeholder, pattern, maxLength, onChange, onInput, list, options=[]})=> {
 
     return (
         <>
@@ -15,8 +15,19 @@ const Input = ({id,text, className, name, type="text", placeholder, pattern, max
             pattern = {pattern}
             maxLength = {maxLength}
             onChange= { onChange }
-            onInput = { onInput }>
+            onInput = { onInput }
+            list= {list}>
             </input>
+            <datalist id={list}>
+                {
+                    options.map((option,idx) =>
+                        <option 
+                            key={`${option}${idx}`}
+                            value={`${option}`}>
+                        </option>
+                    )
+                }
+            </datalist>
         </>
     )
 }
