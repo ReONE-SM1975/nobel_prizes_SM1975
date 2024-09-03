@@ -8,10 +8,10 @@ export default function SearchCatInput({ className, list, id, name, onChange }) 
         "category": ""
     })
     const [options, setOptions] = useState([])
-    
-    
-    
-    useEffect(()=>{
+
+
+
+    useEffect(() => {
         const CATEGORY = {
             PHYSICS: "physics",
             CHEMISTRY: "chemistry",
@@ -52,55 +52,72 @@ export default function SearchCatInput({ className, list, id, name, onChange }) 
         // setOptionList(()=>{
         //     return options.map(option => option.item).join(", ")
         // })
-    },[])
+    }, [])
 
     useEffect(() => {
         if (searchCat) {
-            setResult(()=> {
+            setResult(() => {
                 if (options.includes(searchCat)) {
                     setShowHints(false)
-                    return {"category":searchCat}
+                    return { "category": searchCat }
 
                 } else {
                     setShowHints(true)
                     return {
-                        "category":""
+                        "category": ""
                     }
                 }
             })
-                
+
         } else {
             setShowHints(false)
             setResult({ "category": "" })
         }
     }, [searchCat, options]);
-    
-    useEffect(()=>{
+
+    useEffect(() => {
         onChange(result)
-    },[result]);
-    
+    }, [result]);
+
     function handleOnChange(e) {
-        const inputValue = e.target.value
-        setSearchCat(inputValue)
+        const inputValue = e.target.value;
+        const regex = /[^A-Z]/
+        const nonCharFilterFn = (ele) => {
+            if (isNaN(ele)) {
+                if (regex.test(ele)) {
+                    return ele;
+                } else {
+                    return "";
+                }
+            } else {
+                return "";
+            }
+
+        }
+        setSearchCat(() => {
+            const sample = [...inputValue];
+            const result = sample.filter(nonCharFilterFn).join("");
+            return result;
+        })
     }
 
     return (
         <>
-        <Input
-            className={`${className}`}
-            id={id}
-            name={name}
-            text={searchCat}
-            onInput={handleOnChange}
-            placeholder="double click access list"
-            list={list}
-            options={options}
-        />
-        {showHints && <p className="Cat_Hints">{`Use only one if the following category: ${options.join(", ")}`}</p>}
+            <Input
+                className={`${className}`}
+                id={id}
+                name={name}
+                text={searchCat}
+                onInput={handleOnChange}
+                placeholder="double click access list"
+                list={list}
+                options={options}
+            />
+            {showHints && <p className="Cat_Hints">{`Use only one if the following category: ${options.join(", ")}`}</p>}
 
-        
-            
-            
+
+
+
         </>
 
     )
