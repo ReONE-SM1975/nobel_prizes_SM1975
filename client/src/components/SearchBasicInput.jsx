@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Input from './Input';
 
-export default function SearchBasicInput({ className, id, name, onChange, placeholder, allowNumber = true, allowSpace = true, allowChar = true, allowSpecial = true }) {
+export default function SearchBasicInput({ className, id, name, onChange, placeholder }) {
     const [searchInput, setSearchInput] = useState("");
     const [result, setResult] = useState({});
 
