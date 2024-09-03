@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Input from './Input';
+import '../styles/SearchCatInput.css';
 
 export default function SearchCatInput({ className, list, id, name, onChange }) {
     const [showHints, setShowHints] = useState(false);
@@ -81,7 +82,7 @@ export default function SearchCatInput({ className, list, id, name, onChange }) 
 
     function handleOnChange(e) {
         const inputValue = e.target.value;
-        const regex = /[^A-Z]/
+        const regex = /[a-z]/
         const nonCharFilterFn = (ele) => {
             if (isNaN(ele)) {
                 if (regex.test(ele)) {
@@ -113,7 +114,8 @@ export default function SearchCatInput({ className, list, id, name, onChange }) 
                 list={list}
                 options={options}
             />
-            {showHints && <p className="Cat_Hints">{`Use only one if the following category: ${options.join(", ")}`}</p>}
+            {showHints && <div className="Cat_Hints">{`Use only one if the following category:`}</div>}
+            {showHints && <div className="Cat_Options">{`${options.join(", ")}`}</div>}
 
 
 
