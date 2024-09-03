@@ -5,6 +5,7 @@ import Button from "../components/Button";
 import DropDownDataList from "./DropDownDataList";
 import SearchYearInput from "./SearchYearInput";
 import SearchCatInput from "./SearchCatInput";
+import SearchBasicInput from "./SearchBasicInput";
 
 
 import "../styles/SideControlBar.css";
@@ -153,8 +154,8 @@ export default function SideControlBar() {
                      <SearchCatInput className="SearchTextBar" name="cat_choice" list="catList" id="cat_choice" onChange={handleCatOnChange} /><br />
                     
                     
-                    <label>Firstname:</label>
-                    <Input /><br />
+                    <label htmlFor="firstname" className="SearchLabel">Firstname:</label>
+                    <SearchBasicInput id="firstname" name="firstname" className="SearchTextBar" onChange={setSearchData} /><br />
                     <label>Surname:</label>
                     <Input /><br />
                     <label>Country:</label>
