@@ -2,22 +2,11 @@ import React, { useState } from 'react';
 
 import Input from "../components/Input";
 import Button from "../components/Button";
-import DropDownDataList from "./DropDownDataList";
 import SearchYearInput from "./SearchYearInput";
 import SearchCatInput from "./SearchCatInput";
 import SearchBasicInput from "./SearchBasicInput";
 
-
 import "../styles/SideControlBar.css";
-
-const categories = [
-    "physics",
-    "chemistry",
-    "medicine",
-    "economics",
-    "literature",
-    "peace"
-]
 
 export default function SideControlBar() {
     const [searchData, setSearchData] = useState({
@@ -33,89 +22,14 @@ export default function SideControlBar() {
         "idTo": "",
         "keywords": "",
     })
-    const [searchYear, setSearchYear] = useState({});
-    const [searchYearTo, setSearchYearTo] = useState("");
-    const [searchCat, setSearchCat] = useState("");
-    const [searchFirstName, setSearchFirstName] = useState("");
-    const [searchSurname, setSearchSurname] = useState("");
-    const [searchCountry, setSearchCountry] = useState("");
-    const [searchCity, setSearchCity] = useState("");
-    const [searchAffilation, setSearchAffilation] = useState("");
-    const [searchKeyword, setSearchKeyword] = useState("");
-
-    const [searchYearContainer, setSearchYearContainer] = useState([]);
+    
     const [attempttedSubmit, setAttempttedSubmit] = useState(false);
-
-    const handleSearchYear = (e) => {
-        e.preventDefault();
-        // setSearchYear(e.target.value);
-    }
-
-    const handleSearchCat = (e) => {
-        e.preventDefault();
-        // setSearchCat(e.target.value);
-    }
-
-    const handleSearchFirstName = (e) => {
-        e.preventDefault();
-        // setSearchFirstName(e.target.value);
-    }
-
-    const handleSearchSurname = (e) => {
-        e.preventDefault();
-        // setSearchSurname(e.target.value);
-    }
-
-    const handleSearchCountry = (e) => {
-        e.preventDefault();
-        // setSearchCountry(e.target.value);
-    }
-
-    const handleSearchCity = (e) => {
-        // e.preventDefault();
-    }
 
     const handleSubmitSearch = (e) => {
         e.preventDefault();
         console.log(searchData)
-        // if (searchYear) {
-        //     if (searchYear.length < 4) {
-        //         setAttempttedSubmit(true)
-        //     } else if (searchYear.length === 4) {
-        //         if (isNaN(searchYear)) {
-        //             setAttempttedSubmit(true)
-        //         } else {
-        //             /* 
-        //             send search year request to nobel prize
-        //             */
-        //             setAttempttedSubmit(false)
-        //         }
-        //     } else if (searchYear.length < 9) {
-        //         setAttempttedSubmit(true)
-        //     } else if (searchYear.length === 9) {
-        //         if (searchYear[4] !== '-') {
-        //             setAttempttedSubmit(true);
-        //         } else {
-        //             setSearchYearContainer(searchYear.split("-"))
-        //             /**
-        //              * searchYearContainer[0] will be the year where start of range be
-        //              */
-        //             setAttempttedSubmit(false)
-        //             if (isNaN(searchYearContainer[0]) || isNaN(searchYearContainer[1])) {
-        //                 setAttempttedSubmit(true);
-        //             } else {
-        //                 setSearchYearTo(searchYearContainer[1])
-        //                 /**
-        //                  * send search year and yearto request to nobel prize 
-        //                  */
-        //                 setAttempttedSubmit(false)
-
-        //             }
-        //         }
-        //     }
-
-        // }
     }
+
     function handleYearOnChange(obj) {
         console.log(obj)
         setSearchData((prev) => {
@@ -153,19 +67,25 @@ export default function SideControlBar() {
                      */}
                     <SearchCatInput className="SearchTextBar" name="cat_choice" list="catList" id="cat_choice" onChange={handleCatOnChange} /><br />
 
-
                     <label htmlFor="firstname" className="SearchLabel">Firstname:</label>
-                    <SearchBasicInput id="firstname" name="firstname" className="SearchTextBar" onChange={setSearchData} blocktype={['digit', 'uppercase']} /><br />
-                    <label>Surname:</label>
-                    <Input /><br />
+                    <SearchBasicInput id="firstname" name="firstname" className="SearchTextBar" onChange={setSearchData} blocktype={['digit', 'comma']} /><br />
+
+                    <label htmlFor="surname" className="SearchLabel">Surname:</label>
+                    <SearchBasicInput id="surname" name="surname" className="SearchTextBar" onChange={setSearchData}
+                    blocktype={['digit', 'comma']}/><br />
+
                     <label>Country:</label>
                     <Input /><br />
+
                     <label>City:</label>
                     <Input /><br />
+
                     <label>Affiliation:</label>
                     <Input /><br />
+
                     <label>Keyword:</label>
                     <Input /><br />
+                    
                     <Button type="submit" text="Submit" className="SubmitBtn" onClick={handleSubmitSearch} />
                     <Button type="reset" text="Reset" className="ResetBtn" />
                 </form>
