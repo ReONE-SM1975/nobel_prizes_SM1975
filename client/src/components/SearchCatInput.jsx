@@ -84,12 +84,8 @@ export default function SearchCatInput({ className, list, id, name, onChange }) 
         const inputValue = e.target.value;
         const regex = /[a-z]/
         const nonCharFilterFn = (ele) => {
-            if (isNaN(ele)) {
-                if (regex.test(ele)) {
-                    return ele;
-                } else {
-                    return "";
-                }
+            if (regex.test(ele)) {
+                return ele;
             } else {
                 return "";
             }

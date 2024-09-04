@@ -39,12 +39,9 @@ export default function SearchBasicInput({ className, id, name, onChange, placeh
             case "period":
                 return (ele === ".")
             case "uppercase":
-                return (ele.toUpperCase() === ele)
+                return ((/[A-Z]/).test(ele))
             case "lowercase":
-                if ((/[a-z]/).test(ele)) {
-                    return true
-                }
-                return (ele.toLowerCase() === ele)
+                return ((/[a-z]/).test(ele))
             case "others":
                 if (blockspecificinput) {
                     // const allLength = blockspecificinput.map(word => word.length)
