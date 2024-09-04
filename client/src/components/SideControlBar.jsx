@@ -155,7 +155,7 @@ export default function SideControlBar() {
 
 
                     <label htmlFor="firstname" className="SearchLabel">Firstname:</label>
-                    <SearchBasicInput id="firstname" name="firstname" className="SearchTextBar" onChange={setSearchData} blocktype={['digit', 'alphabet']} /><br />
+                    <SearchBasicInput id="firstname" name="firstname" className="SearchTextBar" onChange={setSearchData} blocktype={['digit', 'lowercase']} /><br />
                     <label>Surname:</label>
                     <Input /><br />
                     <label>Country:</label>

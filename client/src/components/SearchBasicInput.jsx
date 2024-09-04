@@ -24,9 +24,12 @@ export default function SearchBasicInput({ className, id, name, onChange, placeh
     function switchFilter(block, ele) {
         switch (block) {
             default:
-                return (ele)
+                return false
             case "digit":
-                return (!isNaN(Number(ele)))
+                if (ele === " ") {
+                    return false
+                }
+                return (!isNaN(ele))
             case "alphabet":
                 return ((/[a-zA-Z]/.test(ele)))
             case "space":
@@ -38,6 +41,9 @@ export default function SearchBasicInput({ className, id, name, onChange, placeh
             case "uppercase":
                 return (ele.toUpperCase() === ele)
             case "lowercase":
+                if ((/[a-z]/).test(ele)) {
+                    return true
+                }
                 return (ele.toLowerCase() === ele)
             case "others":
                 if (blockspecificinput) {
@@ -76,12 +82,12 @@ export default function SearchBasicInput({ className, id, name, onChange, placeh
     const handleOnChange = (e) => {
         const inputValue = e.target.value;
         console.log(`SearchInput_${e.target.name}:`, inputValue)
-        setSearchInput((prev) => {
+        setSearchInput(() => {
             if (blocktype) {
-
+                let result = [...inputValue]
                 for (const block of blocktype) {
                     console.log("block: ", block)
-                    const result = [...inputValue].filter((ele) => {
+                    result = result.filter((ele) => {
                         if (switchFilter(block, ele)) {
                             return "";
                         } else {
@@ -89,9 +95,9 @@ export default function SearchBasicInput({ className, id, name, onChange, placeh
                         }
                     })
                 }
-                return inputValue
+                return result.join("")
             }
-            return `prev:${prev}, inputValue:${inputValue}`;
+            return inputValue;
 
         })
         console.log(searchInput)
