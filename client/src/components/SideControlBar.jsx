@@ -20,9 +20,9 @@ export default function SideControlBar() {
         "affiliation": "",
         "id": "",
         "idTo": "",
-        "keywords": "",
+        "keyword": "",
     })
-    
+
     const [attempttedSubmit, setAttempttedSubmit] = useState(false);
 
     const handleSubmitSearch = (e) => {
@@ -72,20 +72,20 @@ export default function SideControlBar() {
 
                     <label htmlFor="surname" className="SearchLabel">Surname:</label>
                     <SearchBasicInput id="surname" name="surname" className="SearchTextBar" onChange={setSearchData}
-                    blocktype={['digit', 'comma']}/><br />
+                        blocktype={['digit', 'comma']} /><br />
 
-                    <label>Country:</label>
-                    <Input /><br />
+                    <label htmlFor="country" className="SearchLabel">Country:</label>
+                    <SearchBasicInput id="country" name="country" className="SearchTextBar" onChange={setSearchData} blocktype={['digit', 'period']} /><br />
 
-                    <label>City:</label>
-                    <Input /><br />
+                    <label htmlFor="city" className="SearchLabel">City:</label>
+                    <SearchBasicInput id="city" name="city" className="SearchTextBar" onChange={setSearchData} blocktype={['digit', 'period']} /><br />
 
-                    <label>Affiliation:</label>
-                    <Input /><br />
+                    <label htmlFor="affiliation" className="SearchLabel">Affiliation:</label>
+                    <SearchBasicInput id="affiliation" name="affiliation" className="SearchTextBar" onChange={setSearchData} /><br />
 
-                    <label>Keyword:</label>
-                    <Input /><br />
-                    
+                    <label htmlFor="keyword" className="SearchLabel">Keyword:</label>
+                    <SearchBasicInput id="keyword" name="keyword" className="SearchTextBar" onChange={setSearchData} /><br />
+
                     <Button type="submit" text="Submit" className="SubmitBtn" onClick={handleSubmitSearch} />
                     <Button type="reset" text="Reset" className="ResetBtn" />
                 </form>

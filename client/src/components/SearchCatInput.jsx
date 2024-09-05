@@ -10,8 +10,6 @@ export default function SearchCatInput({ className, list, id, name, onChange }) 
     })
     const [options, setOptions] = useState([])
 
-
-
     useEffect(() => {
         const CATEGORY = {
             PHYSICS: "physics",
@@ -50,9 +48,6 @@ export default function SearchCatInput({ className, list, id, name, onChange }) 
         setOptions(() => {
             return opts.map(option => option.item)
         })
-        // setOptionList(()=>{
-        //     return options.map(option => option.item).join(", ")
-        // })
     }, [])
 
     useEffect(() => {
@@ -61,7 +56,6 @@ export default function SearchCatInput({ className, list, id, name, onChange }) 
                 if (options.includes(searchCat)) {
                     setShowHints(false)
                     return { "category": searchCat }
-
                 } else {
                     setShowHints(true)
                     return {
@@ -69,7 +63,6 @@ export default function SearchCatInput({ className, list, id, name, onChange }) 
                     }
                 }
             })
-
         } else {
             setShowHints(false)
             setResult({ "category": "" })
