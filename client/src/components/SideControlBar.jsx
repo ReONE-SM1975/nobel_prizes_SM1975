@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
-import Input from "../components/Input";
+import {ResultContext} from "../context/ResultContext"
+
 import Button from "../components/Button";
 import SearchYearInput from "./SearchYearInput";
 import SearchCatInput from "./SearchCatInput";
@@ -9,6 +10,10 @@ import SearchBasicInput from "./SearchBasicInput";
 import "../styles/SideControlBar.css";
 
 export default function SideControlBar() {
+
+    const { setGetSearchData } = useContext(ResultContext)
+
+
     const [searchData, setSearchData] = useState({
         "year": "",
         "yearTo": "",
@@ -28,6 +33,7 @@ export default function SideControlBar() {
     const handleSubmitSearch = (e) => {
         e.preventDefault();
         console.log(searchData)
+        setGetSearchData(searchData)
     }
 
     function handleYearOnChange(obj) {

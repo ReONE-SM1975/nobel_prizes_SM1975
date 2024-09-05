@@ -1,20 +1,20 @@
 import React from "react";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import MiddleBodyContent from "../components/MiddleBodyContent"
 // import SideControlBar from "../components/SideControlBar";
 // import ShowResults from "../components/ShowResults";
-import axios from "axios"
+// import axios from "axios"
 
 import "../styles/Home.css"
 
 export default function Home() {
     // const [hello, setHello] = useState([{"message":"should have 3 lines included this line"}]);
 
-    const [myDefault, setMyDefault] = useState([]);
+    // const [myDefault, setMyDefault] = useState([]);
 
-    useEffect(() => {
+    // useEffect(() => {
         // const response = axios.create({baseURL:"http://localhost:8000"})
         // const header = {
         //     'Accept': 'application/json',
@@ -27,18 +27,18 @@ export default function Home() {
         }).catch(error => console.error(error))
         */
 
-        axios.get("http://localhost:8000/api/fullprizes/")
-            .then(response => {
-                console.log(response.data);
-                setMyDefault(response.data.prizes)
-            })
+        //axios.get("/api/fullprizes/")
+         //   .then(response => {
+         //       console.log(response.data);
+                // setMyDefault(response.data.prizes)
+          //  })
             // .then(res => {
             //     setMyDefault(res.data)
             //     console.log(myDefault)
             // })
-            .catch(error => console.error(error))
+          //  .catch(error => console.error(error))
 
-    }, []);
+    // }, []);
     return (
         <div>
             <div className="Home">
@@ -55,7 +55,9 @@ export default function Home() {
                     }\n`
                         } */}
 
-                    <MiddleBodyContent myDefault={myDefault} />
+                    <MiddleBodyContent 
+                    // myDefault={myDefault} 
+                    />
                 </div>
                 <div className="Home__Footer">
                     <Footer mainText={

@@ -1,6 +1,8 @@
-import React, {useState,useEffect} from "react";
+import React, {useState,useEffect, useContext} from "react";
 //import axios from "axios"
 import "../styles/ShowResults.css";
+
+import {ResultContext} from "../context/ResultContext"
 
 const resultTexts = (resultNum = 0) => {
     resultNum = isNaN(parseInt(resultNum)) ? 0 : parseInt(resultNum);
@@ -12,13 +14,22 @@ const resultTexts = (resultNum = 0) => {
 }
 
 export default function ShowResults({data=[]}){
-    const [displayData, setDisplayData] = useState(data);
+    const [displayData, setDisplayData] = useState([]);
     const [searchFound, setSearchFound] = useState(0);
     
+    const { getResult } = useContext(ResultContext)
+
+    // useEffect(()=>{
+    //     setDisplayData(data)
+    //     setSearchFound(resultTexts(data.length))
+    // },[data]); 
+
     useEffect(()=>{
-        setDisplayData(data)
-        setSearchFound(resultTexts(data.length))
-    },[data]); 
+        setDisplayData(getResult)
+        setSearchFound(resultTexts(getResult.length))
+    }, [getResult])
+
+
     
     function laureatesDisplay (items) {
         return (

@@ -26,7 +26,7 @@ export default function RandomWinner() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.post("http://localhost:8000/api/randomwinner/", payload)
+                const response = await axios.post("/api/randomwinner/", payload)
                 setReturnData(response.data);
             } catch (err) { console.error(err) }
         }
