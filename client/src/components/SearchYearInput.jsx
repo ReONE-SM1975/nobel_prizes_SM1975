@@ -48,6 +48,8 @@ export default function SearchYearInput({ className, name, id, onChange }) {
                         setResult(() => {
                             let start = Number(temp[0])
                             let end = Number(temp[1])
+                            // temp[0] = ""
+                            // temp[1] = ""
                             if (start < 1901) {
                                 start = 1901;
                             } else if (start > new Date().getFullYear()) {
@@ -79,6 +81,8 @@ export default function SearchYearInput({ className, name, id, onChange }) {
 
                         })
                     }
+                    // temp[0] = "";
+                    // temp[1] = "";
                 }
             }
 
