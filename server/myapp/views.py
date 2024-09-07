@@ -69,6 +69,10 @@ def searchofficial(request):
         my_dict = {}
         text = []
         char = "&"
+        url = "https://api.nobelprize.org/v1/"
+        prizejson = "prize.json"
+        laureatesjson = "laureate.json"
+        countryjson = "country.json"
         for key in payload:
             if key in query_prize:
                 text.append(f"{key}={payload[key]}")
