@@ -64,8 +64,8 @@ def searchofficial(request):
     payload = request.data
     if (payload):
         query_prize = ["year", "yearTo", "category"]
-        query_laureates = ["bornCity","diedCity","bornCountry","diedCountry", "affiliation"]
-        query_others = ["firstname", "surname", "keyword"]
+        query_laureates = ["city","country","affiliation"]
+        query_others = ["firstname", "surname", "keyword", "id", "idTo"]
         my_dict = {}
         text = []
         char = "&"
