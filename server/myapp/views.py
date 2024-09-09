@@ -9,6 +9,30 @@ import requests
 
 
 # Create your views here.
+def writePrizes(year, category, overallmotivation, laureates=[]):
+    return {
+        "prizes": [
+            {
+                "year": str(year),
+                "category": str(category),
+                "overallmotivation": str(overallmotivation),
+                "laureates": list(laureates)
+            }
+        ]
+    }
+
+def writePrizesLaureates(id, firstname, surname, motivation, share):
+    return {
+        "id":str(id),
+        "firstname":str(firstname),
+        "surname":str(surname),
+        "motivation":str(motivation),
+        "share":str(share)
+    }
+
+def destructing(my_dict, *keys):
+    return [my_dict[k] if k in my_dict else None for k in keys]
+    
 
 # @require_http_methods(['GET'])
 @api_view(['GET'])
@@ -129,7 +153,16 @@ def searchofficial(request):
                 return Response(result)
             # elif laureatesquery and not othersquery:
 
-                        
+            # elif laureatesquery and othersquery:
+        
+        # elif not prizesquery:
+            
+            # if not laureatesquery and not othersquery:
+                # return Response({"error": "payload and official page query not matching or no payload matches found"})    
+            
+            # elif not laureatesquery and othersquery:
+            
+            # elif laureatesquery and othersquery:   
                         
                             
                         
