@@ -79,16 +79,22 @@ def searchofficial(request):
         laureatesjson = "laureate.json"
         # countryjson = "country.json"
         for key in payload:
-            
-            prizesquery.append(f"{key}={payload[key]}")
-            # elif key in query_laureates:
-            #     laureatesquery.append(f"{key}={payload[key]}")
-            # elif key in query_others:
-            #     othersquery.append(f"{key}={payload[key]}")
+            if key in query_prize:
+                prizesquery.append(f"{key}={payload[key]}")
+            elif key in query_laureates:
+                laureatesquery.append(f"{key}={payload[key]}")
+            elif key in query_others:
+                othersquery.append({key:payload[key]})
         # if prizesquery and not laureatesquery and not othersquery:
-        response = requests.get(f"{url}{prizesjson}?{char.join(prizesquery)}")
-        data = response.json()
-        return Response(data)
+        if prizesquery:
+            response = requests.get(f"{url}{prizesjson}?{char.join(prizesquery)}")
+            data = response.json()
+            if not laureatesquery and not othersquery:
+                return Response(data)
+            # elif othersquery and not laureatesquery:
+                
+            
+        return Response({"message":"You have provided non prize query search"})
         # elif(prizesquery and laureatesquery and not othersquery):
         #     prizes = data.prizes
         #     for prize in prizes:
