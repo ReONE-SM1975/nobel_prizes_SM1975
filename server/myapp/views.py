@@ -65,7 +65,7 @@ def searchofficial(request):
     if (payload):
         query_prize = ["year", "yearTo", "category"]
         query_laureates = ["city","country","affiliation", "keyword"]
-        query_others = ["firstname", "surname", "id", "idTo"]
+        query_others = ["firstname", "surname","id", "idTo"]
         result = {
             "prizes":[]
         }
@@ -84,14 +84,55 @@ def searchofficial(request):
             elif key in query_laureates:
                 laureatesquery.append(f"{key}={payload[key]}")
             elif key in query_others:
-                othersquery.append({key:payload[key]})
+                othersquery.append(key)
         # if prizesquery and not laureatesquery and not othersquery:
         if prizesquery:
             response = requests.get(f"{url}{prizesjson}?{char.join(prizesquery)}")
             data = response.json()
             if not laureatesquery and not othersquery:
                 return Response(data)
-            # elif othersquery and not laureatesquery:
+            elif othersquery and not laureatesquery:
+                # if 'prizes' in data and 'laureates' in data['prizes']:
+                for ele in data.prizes:
+                    year = ele.year
+                    category = ele.category
+                    if ele.overallmotivation:
+                        overallmotivation = ele.overallmotivation
+                    else:
+                        overallmotivation = ""
+                    if ele.laureates:
+                        for laureate in ele.laureates:
+                            id = laureate.id
+                            firstname = laureate.firstname
+                            if laureate.surname:
+                                surname = laureate.surname
+                            else:
+                                surname = ""
+                            motivation = laureate.motivation
+                            share = laureate.share
+                            for key in othersquery:
+                                if laureate[key] == payload[key]:
+                                    result.prizes.append({
+                                        "year":year,
+                                        "category":category,
+                                        "overallmotivation":overallmotivation,
+                                        "laureates":[
+                                            {
+                                                "id": id,
+                                                "firstname":firstname,
+                                                "surname":surname,
+                                                "motivation":motivation,
+                                                "share":share
+                                                }
+                                        ]
+                                    })
+                return Response(result)
+            # elif laureatesquery and not othersquery:
+
+                        
+                        
+                            
+                        
                 
             
         return Response({"message":"You have provided non prize query search"})
