@@ -187,6 +187,7 @@ def searchofficial(request):
         laureatesjson = "laureate.json"
         
         for key in dict(payload):
+            # bug: empty value should make list empty
             if key in query_prize:
                 prizesquery.append(f"{key}={payload[key]}")
                 
