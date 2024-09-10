@@ -47,6 +47,8 @@ export default function ResultContextProvider({children}) {
                     const {data} = response;
                     if(data?.prizes){
                         return data.prizes
+                    } else if (data?.laureates){
+                        return data.laureates
                     } else {
                         return []
                     }
