@@ -15,9 +15,11 @@ CONS = {
 PRIZES = {
     "CATEGORY":"category",
     "LAUREATES":"laureates",
-    "OVERALLMOTIVATION":"overallmotivation",
+    "MOTIVATION":"motivation",
+    "OVERALLMOTIVATION":"overallMotivation",
     "YEAR":"year",
     "YEARTO":"yearTo",
+    "AFFILIATIONS":"affiliation"
 }
 CATEGORY = {
     "CHEMISTRY": "chemistry",
@@ -28,11 +30,14 @@ CATEGORY = {
     "PHYSICS": "physics",
 }
 LAUREATES = {
-    "AFFILIATION":"affiliation",
+    "AFFILIATIONS":"affiliations",
+    "BORN":"born",
     "BORNCOUNTRY":"bornCountry",
+    "BORNCOUNTRYCODE":"bornCountryCode",
     "BORNCITY": "bornCity",
     "BORNDATE":"bornDate",
     "BORNDATETO":"bornDateTo",
+    "DIED":"died",
     "DIEDCITY":"diedCity",
     "DIEDCOUNTRY":"diedCountry",
     "DIEDCOUNTRYCODE":"diedCountryCode",
@@ -44,26 +49,31 @@ LAUREATES = {
     "MOTIVATION":"motivation",
     "SHARE":"share",
 }
+AFFILIATIONS = {
+    "NAME":"name",
+    "CITY":"city",
+    "COUNTRY":"country",
+}
 OTHERS = {
     "FIRSTNAME":"firstname",
     "SURNAME": "surname",
     "KEYWORD": "keyword",
     "ID":"id",
-    "IDTO":"idTo"
+    "IDTO":"idTo",
 }
 URL = {
     "URL":"https://api.nobelprize.org/v1/",
     "PRIZEJSON":"prize.json",
     "LAUREATEJSON":"laureate.json",
-    "COUNTRYJSON":"country.json"
+    "COUNTRYJSON":"country.json",
 }
 # Create your views here.
 def writePrizes(year, category, overallmotivation, laureates=[]):
     return {
         "year": str(year),
         "category": str(category),
-        "overallmotivation": str(overallmotivation),
-        "laureates": list(laureates)
+        "overallMotivation": str(overallmotivation),
+        "laureates": list(laureates),
     }
 
 def writePrizesLaureates(id, firstname, surname, motivation, share):
@@ -72,7 +82,40 @@ def writePrizesLaureates(id, firstname, surname, motivation, share):
         "firstname":str(firstname),
         "surname":str(surname),
         "motivation":str(motivation),
-        "share":str(share)
+        "share":str(share),
+    }
+
+def writeLaureates(id,firstname,surname,born,died,borncountry,borncountrycode,borncity,diedcountry,diedcountrycode,diedcity,gender,prizes=[]):
+    return {
+        "id":str(id),
+        "firstname":str(firstname),
+        "surname":str(surname),
+        "born":str(born),
+        "died":str(died),
+        "bornCountry":str(borncountry),
+        "bornCountryCode":str(borncountrycode),
+        "bornCity":str(borncity),
+        "diedCountry":str(diedcountry),
+        "diedCountryCode":str(diedcountrycode),
+        "diedCity":str(diedcity),
+        "gender":str(gender),
+        "prizes":list(prizes),
+    }
+
+def writeLaureatesPrizes(year,category,share,motivation,affiliations=[]):
+    return {
+        "year":str(year),
+        "category":str(category),
+        "share":str(share),
+        "motivation":str(motivation),
+        "affiliations":list(affiliations),
+    }
+
+def writeLaureatesPrizesAffiliations(name,city,country):
+    return {
+        "name":str(name),
+        "city":str(city),
+        "country":str(country),
     }
 
 def destructing(my_dict, *keys):
@@ -125,11 +168,6 @@ def get_randomWinner(request):
 
 @api_view(['POST'])
 def searchofficial(request):
-    message = [
-        "No search data avaliable",
-        "Search subject not found",
-        ""
-    ]
     payload = request.data
     if (payload):
         print("payload",payload, dict(payload))
@@ -147,7 +185,7 @@ def searchofficial(request):
         url = "https://api.nobelprize.org/v1/"
         prizesjson = "prize.json"
         laureatesjson = "laureate.json"
-        # countryjson = "country.json"
+        
         for key in dict(payload):
             if key in query_prize:
                 prizesquery.append(f"{key}={payload[key]}")
@@ -161,7 +199,7 @@ def searchofficial(request):
         print("prizesquery:",prizesquery)
         print("laureatesquery:",laureatesquery)
         print("othersquery:",othersquery)
-        # if prizesquery and not laureatesquery and not othersquery:
+        
         if prizesquery:
             response = requests.get(f"{url}{prizesjson}?{char.join(prizesquery)}")
             status = response.status_code
@@ -180,9 +218,9 @@ def searchofficial(request):
                                 year=item["year"]
                                 category=item["category"]
                                 overallmotivation = ""
-                                if "overallmotivation" in itemlist:
-                                    overallmotivation = item["overallmotivation"]
-                                laureates = []
+                                if "overallMotivation" in itemlist:
+                                    overallmotivation = item["overallMotivation"]
+                                #laureates = []
                                 if "laureates" in itemlist and len(item["laureates"]):
                                     for laur in item["laureates"]:
                                         laurlist = laur.keys()
@@ -210,7 +248,7 @@ def searchofficial(request):
                                                 {
                                                     "year":year,
                                                     "category":category,
-                                                    "overallmotivation":overallmotivation,
+                                                    "overallMotivation":overallmotivation,
                                                     "laureates":[temp]
                                                 }
                                             )
@@ -221,68 +259,10 @@ def searchofficial(request):
                 except Exception as e:
                     return Response({
                         "message":"[o]prizes [o]others [x]laureates", 
-                        "error":str(e)
+                        "error":str(e),
+                        "status":status
                         })
                 
-                # if data["prizes"] and data["prizes"][0]["laureates"]:
-                #     prizes = data["prizes"]
-                    
-                #     for prizesIdx,ele in enumerate(prizes):
-                #         elelist = ele.keys()
-                #         print(f"data.prizes[{prizesIdx}]",elelist)
-                #         year = ele["year"]
-                #         category = ele["category"]
-                        
-                #         overallmotivation = ""
-                #         if "overallmotivation" in elelist:
-                #             overallmotivation = ele["overallmotivation"]
-                #         laureates = []
-                #         prizestemp = {
-                #             "year":year,
-                #             "category":category,
-                #             "overallmotivation":overallmotivation,
-                #             "laureates":laureates
-                #         }
-                #         if "laureates" in elelist:
-                #             for count,laureate in enumerate(ele["laureates"]):
-                #                 laureatelist = laureate.keys()
-                #                 print(f"laureates[{count}]",laureatelist)
-                #                 id = laureate["id"]
-                #                 firstname = laureate["firstname"]
-                #                 surname = ""
-                #                 if "surname" in laureatelist:
-                #                     surname = laureate["surname"]
-                #                 motivation = laureate["motivation"]
-                #                 share = laureate["share"]
-                #                 laureatestemp = {
-                #                     "id": id,
-                #                     "firstname":firstname,
-                #                     "surname":surname,
-                #                     "motivation":motivation,
-                #                     "share":share
-                #                 }
-                #                 groups = []
-                #                 for key in othersquery:
-                #                     if laureate[key] == payload[key]:
-                #                         groups.append(laureatestemp)
-                #                 if groups:
-                #                     prizestemp['laureates'] = groups
-                #                     result["prizes"].append(prizestemp) 
-                #         else:
-                #             result["prizes"].append(
-                #                 {
-                #                     "year":year,
-                #                     "category":category,
-                #                     "overallmotivation":overallmotivation,
-                #                     "laureates":laureates
-                #                     }
-                #             )
-                #     return Response(result)
-                # elif not data["prizes"][0]["laureates"]:
-                #     return Response(data)
-                
-                # else:
-                #     return Response({"error":"response incorrect or variable incorrect represented or codes has fault needed to be resorted","status_code":status,"data":data, "payload":payload})
             # elif laureatesquery and not othersquery:
 
             # elif laureatesquery and othersquery:
@@ -295,29 +275,10 @@ def searchofficial(request):
             # elif not laureatesquery and othersquery:
             
             # elif laureatesquery and othersquery:   
-                        
-                            
-                        
-                
-            
-        return Response({"message":"You have provided non prize query search", "status":status, "data":data})
-        # elif(prizesquery and laureatesquery and not othersquery):
-        #     prizes = data.prizes
-        #     for prize in prizes:
-        #         for laureates in prize.laureates:
-        #             if laureates.id:
-        #                 ids_group.append(laureates.id)
-        #     for id in ids_group:
-        #         return
-        # elif laureatesquery and othersquery:
-        #     return
-        
-            
-                
-        # else:
-        #     response = requests.get(f"{url}{laureatesjson}")
 
-        #return Response({"payload" : str(payload),"keys": str([{str(i):str(payload[i])} for i in payload if i in query_prize] + [{str(j):str(payload[j])} for j in payload if j in query_laureates] + [k for k in payload if k in query_others])})
+            
+        return Response({"message":"You have provided non prize query search", "payload":str(request.data),"request":str(request)})
+
     return Response({
                     "message" : "payload has error or empty",
                     "payload" : str(request.data),
