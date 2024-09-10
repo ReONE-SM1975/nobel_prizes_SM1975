@@ -188,13 +188,13 @@ def searchofficial(request):
         
         for key in dict(payload):
             # bug: empty value should make list empty
-            if key in query_prize:
+            if key in query_prize and payload[key]:
                 prizesquery.append(f"{key}={payload[key]}")
                 
-            elif key in query_laureates:
+            elif key in query_laureates and payload[key]:
                 laureatesquery.append(f"{key}={payload[key]}")
                 
-            elif key in query_others:
+            elif key in query_others and payload[key]:
                 othersquery.append(key)
                 
         print("prizesquery:",prizesquery)
