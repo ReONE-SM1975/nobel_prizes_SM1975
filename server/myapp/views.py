@@ -8,7 +8,55 @@ from rest_framework.response import Response
 import requests
 import json
 
-
+CONS = {
+    "LAUREATES":"laureates",
+    "PRIZES":"prizes",
+}
+PRIZES = {
+    "CATEGORY":"category",
+    "LAUREATES":"laureates",
+    "OVERALLMOTIVATION":"overallmotivation",
+    "YEAR":"year",
+    "YEARTO":"yearTo",
+}
+CATEGORY = {
+    "CHEMISTRY": "chemistry",
+    "ECONOMICS": "economics",
+    "LITERATURE": "literature",
+    "MEDICINE": "medicine",
+    "PEACE": "peace",
+    "PHYSICS": "physics",
+}
+LAUREATES = {
+    "AFFILIATION":"affiliation",
+    "BORNCOUNTRY":"bornCountry",
+    "BORNCITY": "bornCity",
+    "BORNDATE":"bornDate",
+    "BORNDATETO":"bornDateTo",
+    "DIEDCITY":"diedCity",
+    "DIEDCOUNTRY":"diedCountry",
+    "DIEDCOUNTRYCODE":"diedCountryCode",
+    "DIEDDATE":"diedDate",
+    "DIEDDATETO":"diedDateTo",
+    "ID" : "id",
+    "KEYWORD":"keyword",
+    "GENDER":"gender",
+    "MOTIVATION":"motivation",
+    "SHARE":"share",
+}
+OTHERS = {
+    "FIRSTNAME":"firstname",
+    "SURNAME": "surname",
+    "KEYWORD": "keyword",
+    "ID":"id",
+    "IDTO":"idTo"
+}
+URL = {
+    "URL":"https://api.nobelprize.org/v1/",
+    "PRIZEJSON":"prize.json",
+    "LAUREATEJSON":"laureate.json",
+    "COUNTRYJSON":"country.json"
+}
 # Create your views here.
 def writePrizes(year, category, overallmotivation, laureates=[]):
     return {
@@ -125,11 +173,15 @@ def searchofficial(request):
                 datalist = data.keys()
                 # laureateslist = data["prizes"][0]["laureates"].keys()
                 print("data keys: ", datalist)
+                # if data["prizes"] and data["prizes"][0]["laureates"]:
+                #if "prizes" in datalist:
                 if data["prizes"] and data["prizes"][0]["laureates"]:
                     prizes = data["prizes"]
+                    prizesIdx = 0
                     for ele in prizes:
                         elelist = ele.keys()
-                        print(elelist)
+                        print(f"data.prizes[{prizesIdx}]",elelist)
+                        prizesIdx += 1
                         year = ele["year"]
                         category = ele["category"]
                         # if ele["overallmotivation"]:
@@ -150,7 +202,7 @@ def searchofficial(request):
                             count = 0
                             for laureate in ele["laureates"]:
                                 laureatelist = laureate.keys()
-                                print(laureatelist)
+                                print(f"laureates[{count}]",laureatelist)
                                 id = laureate["id"]
                                 firstname = laureate["firstname"]
                                 surname = ""
@@ -166,6 +218,7 @@ def searchofficial(request):
                                     "share":share
                                 }
                                 groups = []
+                                count += 1
                                 for key in othersquery:
                                     if laureate[key] == payload[key]:
                                         groups.append(laureatestemp)
@@ -173,7 +226,7 @@ def searchofficial(request):
                                     prizestemp['laureates'] = groups
                                     result["prizes"].append(prizestemp) 
                                     #result["prizes"][0]['laureates'] = groups
-                                    count += 1
+                                    
                                 
                         else:
                             result["prizes"].append(
@@ -189,7 +242,7 @@ def searchofficial(request):
                     return Response(data)
                 
                 else:
-                    return Response({"error":"response incorrect or variable or codes has fault","status_code":status,"data":data})
+                    return Response({"error":"response incorrect or variable incorrect represented or codes has fault needed to be resorted","status_code":status,"data":data, "payload":payload})
             # elif laureatesquery and not othersquery:
 
             # elif laureatesquery and othersquery:
