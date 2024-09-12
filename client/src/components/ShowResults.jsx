@@ -18,6 +18,52 @@ export default function ShowResults() {
         }
         return ["Found ", `${resultNum}`, ` result${single}.`];
     }
+
+    function readKeys(obj = {}, orders = []) {
+        const result = {}
+        if (obj["firstname"] || obj["surname"]) {
+            result["fullname"] = obj["surname"] ? `${obj["firstname"]} ${obj["surname"]}` : obj["firstname"]
+        }
+        const objKeyList = ["fullname"]
+        if (orders) {
+            for (const key of orders) {
+                if (obj[key] instanceof Array || Array.isArray(obj[key]) || Object.prototype.toString.call(obj[key]) === '[object Array]') {
+                    return readKeys(obj[key])
+                } else if (key === "firstname" || key === "surname") {
+                    continue;
+                } else {
+                    if (key) {
+                        result[key] = obj[key]
+                        objKeyList.push(key)
+                    }
+                }
+            }
+        } else {
+            for (const key in obj) {
+                if (obj[key] instanceof Array || Array.isArray(obj[key]) || Object.prototype.toString.call(obj[key]) === '[object Array]') {
+                    return readKeys(obj[key])
+                } else if (key === "firstname" || key === "surname") {
+                    continue;
+                } else {
+                    if (key) {
+                        result[key] = obj[key]
+                        objKeyList.push(key)
+                    }
+                }
+
+            }
+        }
+
+        return (
+            <>
+                {result && objKeyList.map((ele, idx) => (<div key={`${result[ele]}${idx}`}>{`${ele}: ${result[ele]}`}</div>))}
+            </>
+        )
+
+
+
+
+    }
     // useEffect(()=>{
     //     setDisplayData(data)
     //     setSearchFound(resultTexts(data.length))
@@ -110,16 +156,24 @@ export default function ShowResults() {
         } else if (laureates) {
             return (
                 <>
-                    {laureates && laureates.map((laureate, idc) => {
-                        const { id, firstname, surname, born, died, borncountry, borncountrycode, borncity, diedcountry, diedcountrycode, diedcity, gender, prizes } = laureate;
-                        const name = surname ? `${firstname} ${surname}` : `${firstname}`
+                    {laureates && laureates.map((obj, idxc) => {
                         return (
-                            <div key={`lrts-${idc}`}> {/* parent div for laur map*/}
-
+                            <div key={`lrts-${idxc}`}>
+                                {readKeys(obj, [])}
                             </div>
-                        )
 
-                    })}
+                        )
+                    })
+                        // .map((laureate, idc) => {
+                        // const { id, firstname, surname, born, died, borncountry, borncountrycode, borncity, diedcountry, diedcountrycode, diedcity, gender, prizes } = laureate;
+                        // const name = surname ? `${firstname} ${surname}` : `${firstname}`
+                        // return (
+                        //     <div key={`lrts-${idc}`}> {/* parent div for laur map*/}
+
+                        //     </div>
+                        // )
+
+                    }
                 </>
             )
         }
