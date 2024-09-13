@@ -22,7 +22,7 @@ export default function ShowResults() {
     function readKeys(obj = {}, orders = []) {
         const result = {}
         if (obj["firstname"] || obj["surname"]) {
-            result["fullname"] = obj["surname"] ? `${obj["firstname"]} ${obj["surname"]}` : obj["firstname"]
+            result["fullname"] = obj["surname"] ? `${obj["firstname"]} ${obj["surname"]}` : `${obj["firstname"]}`;
         }
         const objKeyList = ["fullname"]
         if (orders) {
