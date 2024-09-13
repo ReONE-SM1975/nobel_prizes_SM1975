@@ -4,12 +4,14 @@ export const CONS = {
 }
 export const PRIZES = {
     "CATEGORY": "category",
+    "FIRSTNAME": "firstname",
+    "SURNAME": "surname",
     "LAUREATES": "laureates",
     "MOTIVATION": "motivation",
     "OVERALLMOTIVATION": "overallMotivation",
     "YEAR": "year",
     "YEARTO": "yearTo",
-    "AFFILIATIONS": "affiliation"
+    "AFFILIATIONS": "affiliation",
 }
 export const CATEGORY = {
     "CHEMISTRY": "chemistry",
@@ -33,11 +35,14 @@ export const LAUREATES = {
     "DIEDCOUNTRYCODE": "diedCountryCode",
     "DIEDDATE": "diedDate",
     "DIEDDATETO": "diedDateTo",
+    "FIRSTNAME":"firstname",
     "ID": "id",
     "KEYWORD": "keyword",
     "GENDER": "gender",
     "MOTIVATION": "motivation",
+    "PRIZES" : "prizes",
     "SHARE": "share",
+    "SURNAME":"surname",
 }
 export const AFFILIATIONS = {
     "NAME": "name",

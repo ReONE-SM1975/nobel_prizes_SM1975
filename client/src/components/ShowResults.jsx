@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 //import axios from "axios"
+import ShowDataRecursive from "../components/ShowDataRecursive";
 import "../styles/ShowResults.css";
+import { CONS, LAUREATES, PRIZES, AFFILIATIONS } from "../constants/constants";
 
 import { ResultContext } from "../context/ResultContext"
 
@@ -9,6 +11,38 @@ export default function ShowResults() {
     const [searchFound, setSearchFound] = useState(0);
 
     const { getResult } = useContext(ResultContext)
+
+    const laureatesOrders = [
+        {[CONS.LAUREATES] : [
+            LAUREATES.ID, 
+            LAUREATES.FIRSTNAME, 
+            LAUREATES.SURNAME, 
+            {[LAUREATES.PRIZES]: [
+                PRIZES.YEAR, 
+                PRIZES.CATEGORY, 
+                PRIZES.MOTIVATION, 
+                {[PRIZES.AFFILIATIONS] :[
+                    AFFILIATIONS.NAME, 
+                    AFFILIATIONS.CITY, 
+                    AFFILIATIONS.COUNTRY]} 
+            ]}
+        ]}
+    ];
+    
+    const prizesOrders = [
+        {[CONS.PRIZES]: [
+            PRIZES.YEAR,
+            PRIZES.CATEGORY,
+            PRIZES.OVERALLMOTIVATION,
+            {[PRIZES.LAUREATES] : [
+                [LAUREATES.ID],
+                [LAUREATES.FIRSTNAME],
+                [LAUREATES.SURNAME],
+                [LAUREATES.MOTIVATION],
+                [LAUREATES.SHARE]
+            ]}
+        ]}
+    ]
 
     const resultTexts = (resultNum = 0) => {
         resultNum = isNaN(parseInt(resultNum)) ? 0 : parseInt(resultNum);
@@ -156,14 +190,15 @@ export default function ShowResults() {
         } else if (laureates) {
             return (
                 <>
-                    {laureates && laureates.map((obj, idxc) => {
-                        return (
-                            <div key={`lrts-${idxc}`}>
-                                {readKeys(obj, [])}
-                            </div>
+                    {laureates && <ShowDataRecursive obj={data} order={laureatesOrders} />}
+                    { //laureates && laureates.map((obj, idxc) => {
+                        // return (
+                        //     <div key={`lrts-${idxc}`}>
+                        //         {readKeys(obj, [])}
+                        //     </div>
 
-                        )
-                    })
+                        // )
+                    //})
                         // .map((laureate, idc) => {
                         // const { id, firstname, surname, born, died, borncountry, borncountrycode, borncity, diedcountry, diedcountrycode, diedcity, gender, prizes } = laureate;
                         // const name = surname ? `${firstname} ${surname}` : `${firstname}`
