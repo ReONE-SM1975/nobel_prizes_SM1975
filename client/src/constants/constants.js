@@ -51,3 +51,9 @@ export const OTHERS = {
     "ID": "id",
     "IDTO": "idTo",
 }
+
+export const SPECIAL = {
+    "FULLNAME": "fullname",
+    "FIRSTNAME": "firstname",
+    "SURNAME": "surname"
+}
