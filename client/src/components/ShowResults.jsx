@@ -31,8 +31,8 @@ export default function ShowResults() {
     
     const prizesOrders = [
         {[CONS.PRIZES]: [
-            PRIZES.YEAR,
             PRIZES.CATEGORY,
+            PRIZES.YEAR,
             PRIZES.OVERALLMOTIVATION,
             {[PRIZES.LAUREATES] : [
                 [LAUREATES.ID],
@@ -157,7 +157,7 @@ export default function ShowResults() {
 
             return (
                 <div>{/* parent div */}
-                    {prizes && prizes.map((prize, idx) => {
+                    {/* prizes && prizes.map((prize, idx) => {
                         return (
                             <div key={`przs-${idx}`}>
                                 <div className="ResultsTable">
@@ -183,7 +183,8 @@ export default function ShowResults() {
 
                         );
                     })
-                    }
+                    */}
+                    {prizes && <ShowDataRecursive obj={data} order={[]} />}
                 </div>
 
             );

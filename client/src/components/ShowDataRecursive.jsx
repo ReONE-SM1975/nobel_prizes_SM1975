@@ -104,7 +104,7 @@ export default function ShowDataRecursive({ obj = {}, order = [], expend = false
     }
     return (
         <>
-            <Button onClick={handleToExpend} text={toExpend ? <div>Expand</div> : <div>Collapse</div>} />
+            <Button onClick={handleToExpend} text={toExpend ? <div>Expand</div> : <div>Collapse</div>} /><br />
             {Object.keys(dataResult).length && toExpend ? <div>{handleRescursion(dataResult, updateOrders)}</div> : null}
         </>
     )
