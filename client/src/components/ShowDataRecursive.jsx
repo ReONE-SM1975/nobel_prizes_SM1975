@@ -32,8 +32,9 @@ export default function ShowDataRecursive({ obj = {}, order = [], expend = false
     useEffect(() => {
 
         setUpdateOrders((prev) => {
+            if (!order) return []
             let fullnameCount = 0;
-            for (const ele in order) {
+            for (const ele of order) {
                 if (ele === SPECIAL.FIRSTNAME) {
                     fullnameCount += 1;
                 } else if (ele === SPECIAL.SURNAME) {
@@ -44,6 +45,7 @@ export default function ShowDataRecursive({ obj = {}, order = [], expend = false
                 fullnameCount = 0;
                 return [SPECIAL.FULLNAME, ...prev]
             }
+            
             return [...prev]
         })
     }, [order])
@@ -57,12 +59,13 @@ export default function ShowDataRecursive({ obj = {}, order = [], expend = false
                             {<div><span>{`${element}`}</span>{` : ${objx[element]}`}</div>}
                         </>
                     )
-                } else if (element instanceof Object) { /** orders are still not matching with objx */
+                } else if (element instanceof Object) { /**  */
                     for (const innerKey in element) {
                         if (Array.isArray(element[innerKey])) {
                             return (
                                 <>
-                                    {<div><span>{`${innerKey} : `}</span>{objx[innerKey].map((objinner, idxe) => <div key={`${innerKey}${idxe}`}><ShowDataRecursive obj={objinner} order={element[innerKey]} /></div>)}</div>}
+                                    {element[innerKey] && 
+                                    <div><span>{`${innerKey} : `}</span>{objx[innerKey].map((objinner, idxe) => <div key={`${innerKey}${idxe}`}><ShowDataRecursive obj={objinner} order={element[innerKey]} /></div>)}</div>}
                                 </>
                             )
                         }
@@ -76,9 +79,19 @@ export default function ShowDataRecursive({ obj = {}, order = [], expend = false
                     if (typeof objx[element] === "string") {
                         return (
                             <>
-                                {<div><span>{`${element}`}</span>{` : ${objx[element]}`}</div>}
+                                {objx[element] && 
+                                <div><span>{`${element} : `}</span>{`${objx[element]}`}</div>}
                             </>
                         )
+                    } else if (Array.isArray(objx[element])){
+                        return (
+                            <>
+                                {objx[element].length &&
+                                <div><span>{`${element} : `}</span>{objx[element].map((objinner, idxf)=> <div key={`${element}${idxf}`}><ShowDataRecursive obj={objinner} order={[]} /></div>)}</div>}
+                            </>
+                        )
+
+                        
                     }
                 }
             }
