@@ -23,7 +23,9 @@ export default function ShowDataRecursive({ obj = {}, order = [], expend = false
                 }
 
             }
-
+            return {
+                ...prev
+            }
         })
     }, [obj])
 
@@ -56,7 +58,7 @@ export default function ShowDataRecursive({ obj = {}, order = [], expend = false
                         </>
                     )
                 } else if (element instanceof Object) { /** orders are still not matching with objx */
-                    for (const innerKey of element) {
+                    for (const innerKey in element) {
                         if (Array.isArray(element[innerKey])) {
                             return (
                                 <>
