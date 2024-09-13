@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { SPECIAL } from "../constants/constants.js"
+import Button from "../components/Button";
+import { SPECIAL } from "../constants/constants.js";
 
 export default function ShowDataRecursive({ obj = {}, order = [], expend = false }) {
     const [dataResult, setDataResult] = useState(obj)
@@ -54,7 +55,7 @@ export default function ShowDataRecursive({ obj = {}, order = [], expend = false
                             {<div><span>{`${element}`}</span>{` : ${objx[element]}`}</div>}
                         </>
                     )
-                } else if (element instanceof Object) {
+                } else if (element instanceof Object) { /** orders are still not matching with objx */
                     for (const innerKey of element) {
                         if (Array.isArray(element[innerKey])) {
                             return (
@@ -67,7 +68,7 @@ export default function ShowDataRecursive({ obj = {}, order = [], expend = false
                     }
                 }
             }
-        } else if (objx) {
+        } else if (objx) { /** case for no orders is given */
             for (const element in objx) {
                 if (objx[element]) {
                     if (typeof objx[element] === "string") {
@@ -80,16 +81,19 @@ export default function ShowDataRecursive({ obj = {}, order = [], expend = false
                 }
             }
         }
-        return (
-            <>
-                {Object.keys(obj).length ? <div></div> : <div></div>}
-            </>
-        )
     }
 
+    function handleToExpend(e) {
+        e.preventDefault();
+        setToExpend(!toExpend)
+    }
     return (
         <>
-            { }
+            <Button onClick={handleToExpend} text={toExpend ? <div>Expand</div> : <div>Collapse</div>} />
+            {Object.keys(dataResult).length && toExpend ? <div>{handleRescursion(dataResult, updateOrders)}</div> : null}
         </>
     )
+
+
+
 }
