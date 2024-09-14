@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import Button from "../components/Button";
 import { SPECIAL } from "../constants/constants.js";
 
-export default function ShowDataRecursive({ obj = {}, order = [], expend = false }) {
+export default function ShowDataRecursive({ obj = {}, order = {}, expend = false, title = "" }) {
     const [dataResult, setDataResult] = useState(obj)
     const [updateOrders, setUpdateOrders] = useState(order)
     const [toExpend, setToExpend] = useState(expend)
+    const [getTitle, setGetTitle] = useState(title)
 
     useEffect(() => {
 
@@ -32,8 +33,20 @@ export default function ShowDataRecursive({ obj = {}, order = [], expend = false
     useEffect(() => {
 
         setUpdateOrders((prev) => {
-            if (!order) return []
+            // if (title){
+            //     const temp = order.title
+            // } else {
+                
+            //     const temp = Object.values(order)
+            // }
+
             let fullnameCount = 0;
+            let temp = order[Object.values(order)[0]]
+            if (Array.isArray(temp) && temp.length){
+                if (temp.includes(SPECIAL.FIRSTNAME) || temp.includes(SPECIAL.SURNAME)){
+
+                }
+            }
             for (const ele of order) {
                 if (ele === SPECIAL.FIRSTNAME) {
                     fullnameCount += 1;
@@ -58,97 +71,7 @@ export default function ShowDataRecursive({ obj = {}, order = [], expend = false
     },[dataResult])
 
     function handleRescursion(objx, order) {
-        for (const key in objx){
-            let title = key;
-            if (objx[key] && order){
-                for (let i=0; i< objx[key].length; i++){
-                    let temp = {};
-                    let innerOrder = []
-                    for (let j=0; j < order.length; j++){
-                        if (order[j] === "string"){
-                            temp[order[j]] = objx[key][i][order[j]]
-                        } else if (order[j] instanceof Object){
-                            for (const innerKey in order[j]){
-                                temp[innerKey] = objx[key][i][innerKey]
-                                innerOrder.concat(order[j][innerKey])
-                            }
-                        }
-                        return (
-                            <div>
-                                <div>
-                                    <div>{`${title} : `}</div>
-                                    {objx[key].length && 
-                                        objx[key].map((eachObj, idxk) => {
-                                            order.forEach((specific, idxg) => {
-                                                {typeof specific === 'string' &&
-                                                    <div key={`${key}-${specific}-${idxg}-${idxk}`}>
-                                                        <span>{specific}</span>{eachObj[specific]}
-                                                    </div>} 
-                                                {specific instanceof Object && 
-                                                    <div key={`${key}-${specific}-${idxg}-${idxk}`}>
-                                                        <ShowDataRecursive obj={{specific: [eachObj]}} order={innerOrder} />
-                                                    </div>} 
-                                                    
-                                                }
-                                        )}
-                                        
-                                        )}
-                                </div>   
-                            </div>
-                        )
-                    } 
-                }
-            }
-        }
-
-
-
-
-        if (objx && order) {
-            for (const element of order) {
-                if (typeof element === "string" && objx[element]) {
-                    return (
-                        <>
-                            {<div><span>{`${element}`}</span>{` : ${objx[element]}`}</div>}
-                        </>
-                    )
-                } else if (element instanceof Object) { /**  */
-                    for (const innerKey in element) {
-                        if (Array.isArray(element[innerKey])) {
-                            return (
-                                <>
-                                    {element[innerKey] && 
-                                    <div><span>{`${innerKey} : `}</span>{objx[innerKey].map((objinner, idxe) => <div key={`${innerKey}${idxe}`}><ShowDataRecursive obj={objinner} order={element[innerKey]} /></div>)}</div>}
-                                </>
-                            )
-                        }
-
-                    }
-                }
-            }
-        } else if (objx) { /** case for no orders is given */
-            for (const element in objx) {
-                if (objx[element]) {
-                    if (typeof objx[element] === "string") {
-                        return (
-                            <>
-                                {objx[element] && 
-                                <div><span>{`${element} : `}</span>{`${objx[element]}`}</div>}
-                            </>
-                        )
-                    } else if (Array.isArray(objx[element])){
-                        return (
-                            <>
-                                {objx[element].length &&
-                                <div><span>{`${element} : `}</span>{objx[element].map((objinner, idxf)=> <div key={`${element}${idxf}`}><ShowDataRecursive obj={objinner} order={[]} /></div>)}</div>}
-                            </>
-                        )
-
-                        
-                    }
-                }
-            }
-        }
+        
     }
 
     function handleToExpend(e) {

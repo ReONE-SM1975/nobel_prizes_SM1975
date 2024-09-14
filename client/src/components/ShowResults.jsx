@@ -12,37 +12,46 @@ export default function ShowResults() {
 
     const { getResult } = useContext(ResultContext)
 
-    const laureatesOrders = [
-        {[CONS.LAUREATES] : [
+    const laureatesOrders = {
+        [CONS.LAUREATES] : [
             LAUREATES.ID, 
             LAUREATES.FIRSTNAME, 
             LAUREATES.SURNAME, 
-            {[LAUREATES.PRIZES]: [
-                PRIZES.YEAR, 
-                PRIZES.CATEGORY, 
-                PRIZES.MOTIVATION, 
-                {[PRIZES.AFFILIATIONS] :[
-                    AFFILIATIONS.NAME, 
-                    AFFILIATIONS.CITY, 
-                    AFFILIATIONS.COUNTRY]} 
-            ]}
-        ]}
-    ];
+            {
+                [LAUREATES.PRIZES]: [
+                    PRIZES.YEAR, 
+                    PRIZES.CATEGORY, 
+                    PRIZES.MOTIVATION, 
+                    {
+                        [PRIZES.AFFILIATIONS] :[
+                            AFFILIATIONS.NAME, 
+                            AFFILIATIONS.CITY, 
+                            AFFILIATIONS.COUNTRY
+                        ]
+                    } 
+                ]
+            }
+        ]
+    }
     
-    const prizesOrders = [
-        {[CONS.PRIZES]: [
+    
+    const prizesOrders = {
+        [CONS.PRIZES]: [
             PRIZES.CATEGORY,
             PRIZES.YEAR,
             PRIZES.OVERALLMOTIVATION,
-            {[PRIZES.LAUREATES] : [
-                [LAUREATES.ID],
-                [LAUREATES.FIRSTNAME],
-                [LAUREATES.SURNAME],
-                [LAUREATES.MOTIVATION],
-                [LAUREATES.SHARE]
-            ]}
-        ]}
-    ]
+            {
+                [PRIZES.LAUREATES] : [
+                    [LAUREATES.ID],
+                    [LAUREATES.FIRSTNAME],
+                    [LAUREATES.SURNAME],
+                    [LAUREATES.MOTIVATION],
+                    [LAUREATES.SHARE]
+                ]
+            }
+        ]
+    }
+    
 
     const resultTexts = (resultNum = 0) => {
         resultNum = isNaN(parseInt(resultNum)) ? 0 : parseInt(resultNum);
@@ -184,14 +193,22 @@ export default function ShowResults() {
                         );
                     })
                     */}
-                    {prizes && <ShowDataRecursive obj={data} order={prizesOrders} />}
+                    {prizes && 
+                    <div className="ResultTable">
+                        <div className="ResultBody"><ShowDataRecursive obj={prizes} order={prizesOrders} title={CONS.PRIZES}/>
+                        </div>
+                    </div>}
                 </div>
 
             );
         } else if (laureates) {
             return (
                 <>
-                    {laureates && <ShowDataRecursive obj={data} order={laureatesOrders} />}
+                    {laureates && 
+                    <div className="ResultTable">
+                        <div className="ResultBody"><ShowDataRecursive obj={laureates} order={laureatesOrders} title={CONS.LAUREATES}/>
+                        </div>
+                    </div>}
                     { //laureates && laureates.map((obj, idxc) => {
                         // return (
                         //     <div key={`lrts-${idxc}`}>
