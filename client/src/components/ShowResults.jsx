@@ -184,7 +184,7 @@ export default function ShowResults() {
                         );
                     })
                     */}
-                    {prizes && <ShowDataRecursive obj={data} order={[]} />}
+                    {prizes && <ShowDataRecursive obj={data} order={prizesOrders} />}
                 </div>
 
             );

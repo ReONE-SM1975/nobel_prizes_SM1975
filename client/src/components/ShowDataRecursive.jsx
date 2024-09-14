@@ -50,7 +50,50 @@ export default function ShowDataRecursive({ obj = {}, order = [], expend = false
         })
     }, [order])
 
+    useEffect(()=>{
+        console.log("ShowDataRecursive updateOrders:",updateOrders)
+    },[updateOrders])
+    useEffect(()=>{
+        console.log("ShowDataRecursive dateResult:",dataResult)
+    },[dataResult])
+
     function handleRescursion(objx, order) {
+        for (const key in objx){
+            if (objx[key] && order){
+                for (let i=0; i< objx[key].length; i++){
+
+                }
+                return (
+                    <div>
+                        {
+                            <div>
+                                <div>{`${key} : `}</div>
+                                {objx[key].length && 
+                                objx[key].map((eachObj, idxk) => {
+                                    order.forEach((specific, idxg) => {
+                                        {typeof specific === 'string' &&
+                                            <div key={`${key}-${specific}-${idxg}`}>
+                                                
+                                            </div>} 
+                                        {specific instanceof Object && 
+                                            <div key={`${key}-${specific}-${idxg}`}>
+                                                <ShowDataRecursive obj={{specific: [eachObj]}} order={specific} />
+                                            </div>} 
+                                            
+                                        }
+                                )}
+                                
+                                )}
+                            </div>
+                        }
+                    </div>
+                )
+            }
+        }
+
+
+
+
         if (objx && order) {
             for (const element of order) {
                 if (typeof element === "string" && objx[element]) {
@@ -104,8 +147,8 @@ export default function ShowDataRecursive({ obj = {}, order = [], expend = false
     }
     return (
         <>
-            <Button onClick={handleToExpend} text={toExpend ? <div>Expand</div> : <div>Collapse</div>} /><br />
             {Object.keys(dataResult).length && toExpend ? <div>{handleRescursion(dataResult, updateOrders)}</div> : null}
+            <Button onClick={handleToExpend} text={toExpend ? <div>Expand</div> : <div>Collapse</div>} /><br />
         </>
     )
 
