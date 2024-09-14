@@ -40,23 +40,18 @@ export default function ShowDataRecursive({ obj = {}, order = {}, expend = false
             //     const temp = Object.values(order)
             // }
 
-            let fullnameCount = 0;
+           
             let temp = order[Object.values(order)[0]]
             if (Array.isArray(temp) && temp.length){
-                if (temp.includes(SPECIAL.FIRSTNAME) || temp.includes(SPECIAL.SURNAME)){
-
+                if (temp.includes(SPECIAL.FIRSTNAME) ){
+                    
+                    if (temp.includes(SPECIAL.SURNAME) ) {
+                        order.splice(order.indexOf(SPECIAL.SURNAME), 0)
+                       // return [SPECIAL.FULLNAME, ...prev]
+                    }
+                    order.splice(order.indexOf(SPECIAL.FIRSTNAME), 0, SPECIAL.FULLNAME)
+                   // return [SPECIAL.FULLNAME, ...prev]
                 }
-            }
-            for (const ele of order) {
-                if (ele === SPECIAL.FIRSTNAME) {
-                    fullnameCount += 1;
-                } else if (ele === SPECIAL.SURNAME) {
-                    fullnameCount += 1;
-                }
-            }
-            if (fullnameCount > 0) {
-                fullnameCount = 0;
-                return [SPECIAL.FULLNAME, ...prev]
             }
             
             return [...prev]
