@@ -59,35 +59,45 @@ export default function ShowDataRecursive({ obj = {}, order = [], expend = false
 
     function handleRescursion(objx, order) {
         for (const key in objx){
+            let title = key;
             if (objx[key] && order){
                 for (let i=0; i< objx[key].length; i++){
-
-                }
-                return (
-                    <div>
-                        {
-                            <div>
-                                <div>{`${key} : `}</div>
-                                {objx[key].length && 
-                                objx[key].map((eachObj, idxk) => {
-                                    order.forEach((specific, idxg) => {
-                                        {typeof specific === 'string' &&
-                                            <div key={`${key}-${specific}-${idxg}`}>
-                                                
-                                            </div>} 
-                                        {specific instanceof Object && 
-                                            <div key={`${key}-${specific}-${idxg}`}>
-                                                <ShowDataRecursive obj={{specific: [eachObj]}} order={specific} />
-                                            </div>} 
-                                            
-                                        }
-                                )}
-                                
-                                )}
-                            </div>
+                    let temp = {};
+                    let innerOrder = []
+                    for (let j=0; j < order.length; j++){
+                        if (order[j] === "string"){
+                            temp[order[j]] = objx[key][i][order[j]]
+                        } else if (order[j] instanceof Object){
+                            for (const innerKey in order[j]){
+                                temp[innerKey] = objx[key][i][innerKey]
+                                innerOrder.concat(order[j][innerKey])
+                            }
                         }
-                    </div>
-                )
+                        return (
+                            <div>
+                                <div>
+                                    <div>{`${title} : `}</div>
+                                    {objx[key].length && 
+                                        objx[key].map((eachObj, idxk) => {
+                                            order.forEach((specific, idxg) => {
+                                                {typeof specific === 'string' &&
+                                                    <div key={`${key}-${specific}-${idxg}-${idxk}`}>
+                                                        <span>{specific}</span>{eachObj[specific]}
+                                                    </div>} 
+                                                {specific instanceof Object && 
+                                                    <div key={`${key}-${specific}-${idxg}-${idxk}`}>
+                                                        <ShowDataRecursive obj={{specific: [eachObj]}} order={innerOrder} />
+                                                    </div>} 
+                                                    
+                                                }
+                                        )}
+                                        
+                                        )}
+                                </div>   
+                            </div>
+                        )
+                    } 
+                }
             }
         }
 
