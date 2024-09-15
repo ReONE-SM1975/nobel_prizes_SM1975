@@ -66,7 +66,8 @@ export default function ShowDataRecursive({ obj = {}, order = {}, expend = false
     },[dataResult])
 
     function handleRescursion(objx, order) {
-        
+        /** objx  = {prizes = [{year, cat,  laureates = [] },{},{}]} */
+        /** order = {prizes = [ year, cat, {laureates : [] } ] } */
     }
 
     function handleToExpend(e) {
