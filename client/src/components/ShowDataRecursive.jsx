@@ -20,12 +20,15 @@ export default function ShowDataRecursive({ obj = {}, order = {}, expend = false
                 for (const innerObject of obj[key]) { // prizes = [ {innerObject} ]
                     let innerList = []
                     if (currentOrders){
+                        // You needed to handle for case if the value is an array
+                        // wrap the key inside an object and pass that key to the recursion component eg: { laureates = [{},{}] } .
+                        // laureates should be came from the next iteration of the recursive component
                         for (const innerObjectKey of currentOrders){
-                            list.push(<li>{obj[key][innerObject][innerObjectKey]}</li>)
+                            list.push(<li>{obj[key][innerObject][innerObjectKey]}</li>) // this is the in ordered list
                         }
                     } else {
                         for (const innerObjectKey in obj[key][innerObject]){
-                            list.push(<li>{obj[key][innerObject][innerObjectKey]}</li>)
+                            list.push(<li>{obj[key][innerObject][innerObjectKey]}</li>) // this is the object oriented ordered list
                         }
                     }
                     
