@@ -3,67 +3,52 @@ import Button from "../components/Button";
 import { SPECIAL } from "../constants/constants.js";
 
 export default function ShowDataRecursive({ obj = {}, order = {}, expend = false, title = "" }) {
-    const [dataResult, setDataResult] = useState(obj)
-    const [updateOrders, setUpdateOrders] = useState(order)
+    const [currentObject, setCurrentObject] = useState({})
+    const [passOnObject, setPassOnObject] = useState({}) // next level object
+    // const [currentTitle, setCurrentTitle] = useState(title) // if one did not like it to be called prizes, laureates or affiliations
+    const [currentOrders, setCurrentOrders] = useState([])
+    const [passOnOrders, setPassOnOrders] = useState({}) // next level object
     const [toExpend, setToExpend] = useState(expend)
     const [getTitle, setGetTitle] = useState(title)
 
     useEffect(() => {
 
-        setDataResult((prev) => {
-            if (obj[SPECIAL.FIRSTNAME]) {
-                if (obj[SPECIAL.SURNAME]) {
-                    return {
-                        ...prev,
-                        [SPECIAL.FULLNAME]: `${obj[SPECIAL.FIRSTNAME]} ${obj[SPECIAL.SURNAME]}`
-                    }
+        setCurrentObject(() => {
+            const list = []
+            //const { prizes, laureates, affiliations, mixtures } = obj;
+            for (const key in obj) {
+                for (const innerKey of obj[key]) {
+                    list.push(<li>{obj[key][innerKey]}</li>)
                 }
-                return {
-                    ...prev,
-                    [SPECIAL.FULLNAME]: `${obj[SPECIAL.FIRSTNAME]}`
-                }
-
+                return (
+                    <div>{key}:{list}</div>
+                )
             }
-            return {
-                ...prev
-            }
-        })
+        }
+        )
     }, [obj])
 
     useEffect(() => {
 
-        setUpdateOrders((prev) => {
-            // if (title){
-            //     const temp = order.title
-            // } else {
-                
-            //     const temp = Object.values(order)
-            // }
+        setCurrentOrders(() => {
+            /**
+             * setCurrentOrders should take an input of 'object orders' that return an array of keys of wanted orders of the immediate object.
+             * This also should handle:-
+             * 1.) [deleted] as inapporiate for this branch
+             * 2.) take the orders given in the object array. If the element of the array is an object, the key of this object should pass this object to the next order
+             */
 
-           
-            let temp = order[Object.values(order)[0]]
-            if (Array.isArray(temp) && temp.length){
-                if (temp.includes(SPECIAL.FIRSTNAME) ){
-                    
-                    if (temp.includes(SPECIAL.SURNAME) ) {
-                        order.splice(order.indexOf(SPECIAL.SURNAME), 0)
-                       // return [SPECIAL.FULLNAME, ...prev]
-                    }
-                    order.splice(order.indexOf(SPECIAL.FIRSTNAME), 0, SPECIAL.FULLNAME)
-                   // return [SPECIAL.FULLNAME, ...prev]
-                }
-            }
-            
-            return [...prev]
+
+
         })
     }, [order])
 
-    useEffect(()=>{
-        console.log("ShowDataRecursive updateOrders:",updateOrders)
-    },[updateOrders])
-    useEffect(()=>{
-        console.log("ShowDataRecursive dateResult:",dataResult)
-    },[dataResult])
+    useEffect(() => {
+        console.log("ShowDataRecursive updateOrders:", currentOrders)
+    }, [currentOrders])
+    useEffect(() => {
+        console.log("ShowDataRecursive dateResult:", currentObject)
+    }, [currentObject])
 
     function handleRescursion(objx, order) {
         /** objx  = {prizes = [{year, cat,  laureates = [] },{},{}]} */
@@ -76,7 +61,7 @@ export default function ShowDataRecursive({ obj = {}, order = {}, expend = false
     }
     return (
         <>
-            {Object.keys(dataResult).length && toExpend ? <div>{handleRescursion(dataResult, updateOrders)}</div> : null}
+            {Object.keys(currentObject).length && toExpend ? <div>{handleRescursion(currentObject, currentOrders)}</div> : null}
             <Button onClick={handleToExpend} text={toExpend ? <div>Expand</div> : <div>Collapse</div>} /><br />
         </>
     )
