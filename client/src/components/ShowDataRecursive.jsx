@@ -21,7 +21,7 @@ export default function ShowDataRecursive({ obj = {}, order = {}, expend = false
                     list.push(<li>{obj[key][innerKey]}</li>)
                 }
                 return (
-                    <div>{key}:{list}</div>
+                    <div><ul>{key}:</ul>{list}</div>
                 )
             }
         }
