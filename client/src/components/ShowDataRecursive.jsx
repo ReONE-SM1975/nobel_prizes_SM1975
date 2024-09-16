@@ -24,6 +24,9 @@ export default function ShowDataRecursive({ obj = {}, order = {}, expend = false
                         // wrap the key inside an object and pass that key to the recursion component eg: { laureates = [{},{}] } .
                         // laureates should be came from the next iteration of the recursive component
                         for (const innerObjectKey of currentOrders){
+                            if (typeof obj[key][innerObject][innerObjectKey] === "object" && !Array.isArray(obj[key][innerObject][innerObjectKey])){
+                               // setup next pass on object, next pass on list and Recursive component 
+                            } else if (typeof obj[key][innerObject][innerObjectKey] === "string")
                             list.push(<li>{obj[key][innerObject][innerObjectKey]}</li>) // this is the in ordered list
                         }
                     } else {
