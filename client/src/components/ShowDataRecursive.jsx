@@ -16,9 +16,19 @@ export default function ShowDataRecursive({ obj = {}, order = {}, expend = false
         setCurrentObject(() => {
             const list = []
             //const { prizes, laureates, affiliations, mixtures } = obj;
-            for (const key in obj) {
-                for (const innerKey of obj[key]) {
-                    list.push(<li>{obj[key][innerKey]}</li>)
+            for (const key in obj) { // key = prizes, laureates, affiliations, mixtures
+                for (const innerObject of obj[key]) { // prizes = [ {innerObject} ]
+                    let innerList = []
+                    if (currentOrders){
+                        for (const innerObjectKey of currentOrders){
+                            list.push(<li>{obj[key][innerObject][innerObjectKey]}</li>)
+                        }
+                    } else {
+                        for (const innerObjectKey in obj[key][innerObject]){
+                            list.push(<li>{obj[key][innerObject][innerObjectKey]}</li>)
+                        }
+                    }
+                    
                 }
                 return (
                     <div><ul>{key}:</ul>{list}</div>
