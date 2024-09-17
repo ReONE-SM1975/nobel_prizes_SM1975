@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Button from "../components/Button";
-import { SPECIAL } from "../constants/constants.js";
+// import { SPECIAL } from "../constants/constants.js";
+import { isObject } from "../utils/utils.js"
 
 export default function ShowDataRecursive({ obj = {}, order = {}, expend = false, title = "" }) {
     const [currentObject, setCurrentObject] = useState({})
@@ -8,41 +9,38 @@ export default function ShowDataRecursive({ obj = {}, order = {}, expend = false
     // const [currentTitle, setCurrentTitle] = useState(title) // if one did not like it to be called prizes, laureates or affiliations
     const [currentOrders, setCurrentOrders] = useState([])
     const [passOnOrders, setPassOnOrders] = useState({}) // next level object
+    const [currentTitle, setCurrentTitle] = useState(title) // Only can rewrite the top level nest name
     const [toExpend, setToExpend] = useState(expend)
-    const [getTitle, setGetTitle] = useState(title)
+
 
     useEffect(() => {
 
         setCurrentObject(() => {
-            const list = []
-            //const { prizes, laureates, affiliations, mixtures } = obj;
-            for (const key in obj) { // key = prizes, laureates, affiliations, mixtures
-                for (const innerObject of obj[key]) { // prizes = [ {innerObject} ]
-                    let innerList = []
-                    if (currentOrders){
-                        // You needed to handle for case if the value is an array
-                        // wrap the key inside an object and pass that key to the recursion component eg: { laureates = [{},{}] } .
-                        // laureates should be came from the next iteration of the recursive component
-                        for (const innerObjectKey of currentOrders){
-                            if (typeof obj[key][innerObject][innerObjectKey] === "object" && !Array.isArray(obj[key][innerObject][innerObjectKey])){
-                               // setup next pass on object, next pass on list and Recursive component 
-                            } else if (typeof obj[key][innerObject][innerObjectKey] === "string")
-                            list.push(<li>{obj[key][innerObject][innerObjectKey]}</li>) // this is the in ordered list
-                        }
-                    } else {
-                        for (const innerObjectKey in obj[key][innerObject]){
-                            list.push(<li>{obj[key][innerObject][innerObjectKey]}</li>) // this is the object oriented ordered list
+            for (const currentKey in obj) { /** obj = {"prizes" : [] }*/
+                for (const arr of obj[currentKey]) { /** obj[prizes] = [ {}, {} ] */
+                    for (const item in obj[currentKey][arr]) { /** obj[prizes][item] */
+                        if (Array.isArray(obj[currentKey][arr][item])) {
+                            setPassOnObject(() => {
+                                const result = {}
+                                result[item] = obj[currentKey][arr][item]
+                                return result;
+                            })
                         }
                     }
-                    
                 }
-                return (
-                    <div><ul>{key}:</ul>{list}</div>
-                )
             }
+            return obj
+        })
+        /** handle title */
+        if (!currentTitle) {
+            const temp = Object.keys(obj)
+            if (temp.length > 1) {
+                console.error("ShowDataRecursive: Title expected object should only have one key")
+            }
+            setCurrentTitle(temp[0]) /** Despite error still try to get curretnt title out of the first object key it encounter */
         }
-        )
-    }, [obj])
+
+    }, [obj, currentTitle])
 
     useEffect(() => {
 
@@ -53,8 +51,14 @@ export default function ShowDataRecursive({ obj = {}, order = {}, expend = false
              * 1.) [deleted] as inapporiate for this branch
              * 2.) take the orders given in the object array. If the element of the array is an object, the key of this object should pass this object to the next order
              */
-
-
+            for (const currentKey in order) {
+                for (const arr of order[currentKey]) {
+                    if (isObject(order[currentKey][arr])) {
+                        setPassOnOrders(order[currentKey][arr])
+                    }
+                }
+            }
+            return order
 
         })
     }, [order])
@@ -66,9 +70,19 @@ export default function ShowDataRecursive({ obj = {}, order = {}, expend = false
         console.log("ShowDataRecursive dateResult:", currentObject)
     }, [currentObject])
 
+    useEffect(() => {
+
+    })
+
     function handleRescursion(objx, order) {
         /** objx  = {prizes = [{year, cat,  laureates = [] },{},{}]} */
         /** order = {prizes = [ year, cat, {laureates : [] } ] } */
+        /** Get objx keys and it's length can only be 1 */
+        return (
+            <>
+
+            </>
+        )
     }
 
     function handleToExpend(e) {
@@ -77,8 +91,43 @@ export default function ShowDataRecursive({ obj = {}, order = {}, expend = false
     }
     return (
         <>
-            {Object.keys(currentObject).length && toExpend ? <div>{handleRescursion(currentObject, currentOrders)}</div> : null}
-            <Button onClick={handleToExpend} text={toExpend ? <div>Expand</div> : <div>Collapse</div>} /><br />
+            <ul>
+                <span>{currentTitle}{" : "}</span><br />
+                <Button onClick={handleToExpend} text={toExpend ? <div>Expand</div> : <div>Collapse</div>} /><br />
+                {toExpend && currentObject.currentTitle && currentObject.currentTitle.map((items, index) => {
+                    if (currentOrders) {
+                        items.map((key, idx) => {
+                            if (typeof key === "string") {
+                                return (
+
+                                    <li key={`${key}-${idx}`}><div><span>{key}{" : "}</span>{currentObject.currentTitle.key}</div></li>
+
+
+                                )
+
+                            } else if (isObject(key)) {
+                                return (
+
+                                    <li key={`${key}-${idx}`}>
+                                        <div>
+                                            <ShowDataRecursive
+                                                objx={passOnObject}
+                                                order={passOnOrders} />
+
+                                        </div>
+                                    </li>
+
+                                )
+                            }
+                        })
+                    } if (passOnOrders) {
+
+                    }
+                })}
+            </ul>
+            {/* {Object.keys(currentObject).length && toExpend ? <div>{handleRescursion(currentObject, currentOrders)}</div> : null} */}
+
+
         </>
     )
 
