@@ -118,11 +118,13 @@ export default function ShowDataRecursive({ obj = {}, order = {}, expend = false
                                     </li>
 
                                 )
-                            }
+                            } 
+                            return null
                         })
-                    } if (passOnOrders) {
+                    } else if (!currentOrders) {
 
                     }
+                    return null
                 })}
             </ul>
             {/* {Object.keys(currentObject).length && toExpend ? <div>{handleRescursion(currentObject, currentOrders)}</div> : null} */}
