@@ -97,15 +97,15 @@ export default function ShowDataRecursive({ obj = {}, order = {}, expend = false
                 {toExpend && currentObject.currentTitle && currentObject.currentTitle.map((item, index) => {
                     if (currentOrders) {
                         currentOrders.map((key, idx) => {
-                            if (typeof item[key] === "string") {
+                            if (item[key] && typeof item[key] === "string") {
                                 return (
 
                                     <li key={`${key}-${index}-${idx}`}><div><span>{`[${index + 1}][${idx + 1}] ${key} : `}</span>{item[key]}</div></li>
-
+                                    
 
                                 )
 
-                            } else if (isObject(item[key])) {
+                            } else if (item[key] && isObject(item[key])) {
                                 return (
 
                                     <li key={`${key}-${index}-${idx}`}>
