@@ -1,4 +1,4 @@
-export function getRandom(min, max) {
+export default function getRandom(min, max) {
     if (min > max) {
         [min, max] = [max, min];
     } else if (min === max) {
@@ -10,3 +10,4 @@ export function getRandom(min, max) {
 export function isObject(obj) {
     return (typeof obj === "object" && !Array.isArray(obj) && obj !== null)
 }
+
