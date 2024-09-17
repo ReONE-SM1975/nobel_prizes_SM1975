@@ -94,25 +94,26 @@ export default function ShowDataRecursive({ obj = {}, order = {}, expend = false
             <ul>
                 <span>{currentTitle}{" : "}</span><br />
                 <Button onClick={handleToExpend} text={toExpend ? <div>Expand</div> : <div>Collapse</div>} /><br />
-                {toExpend && currentObject.currentTitle && currentObject.currentTitle.map((items, index) => {
+                {toExpend && currentObject.currentTitle && currentObject.currentTitle.map((item, index) => {
                     if (currentOrders) {
-                        items.map((key, idx) => {
-                            if (typeof key === "string") {
+                        currentOrders.map((key, idx) => {
+                            if (typeof item[key] === "string") {
                                 return (
 
-                                    <li key={`${key}-${idx}`}><div><span>{key}{" : "}</span>{currentObject.currentTitle.key}</div></li>
+                                    <li key={`${key}-${index}-${idx}`}><div><span>{`[${index + 1}][${idx + 1}] ${key} : `}</span>{item[key]}</div></li>
 
 
                                 )
 
-                            } else if (isObject(key)) {
+                            } else if (isObject(item[key])) {
                                 return (
 
-                                    <li key={`${key}-${idx}`}>
-                                        <div>
+                                    <li key={`${key}-${index}-${idx}`}>
+                                        <div><span>{`[${index + 1}][${idx + 1}] `}</span>
                                             <ShowDataRecursive
                                                 objx={passOnObject}
-                                                order={passOnOrders} />
+                                                order={passOnOrders}
+                                                title={key} />
 
                                         </div>
                                     </li>
