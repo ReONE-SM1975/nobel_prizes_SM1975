@@ -16,9 +16,12 @@ export default function ShowDataRecursive({ obj = {}, order = {}, expand = false
     useEffect(() => {
 
         setCurrentObject(() => {
+            const currentResult = {};
+            
             for (const currentKey in obj) { /** obj = {"prizes" : [] }*/
                 for (const arr of obj[currentKey]) { /** obj[prizes] = [ {}, {} ] */
                     for (const item in obj[currentKey][arr]) { /** obj[prizes][item] */
+                        currentResult[currentKey] = obj[currentKey]
                         if (Array.isArray(obj[currentKey][arr][item])) {
                             setPassOnObject(() => {
                                 const result = {}
@@ -29,7 +32,8 @@ export default function ShowDataRecursive({ obj = {}, order = {}, expand = false
                     }
                 }
             }
-            return obj
+            console.log("currentResult",currentResult)
+            return currentResult
         })
         /** handle title */
         setCurrentTitle((prev)=>{
@@ -124,7 +128,7 @@ export default function ShowDataRecursive({ obj = {}, order = {}, expand = false
                                             <ShowDataRecursive
                                                 objx={passOnObject}
                                                 order={passOnOrders}
-                                                title={key} />
+                                                 />
                                         </div>
                                     </li>
                                 )
