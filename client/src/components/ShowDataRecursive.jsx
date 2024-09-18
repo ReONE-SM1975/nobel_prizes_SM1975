@@ -16,24 +16,30 @@ export default function ShowDataRecursive({ obj = {}, order = {}, expand = false
     useEffect(() => {
 
         setCurrentObject(() => {
-            const currentResult = {};
+            const result = {};
             
             for (const currentKey in obj) { /** obj = {"prizes" : [] }*/
-                for (const arr of obj[currentKey]) { /** obj[prizes] = [ {}, {} ] */
-                    for (const item in obj[currentKey][arr]) { /** obj[prizes][item] */
-                        currentResult[currentKey] = obj[currentKey]
-                        if (Array.isArray(obj[currentKey][arr][item])) {
-                            setPassOnObject(() => {
-                                const result = {}
-                                result[item] = obj[currentKey][arr][item]
-                                return result;
-                            })
+                if (Array.isArray(obj[currentKey])){
+                    for (const item of obj[currentKey]) { /** obj[prizes] = [ {}, {} ] */
+                        if(isObject(obj[currentKey][item])){
+                            for (const itemKey of obj[currentKey][item]){
+                                if (Array.isArray(obj[currentKey][item][itemKey])){
+                                    setPassOnObject(()=>{
+                                        const result = {};
+                                        result[itemKey] = obj[currentKey][item][itemKey]
+                                        return result
+                                    })
+                                    result[itemKey] = {}
+                                } else {
+                                    result[itemKey] = obj[currentKey][item][itemKey]
+                                }
+                            }
                         }
-                    }
+                    }    
                 }
             }
-            console.log("currentResult",currentResult)
-            return currentResult
+            console.log("ShowDataRecursive currentObject",result)
+            return result
         })
         /** handle title */
         setCurrentTitle((prev)=>{
