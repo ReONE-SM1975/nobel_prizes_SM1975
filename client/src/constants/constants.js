@@ -1,18 +1,36 @@
-export const CONS = {
-    "LAUREATES": "laureates",
+export const PARENTSCONS = {
     "PRIZES": "prizes",
+    "LAUREATES" : "laureates",
+    "AFFILIATIONS" : "affiliations",
 }
-export const PRIZES = {
+
+export const CHILDCONS = {
+    "BORN": "born",
+    "BORNCOUNTRY": "bornCountry",
+    "BORNCOUNTRYCODE": "bornCountryCode",
+    "BORNCITY": "bornCity",
+    "BORNDATE": "bornDate",
+    "BORNDATETO": "bornDateTo",
     "CATEGORY": "category",
-    "FIRSTNAME": "firstname",
-    "SURNAME": "surname",
-    "LAUREATES": "laureates",
+    "CITY": "city",
+    "COUNTRY": "country",
+    "DIED": "died",
+    "DIEDCITY": "diedCity",
+    "DIEDCOUNTRY": "diedCountry",
+    "DIEDCOUNTRYCODE": "diedCountryCode",
+    "DIEDDATE": "diedDate",
+    "DIEDDATETO": "diedDateTo",
+    "GENDER": "gender",
+    "ID": "id",
+    "KEYWORD": "keyword",
     "MOTIVATION": "motivation",
+    "NAME": "name",
     "OVERALLMOTIVATION": "overallMotivation",
+    "SHARE": "share",
     "YEAR": "year",
     "YEARTO": "yearTo",
-    "AFFILIATIONS": "affiliation",
 }
+
 export const CATEGORY = {
     "CHEMISTRY": "chemistry",
     "ECONOMICS": "economics",
@@ -21,44 +39,10 @@ export const CATEGORY = {
     "PEACE": "peace",
     "PHYSICS": "physics",
 }
-export const LAUREATES = {
-    "AFFILIATIONS": "affiliations",
-    "BORN": "born",
-    "BORNCOUNTRY": "bornCountry",
-    "BORNCOUNTRYCODE": "bornCountryCode",
-    "BORNCITY": "bornCity",
-    "BORNDATE": "bornDate",
-    "BORNDATETO": "bornDateTo",
-    "DIED": "died",
-    "DIEDCITY": "diedCity",
-    "DIEDCOUNTRY": "diedCountry",
-    "DIEDCOUNTRYCODE": "diedCountryCode",
-    "DIEDDATE": "diedDate",
-    "DIEDDATETO": "diedDateTo",
-    "FIRSTNAME":"firstname",
-    "ID": "id",
-    "KEYWORD": "keyword",
-    "GENDER": "gender",
-    "MOTIVATION": "motivation",
-    "PRIZES" : "prizes",
-    "SHARE": "share",
-    "SURNAME":"surname",
-}
-export const AFFILIATIONS = {
-    "NAME": "name",
-    "CITY": "city",
-    "COUNTRY": "country",
-}
-export const OTHERS = {
-    "FIRSTNAME": "firstname",
-    "SURNAME": "surname",
-    "KEYWORD": "keyword",
-    "ID": "id",
-    "IDTO": "idTo",
-}
 
 export const SPECIAL = {
     "FULLNAME": "fullname",
-    "FIRSTNAME": "firstname",
-    "SURNAME": "surname"
+    "KEYWORD": "keyword",
+    "FIRSTNAME" : "firstname",
+    "SURNAME" : "surname",
 }

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 //import axios from "axios"
 import ShowDataRecursive from "../components/ShowDataRecursive";
 import "../styles/ShowResults.css";
-import { CONS, LAUREATES, PRIZES, AFFILIATIONS } from "../constants/constants";
+import { PARENTSCONS, CHILDCONS, SPECIAL } from "../constants/constants";
 
 import { ResultContext } from "../context/ResultContext"
 
@@ -12,22 +12,16 @@ export default function ShowResults() {
 
     const { getResult } = useContext(ResultContext)
 
+    const { LAUREATES, PRIZES, AFFILIATIONS } = PARENTSCONS
+    const { ID, YEAR, CATEGORY, MOTIVATION, NAME, CITY, COUNTRY, SHARE, OVERALLMOTIVATION } = CHILDCONS
+    const { FIRSTNAME, SURNAME } = SPECIAL
+
     const laureatesOrders = {
-        [CONS.LAUREATES]: [
-            LAUREATES.ID,
-            LAUREATES.FIRSTNAME,
-            LAUREATES.SURNAME,
+        [LAUREATES]: [ ID, FIRSTNAME, SURNAME,
             {
-                [LAUREATES.PRIZES]: [
-                    PRIZES.YEAR,
-                    PRIZES.CATEGORY,
-                    PRIZES.MOTIVATION,
+                [PRIZES]: [ YEAR, CATEGORY, MOTIVATION,
                     {
-                        [PRIZES.AFFILIATIONS]: [
-                            AFFILIATIONS.NAME,
-                            AFFILIATIONS.CITY,
-                            AFFILIATIONS.COUNTRY
-                        ]
+                        [AFFILIATIONS]: [ NAME, CITY, COUNTRY ]
                     }
                 ]
             }
@@ -36,18 +30,9 @@ export default function ShowResults() {
 
 
     const prizesOrders = {
-        [CONS.PRIZES]: [
-            PRIZES.CATEGORY,
-            PRIZES.YEAR,
-            PRIZES.OVERALLMOTIVATION,
+        [PRIZES]: [ CATEGORY, YEAR, OVERALLMOTIVATION,
             {
-                [PRIZES.LAUREATES]: [
-                    [LAUREATES.ID],
-                    [LAUREATES.FIRSTNAME],
-                    [LAUREATES.SURNAME],
-                    [LAUREATES.MOTIVATION],
-                    [LAUREATES.SHARE]
-                ]
+                [LAUREATES]: [ ID, FIRSTNAME ,SURNAME, MOTIVATION, SHARE ]
             }
         ]
     }
