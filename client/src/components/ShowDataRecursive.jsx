@@ -112,47 +112,52 @@ export default function ShowDataRecursive({ obj = {}, order = {}, expand = false
         e.preventDefault();
         setToExpand(!toExpand)
     }
+
+    function handleRescursive(){
+        const list = [];
+       
+        if (order[currentTitle].length){
+            for (let i =0; i < order.length; i++){
+                let j = 0;
+                for (const eachObject of obj[currentTitle]){
+                    if (eachObject[order[i]] && typeof order[i] === "string"){
+                        list.push(<li key={`${currentTitle}-${i}-${j}`}><div><span>{order[i]}{" : "}</span>{eachObject[order[i]]}</div></li>)
+                    } else if (isObject(currentOrders[i])){
+                        const nextOrderKey = Object.keys(order[i])[0]
+                        if (eachObject[nextOrderKey]){
+                            list.push(<li key={`${currentTitle}-${i}-${j}`}><div><ShowDataRecursive obj={{nextOrderKey : eachObject[nextOrderKey]}} order={order[i]}/></div></li>)
+                        }
+                    }
+                    j++;
+                }
+                
+            }
+        } else {
+            let i = 0;
+            for (const eachObject of obj[currentTitle]){
+                let j = 0;
+                for (const eachKey in eachObject){
+                    if(eachObject[eachKey] && typeof eachObject[eachKey] === "string"){
+                        list.push(<li key={`${currentTitle}-${i}-${j}`}><div><span>{eachKey}{" : "}</span>{eachObject[eachKey]}</div></li>)
+                        
+                    } else if (Array.isArray(eachObject[eachKey])){
+                        const nextOrderKey = eachKey
+                        list.push(<li key={`${currentTitle}-${i}-${j}`}><div><ShowDataRecursive obj={{nextOrderKey : eachObject[nextOrderKey]}} order={{}}/></div></li>)
+                    }
+                    j++;
+                }
+                i++;
+            }
+        }
+        return (list)
+    }
     return (
         <div>
             <ul>
-                <span>{currentTitle}{" : "}</span><br />
-                <Button onClick={handleToExpand} text={toExpand ? <div>Collaspe</div> : <div>Expand</div>} /><br />
-                {
-                toExpand &&
-                currentObject[currentTitle] && 
-                currentOrders && 
-                currentObject[currentTitle].map((item, index) => {
-                    currentOrders.map((key, idx) => {
-                            if (item[key] && typeof item[key] === "string") 
-                                return(
-                                    <li key={`${key}-${index}-${idx}`}><div><span>{`[${index + 1}][${idx + 1}] ${key} : `}</span>{item[key]}</div></li>
-                                )
-                            else if  (item[key] && isObject(item[key])) 
-                                return (
-                                    <li key={`${key}-${index}-${idx}`}>
-                                        <div><span>{`[${index + 1}][${idx + 1}] `}</span>
-                                            <ShowDataRecursive
-                                                objx={passOnObject}
-                                                order={passOnOrders}
-                                                 />
-                                        </div>
-                                    </li>
-                                )
-                                return null
-                        }
-                    )
-                    return null
-                }
-            ) 
-                
-                
-                
-                
-            } 
+                <span id={`id-${currentTitle}`}>{currentTitle}{" : "}</span><br />
+                <Button id={`id-${currentTitle}`} onClick={handleToExpand} text={toExpand ? <div>Collaspe</div> : <div>Expand</div>} /><br />
+                {toExpand && handleRescursive()} 
             </ul>
-            {/* {Object.keys(currentObject).length && toExpend ? <div>{handleRescursion(currentObject, currentOrders)}</div> : null} */}
-
-
         </div>
     )
 
