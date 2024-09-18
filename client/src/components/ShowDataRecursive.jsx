@@ -149,15 +149,15 @@ export default function ShowDataRecursive({ obj = {}, order = {}, expand = false
                 i++;
             }
         }
-        return (list)
+        return (<ul>{list}</ul>)
     }
     return (
         <div>
-            <ul>
+            <div>
                 <span id={`id-${currentTitle}`}>{currentTitle}{" : "}</span><br />
                 <Button id={`id-${currentTitle}`} onClick={handleToExpand} text={toExpand ? <div>Collaspe</div> : <div>Expand</div>} /><br />
                 {toExpand && handleRescursive()} 
-            </ul>
+            </div>
         </div>
     )
 
