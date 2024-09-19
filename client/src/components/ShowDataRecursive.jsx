@@ -127,12 +127,12 @@ export default function ShowDataRecursive({ obj = {}, order = {}, expand = false
                 for (let i = 0; i < order[currentTitle].length; i++) {
                     console.log(`eachObject[order[currentTitle][i]] : `, eachObject[order[currentTitle][i]])
                     if (eachObject[order[currentTitle][i]] && typeof order[currentTitle][i] === "string") {
-                        list.push(<li key={`${currentTitle}-${i}-${j}`}><div><span>{order[currentTitle][i]}{" : "}</span>{eachObject[order[currentTitle][i]]}</div></li>)
+                        list.push(<ul><li key={`${currentTitle}-${i}-${j}`}><div><span>{order[currentTitle][i]}{" : "}</span>{eachObject[order[currentTitle][i]]}</div></li></ul>)
                     } else if (isObject(order[currentTitle][i])) {
                         const nextOrderKey = Object.keys(order[currentTitle][i])[0]
                         console.log("isObject(currentOrders[i]):", order[currentTitle][i])
                         if (eachObject[nextOrderKey]) {
-                            list.push(<li key={`${currentTitle}-${i}-${j}`}><div><ShowDataRecursive obj={{ [nextOrderKey]: eachObject[nextOrderKey] }} order={order[currentTitle][i]} toExpand={false} /></div></li>)
+                            list.push(<ul><li key={`${currentTitle}-${i}-${j}`}><div><ShowDataRecursive obj={{ [nextOrderKey]: eachObject[nextOrderKey] }} order={order[currentTitle][i]} toExpand={false} /></div></li></ul>)
                         }
                     }
                     j++;
@@ -152,21 +152,31 @@ export default function ShowDataRecursive({ obj = {}, order = {}, expand = false
                         list.push(<li key={`${currentTitle}-${i}-${j}`}><div><ShowDataRecursive obj={{ nextOrderKey: eachObject[nextOrderKey] }} order={{}} /></div></li>)
                     }
                     j++;
+                    
                 }
                 i++;
+                
             }
         }
         console.log(list)
-        return (<ul>{list}</ul>)
+        return (<div className="ResultsCell"><ul>{list}</ul></div>)
     }
     return (
-        <div className="ResultsRow">
-            <div className="ResultsCell">
-                <span id={`id-${currentTitle}`}>{currentTitle}{" : "}</span><br />
-                <Button id={`id-${currentTitle}`} onClick={handleToExpand} text={toExpand ? <div>Collaspe</div> : <div>Expand</div>} /><br />
-                {toExpand && handleRescursive()}
+        <>
+        <div className="ResultsTable">
+            <div className="ResultsBody">
+                <div className="ResultsRow">
+                    
+                        <span id={`id-${currentTitle}`}>{currentTitle}{" : "}</span><br />
+                        <Button id={`id-${currentTitle}`} onClick={handleToExpand} text={toExpand ? <div>Collaspe</div> : <div>Expand</div>} /><br />
+                        {toExpand && handleRescursive()}
+                    
+                </div>
+
             </div>
         </div>
+        
+        </>
     )
 
 

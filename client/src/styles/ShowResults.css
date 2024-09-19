@@ -21,6 +21,8 @@
     table-layout: fixed;
     border-collapse: collapse;
     width: 100%;
+    border:1px solid black;
+    
 }
 
 .ResultsBody {
