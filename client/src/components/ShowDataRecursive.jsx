@@ -17,14 +17,14 @@ export default function ShowDataRecursive({ obj = {}, order = {}, expand = false
 
         setCurrentObject(() => {
             const result = {};
-            
+
             for (const currentKey in obj) { /** obj = {"prizes" : [] }*/
-                if (Array.isArray(obj[currentKey])){
+                if (Array.isArray(obj[currentKey])) {
                     for (const item of obj[currentKey]) { /** obj[prizes] = [ {}, {} ] */
-                        if(isObject(obj[currentKey][item])){
-                            for (const itemKey of obj[currentKey][item]){
-                                if (Array.isArray(obj[currentKey][item][itemKey])){
-                                    setPassOnObject(()=>{
+                        if (isObject(obj[currentKey][item])) {
+                            for (const itemKey of obj[currentKey][item]) {
+                                if (Array.isArray(obj[currentKey][item][itemKey])) {
+                                    setPassOnObject(() => {
                                         const result = {};
                                         result[itemKey] = obj[currentKey][item][itemKey]
                                         return result
@@ -35,14 +35,14 @@ export default function ShowDataRecursive({ obj = {}, order = {}, expand = false
                                 }
                             }
                         }
-                    }    
+                    }
                 }
             }
-            console.log("ShowDataRecursive currentObject",result)
+            console.log("ShowDataRecursive currentObject", result)
             return result
         })
         /** handle title */
-        setCurrentTitle((prev)=>{
+        setCurrentTitle((prev) => {
             if (prev) {
                 return prev
             } else {
@@ -53,7 +53,7 @@ export default function ShowDataRecursive({ obj = {}, order = {}, expand = false
                 return temp[0]
             }
         })
-        console.log("currentTitle:",currentTitle)
+        console.log("currentTitle:", currentTitle)
 
     }, [obj, currentTitle])
 
@@ -67,15 +67,15 @@ export default function ShowDataRecursive({ obj = {}, order = {}, expand = false
              * 2.) take the orders given in the object array. If the element of the array is an object, the key of this object should pass this object to the next order
              */
             const list = []
-            
+
             for (const currentKey in order) { /** order = {prizes:[ "",{}]} */
                 for (const arr of order[currentKey]) { /** order[prizes] = ["", {}] */
                     if (isObject(order[currentKey][arr])) {
                         setPassOnOrders(order[currentKey][arr])
-                        for (const innerKey in order[currentKey][arr]){
+                        for (const innerKey in order[currentKey][arr]) {
                             list.push(innerKey)
                         }
-                    } else if (typeof order[currentKey][arr] === "string"){
+                    } else if (typeof order[currentKey][arr] === "string") {
                         list.push(arr)
                     }
                 }
@@ -92,71 +92,79 @@ export default function ShowDataRecursive({ obj = {}, order = {}, expand = false
         console.log("ShowDataRecursive currentObject:", currentObject)
     }, [currentObject])
 
-    useEffect(()=>{
-        console.log("ShowDataRecursive passOnObject:",passOnObject)
-    },[passOnObject])
+    useEffect(() => {
+        console.log("ShowDataRecursive passOnObject:", passOnObject)
+    }, [passOnObject])
 
     useEffect(() => {
         console.log("ShowDataRecursive passOnOrders:", passOnOrders)
-    },[passOnOrders])
+    }, [passOnOrders])
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log("ShowDataRecursive toExpand", toExpand)
-    },[toExpand])
+    }, [toExpand])
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log("ShowDataRecursive currentObject.currentTitle", currentObject.currentTitle)
-    },[currentObject, currentTitle])
+    }, [currentObject, currentTitle])
 
     function handleToExpand(e) {
         e.preventDefault();
         setToExpand(!toExpand)
     }
 
-    function handleRescursive(){
+    function handleRescursive() {
         const list = [];
-       
-        if (order[currentTitle].length){
-            for (let i =0; i < order.length; i++){
-                let j = 0;
-                for (const eachObject of obj[currentTitle]){
-                    if (eachObject[order[i]] && typeof order[i] === "string"){
-                        list.push(<li key={`${currentTitle}-${i}-${j}`}><div><span>{order[i]}{" : "}</span>{eachObject[order[i]]}</div></li>)
-                    } else if (isObject(currentOrders[i])){
-                        const nextOrderKey = Object.keys(order[i])[0]
-                        if (eachObject[nextOrderKey]){
-                            list.push(<li key={`${currentTitle}-${i}-${j}`}><div><ShowDataRecursive obj={{nextOrderKey : eachObject[nextOrderKey]}} order={order[i]}/></div></li>)
+        const theOrder = order[currentTitle]
+        if (order[currentTitle].length) {
+            console.log("order[currentTitle].length:", order[currentTitle].length)
+            console.log("order[currentTitle]:", order[currentTitle])
+            let j = 0
+            for (const eachObject of obj[currentTitle]) {
+                //for (let i = 0; i < order[currentTitle].length; i++) {
+                //let j = 0;
+                // for (const eachObject of obj[currentTitle]) {
+                for (let i = 0; i < order[currentTitle].length; i++) {
+                    console.log(`eachObject[order[currentTitle][i]] : `, eachObject[order[currentTitle][i]])
+                    if (eachObject[order[currentTitle][i]] && typeof order[currentTitle][i] === "string") {
+                        list.push(<li key={`${currentTitle}-${i}-${j}`}><div><span>{order[currentTitle][i]}{" : "}</span>{eachObject[order[currentTitle][i]]}</div></li>)
+                    } else if (isObject(order[currentTitle][i])) {
+                        const nextOrderKey = Object.keys(order[currentTitle][i])[0]
+                        console.log("isObject(currentOrders[i]):", order[currentTitle][i])
+                        if (eachObject[nextOrderKey]) {
+                            list.push(<li key={`${currentTitle}-${i}-${j}`}><div><ShowDataRecursive obj={{ [nextOrderKey]: eachObject[nextOrderKey] }} order={order[currentTitle][i]} toExpand={false} /></div></li>)
                         }
                     }
                     j++;
                 }
-                
+
             }
         } else {
             let i = 0;
-            for (const eachObject of obj[currentTitle]){
+            for (const eachObject of obj[currentTitle]) {
                 let j = 0;
-                for (const eachKey in eachObject){
-                    if(eachObject[eachKey] && typeof eachObject[eachKey] === "string"){
+                for (const eachKey in eachObject) {
+                    if (eachObject[eachKey] && typeof eachObject[eachKey] === "string") {
                         list.push(<li key={`${currentTitle}-${i}-${j}`}><div><span>{eachKey}{" : "}</span>{eachObject[eachKey]}</div></li>)
-                        
-                    } else if (Array.isArray(eachObject[eachKey])){
+
+                    } else if (Array.isArray(eachObject[eachKey])) {
                         const nextOrderKey = eachKey
-                        list.push(<li key={`${currentTitle}-${i}-${j}`}><div><ShowDataRecursive obj={{nextOrderKey : eachObject[nextOrderKey]}} order={{}}/></div></li>)
+                        list.push(<li key={`${currentTitle}-${i}-${j}`}><div><ShowDataRecursive obj={{ nextOrderKey: eachObject[nextOrderKey] }} order={{}} /></div></li>)
                     }
                     j++;
                 }
                 i++;
             }
         }
+        console.log(list)
         return (<ul>{list}</ul>)
     }
     return (
-        <div>
-            <div>
+        <div className="ResultsRow">
+            <div className="ResultsCell">
                 <span id={`id-${currentTitle}`}>{currentTitle}{" : "}</span><br />
                 <Button id={`id-${currentTitle}`} onClick={handleToExpand} text={toExpand ? <div>Collaspe</div> : <div>Expand</div>} /><br />
-                {toExpand && handleRescursive()} 
+                {toExpand && handleRescursive()}
             </div>
         </div>
     )

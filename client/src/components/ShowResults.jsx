@@ -17,11 +17,11 @@ export default function ShowResults() {
     const { FIRSTNAME, SURNAME } = SPECIAL
 
     const laureatesOrders = {
-        [LAUREATES]: [ ID, FIRSTNAME, SURNAME,
+        [LAUREATES]: [ID, FIRSTNAME, SURNAME,
             {
-                [PRIZES]: [ YEAR, CATEGORY, MOTIVATION,
+                [PRIZES]: [YEAR, CATEGORY, MOTIVATION,
                     {
-                        [AFFILIATIONS]: [ NAME, CITY, COUNTRY ]
+                        [AFFILIATIONS]: [NAME, CITY, COUNTRY]
                     }
                 ]
             }
@@ -30,9 +30,9 @@ export default function ShowResults() {
 
 
     const prizesOrders = {
-        [PRIZES]: [ CATEGORY, YEAR, OVERALLMOTIVATION,
+        [PRIZES]: [CATEGORY, YEAR, OVERALLMOTIVATION,
             {
-                [LAUREATES]: [ ID, FIRSTNAME ,SURNAME, MOTIVATION, SHARE ]
+                [LAUREATES]: [ID, FIRSTNAME, SURNAME, MOTIVATION, SHARE]
             }
         ]
     }
@@ -179,10 +179,10 @@ export default function ShowResults() {
                     })
                     */}
                     {prizes &&
-                        <div className="ResultTable">
-                            <div className="ResultBody"><ShowDataRecursive obj={data} order={prizesOrders} />
+                        <ul><div className="ResultTable">
+                            <div className="ResultBody"><ShowDataRecursive obj={data} order={prizesOrders} expand={false} />
                             </div>
-                        </div>}
+                        </div></ul>}
                 </div>
 
             );
