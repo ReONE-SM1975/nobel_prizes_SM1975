@@ -145,11 +145,11 @@ export default function ShowDataRecursive({ obj = {}, order = {}, expand = false
                 let j = 0;
                 for (const eachKey in eachObject) {
                     if (eachObject[eachKey] && typeof eachObject[eachKey] === "string") {
-                        list.push(<li key={`${currentTitle}-${i}-${j}`}><div><span>{eachKey}{" : "}</span>{eachObject[eachKey]}</div></li>)
+                        list.push(<li key={`${currentTitle}-${i}-${j}`}><div className="ResultsCell AlignLeft Capital"><span>{eachKey}{" : "}</span></div><div className="ResultsCell">{eachObject[eachKey]}</div></li>)
 
                     } else if (Array.isArray(eachObject[eachKey])) {
                         const nextOrderKey = eachKey
-                        list.push(<li key={`${currentTitle}-${i}-${j}`}><div><ShowDataRecursive obj={{ nextOrderKey: eachObject[nextOrderKey] }} order={{}} /></div></li>)
+                        list.push(<li key={`${currentTitle}-${i}-${j}`}><div className="ResultsCell AlignLeft"><ShowDataRecursive obj={{ nextOrderKey: eachObject[nextOrderKey] }} order={{}} /></div></li>)
                     }
                     j++;
                     
@@ -159,7 +159,7 @@ export default function ShowDataRecursive({ obj = {}, order = {}, expand = false
             }
         }
         console.log(list)
-        return (<div className="ResultsCell"><ul>{list}</ul></div>)
+        return (<div className="ResultsCell AlignLeft Capital"><ul>{list}</ul></div>)
     }
     return (
         <>

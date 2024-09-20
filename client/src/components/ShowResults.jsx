@@ -179,13 +179,13 @@ export default function ShowResults() {
                     })
                     */}
                     {prizes &&
-                        <ul><div className="ResultsTable">
-                            <div className="ResultsBody">
-                                <div className="ResultsRow">
+                        <ul><div>
+                            
+                                
                                     <ShowDataRecursive obj={data} order={prizesOrders} expand={false} />
 
-                                </div>
-                            </div>
+                                
+                            
                         </div></ul>}
                 </div>
 
