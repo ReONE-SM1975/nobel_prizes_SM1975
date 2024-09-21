@@ -179,14 +179,14 @@ export default function ShowResults() {
                     })
                     */}
                     {prizes &&
-                        <ul><div>
-                            
-                                
+                        <div>
+                            <div className="Shrink">
+                                <div className="Flex-grow">
                                     <ShowDataRecursive obj={data} order={prizesOrders} expand={false} />
-
+                                    </div>
                                 
-                            
-                        </div></ul>}
+                            </div>
+                        </div>}
                 </div>
 
             );
@@ -194,8 +194,11 @@ export default function ShowResults() {
             return (
                 <>
                     {laureates &&
-                        <div>
-                            <div><ShowDataRecursive obj={data} order={laureatesOrders} />
+                        <div >
+                            <div className="Shrink">
+                                <div className="Flex-grow">
+                                    <ShowDataRecursive obj={data} order={laureatesOrders} />
+                                </div>
                             </div>
                         </div>}
                     { //laureates && laureates.map((obj, idxc) => {

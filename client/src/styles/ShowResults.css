@@ -55,3 +55,16 @@
 .AlignLeft {
     text-align:left;
 }
+
+.Shrink {
+    display: flex;
+    flex-direction:column;
+}
+
+.Shrink > * {
+    flex-shrink: 0;
+}
+
+.Flex-grow {
+    flex-grow:1;
+}

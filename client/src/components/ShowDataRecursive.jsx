@@ -127,7 +127,7 @@ export default function ShowDataRecursive({ obj = {}, order = {}, expand = false
                 for (let i = 0; i < order[currentTitle].length; i++) {
                     console.log(`eachObject[order[currentTitle][i]] : `, eachObject[order[currentTitle][i]])
                     if (eachObject[order[currentTitle][i]] && typeof order[currentTitle][i] === "string") {
-                        list.push(<ul><li key={`${currentTitle}-${i}-${j}`}><div><span>{order[currentTitle][i]}{" : "}</span>{eachObject[order[currentTitle][i]]}</div></li></ul>)
+                        list.push(<ul><li key={`${currentTitle}-${i}-${j}`}><div className="ResultsCell AlignLeft Capital"><span>{order[currentTitle][i]}{" : "}</span></div><div className="ResultsCell AlignLeft">{eachObject[order[currentTitle][i]]}</div></li></ul>)
                     } else if (isObject(order[currentTitle][i])) {
                         const nextOrderKey = Object.keys(order[currentTitle][i])[0]
                         console.log("isObject(currentOrders[i]):", order[currentTitle][i])
@@ -149,7 +149,7 @@ export default function ShowDataRecursive({ obj = {}, order = {}, expand = false
 
                     } else if (Array.isArray(eachObject[eachKey])) {
                         const nextOrderKey = eachKey
-                        list.push(<li key={`${currentTitle}-${i}-${j}`}><div className="ResultsCell AlignLeft"><ShowDataRecursive obj={{ nextOrderKey: eachObject[nextOrderKey] }} order={{}} /></div></li>)
+                        list.push(<li key={`${currentTitle}-${i}-${j}`}><div className="ResultsCell AlignLeft"><ShowDataRecursive obj={{ [nextOrderKey]: eachObject[nextOrderKey] }} order={{}} /></div></li>)
                     }
                     j++;
                     
@@ -159,11 +159,11 @@ export default function ShowDataRecursive({ obj = {}, order = {}, expand = false
             }
         }
         console.log(list)
-        return (<div className="ResultsCell AlignLeft Capital"><ul>{list}</ul></div>)
+        return (<div className="ResultsCell AlignLeft Capital Flex-grow"><ul>{list}</ul></div>)
     }
     return (
         <>
-        <div className="ResultsTable">
+        <div className="ResultsTable Flew-grow">
             <div className="ResultsBody">
                 <div className="ResultsRow">
                     
