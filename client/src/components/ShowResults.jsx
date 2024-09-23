@@ -150,41 +150,14 @@ export default function ShowResults() {
 
 
             return (
-                <div>{/* parent div */}
-                    {/* prizes && prizes.map((prize, idx) => {
-                        return (
-                            <div key={`przs-${idx}`}>
-                                <div className="ResultsTable">
-                                    <div className="ResultsBody">
-                                        <div className="ResultsRow" >
-                                            <div className="ResultsCell"><h3>{`[${idx + 1}]`}</h3></div>
-                                            <div className="ResultsCell"><h3>{`${prize.year} `}</h3></div>
-                                            <div className="ResultsCell Capital"><h3>{`${prize.category}`}</h3></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                {prize.overallMotivation ?
-                                    <div className="ResultsTable">
-                                        <div className="ResultsBody">
-                                            <div className="ResultsRow">
-                                                <div className="ResultsCell Extend"><h3>{prize.overallMotivation && `${prize.overallMotivation}`}</h3></div>
-                                            </div>
-                                        </div>
-                                    </div> : ""}
-
-                                {prize.laureates && laureatesDisplay(prize.laureates)}
-                            </div>
-
-                        );
-                    })
-                    */}
+                <div>
                     {prizes &&
                         <div>
                             <div className="Shrink">
                                 <div className="Flex-grow">
                                     <ShowDataRecursive obj={data} order={prizesOrders} expand={false} />
-                                    </div>
-                                
+                                </div>
+
                             </div>
                         </div>}
                 </div>
@@ -194,31 +167,13 @@ export default function ShowResults() {
             return (
                 <>
                     {laureates &&
-                        <div >
+                        <div>
                             <div className="Shrink">
                                 <div className="Flex-grow">
                                     <ShowDataRecursive obj={data} order={laureatesOrders} />
                                 </div>
                             </div>
                         </div>}
-                    { //laureates && laureates.map((obj, idxc) => {
-                        // return (
-                        //     <div key={`lrts-${idxc}`}>
-                        //         {readKeys(obj, [])}
-                        //     </div>
-
-                        // )
-                        //})
-                        // .map((laureate, idc) => {
-                        // const { id, firstname, surname, born, died, borncountry, borncountrycode, borncity, diedcountry, diedcountrycode, diedcity, gender, prizes } = laureate;
-                        // const name = surname ? `${firstname} ${surname}` : `${firstname}`
-                        // return (
-                        //     <div key={`lrts-${idc}`}> {/* parent div for laur map*/}
-
-                        //     </div>
-                        // )
-
-                    }
                 </>
             )
         }
