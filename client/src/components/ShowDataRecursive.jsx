@@ -152,30 +152,30 @@ export default function ShowDataRecursive({ obj = {}, order = {}, expand = false
                         list.push(<li key={`${currentTitle}-${i}-${j}`}><div className="ResultsCell AlignLeft"><ShowDataRecursive obj={{ [nextOrderKey]: eachObject[nextOrderKey] }} order={{}} /></div></li>)
                     }
                     j++;
-                    
+
                 }
                 i++;
-                
+
             }
         }
         console.log(list)
-        return (<div className="ResultsCell AlignLeft Capital Flex-grow"><ul>{list}</ul></div>)
+        return (<div className="ResultsRow"><div className="ResultsCell"><ul>{list}</ul></div></div>)
     }
     return (
         <>
-        <div className="ResultsTable Flew-grow">
-            <div className="ResultsBody">
-                <div className="ResultsRow">
-                    
-                        <span id={`id-${currentTitle}`}>{currentTitle}{" : "}</span><br />
-                        <Button id={`id-${currentTitle}`} onClick={handleToExpand} text={toExpand ? <div>Collaspe</div> : <div>Expand</div>} /><br />
-                        {toExpand && handleRescursive()}
-                    
-                </div>
+            <div className="ResultsTable">
+                <div className="ResultsBody">
+                    <div className="ResultsRow">
+                        <div className="ResultsCell">
+                            <span id={`id-${currentTitle}`}>{currentTitle}{" : "}</span><br />
+                            <Button id={`id-${currentTitle}`} onClick={handleToExpand} text={toExpand ? <div>Collaspe</div> : <div>Expand</div>} /><br />
+                            {toExpand && handleRescursive()}
+                        </div>
+                    </div>
 
+                </div>
             </div>
-        </div>
-        
+
         </>
     )
 
