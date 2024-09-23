@@ -6,19 +6,13 @@ import "../styles/MiddleBodyContent.css"
 
 export default function MiddleBodyContent() {
 
-    //const [dataPass, setDataPass] = useState(myDefault)
-    //useEffect(()=>{
-    //setDataPass(myDefault)
-    //},[myDefault])
     return (
         <div className="MiddleBodyContent">
             <div className="MiddleBodyContent__body">
 
                 <SideControlBar></SideControlBar>
 
-
                 <ShowResults
-                //data={dataPass}
                 ></ShowResults>
 
             </div>

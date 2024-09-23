@@ -132,7 +132,7 @@ export default function ShowDataRecursive({ obj = {}, order = {}, expand = false
                         const nextOrderKey = Object.keys(order[currentTitle][i])[0]
                         console.log("isObject(currentOrders[i]):", order[currentTitle][i])
                         if (eachObject[nextOrderKey]) {
-                            list.push(<ul><li key={`${currentTitle}-${i}-${j}`}><div><ShowDataRecursive obj={{ [nextOrderKey]: eachObject[nextOrderKey] }} order={order[currentTitle][i]} toExpand={false} /></div></li></ul>)
+                            list.push(<ul><li key={`${currentTitle}-${i}-${j}`}><div className="Capital Shrink"><ShowDataRecursive obj={{ [nextOrderKey]: eachObject[nextOrderKey] }} order={order[currentTitle][i]} toExpand={false} /></div></li></ul>)
                         }
                     }
                     j++;
