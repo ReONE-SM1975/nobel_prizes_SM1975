@@ -30,7 +30,7 @@ export default function ShowResults() {
     const prizesOrders = {
         [PRIZES]: [CATEGORY, YEAR, OVERALLMOTIVATION,
             {
-                [LAUREATES]: [ID, FIRSTNAME, SURNAME, MOTIVATION, SHARE]
+                [LAUREATES]: [MOTIVATION, ID, FIRSTNAME, SURNAME, SHARE]
             }
         ]
     }
@@ -69,7 +69,8 @@ export default function ShowResults() {
                         <div>
                             <div className="Shrink Capital">
                                 <div className="Flex-grow">
-                                    <ShowDataRecursive obj={data} order={prizesOrders} expand={false} />
+                                    <ShowDataRecursive obj={data} order={prizesOrders}
+                                        expand={false} />
                                 </div>
 
                             </div>
