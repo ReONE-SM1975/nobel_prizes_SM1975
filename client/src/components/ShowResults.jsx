@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-//import axios from "axios"
 import ShowDataRecursive from "../components/ShowDataRecursive";
 import "../styles/ShowResults.css";
 import { PARENTSCONS, CHILDCONS, SPECIAL } from "../constants/constants";
@@ -28,7 +27,6 @@ export default function ShowResults() {
         ]
     }
 
-
     const prizesOrders = {
         [PRIZES]: [CATEGORY, YEAR, OVERALLMOTIVATION,
             {
@@ -36,7 +34,6 @@ export default function ShowResults() {
             }
         ]
     }
-
 
     const resultTexts = (resultNum = 0) => {
         resultNum = isNaN(parseInt(resultNum)) ? 0 : parseInt(resultNum);
@@ -46,56 +43,6 @@ export default function ShowResults() {
         }
         return ["Found ", `${resultNum}`, ` result${single}.`];
     }
-
-    function readKeys(obj = {}, orders = []) {
-        const result = {}
-        if (obj["firstname"] || obj["surname"]) {
-            result["fullname"] = obj["surname"] ? `${obj["firstname"]} ${obj["surname"]}` : `${obj["firstname"]}`;
-        }
-        const objKeyList = ["fullname"]
-        if (orders) {
-            for (const key of orders) {
-                if (obj[key] instanceof Array || Array.isArray(obj[key]) || Object.prototype.toString.call(obj[key]) === '[object Array]') {
-                    return readKeys(obj[key])
-                } else if (key === "firstname" || key === "surname") {
-                    continue;
-                } else {
-                    if (key) {
-                        result[key] = obj[key]
-                        objKeyList.push(key)
-                    }
-                }
-            }
-        } else {
-            for (const key in obj) {
-                if (obj[key] instanceof Array || Array.isArray(obj[key]) || Object.prototype.toString.call(obj[key]) === '[object Array]') {
-                    return readKeys(obj[key])
-                } else if (key === "firstname" || key === "surname") {
-                    continue;
-                } else {
-                    if (key) {
-                        result[key] = obj[key]
-                        objKeyList.push(key)
-                    }
-                }
-
-            }
-        }
-
-        return (
-            <>
-                {result && objKeyList.map((ele, idx) => (<div key={`${result[ele]}${idx}`}>{`${ele}: ${result[ele]}`}</div>))}
-            </>
-        )
-
-
-
-
-    }
-    // useEffect(()=>{
-    //     setDisplayData(data)
-    //     setSearchFound(resultTexts(data.length))
-    // },[data]); 
 
     useEffect(() => {
         setDisplayData(getResult)
@@ -112,48 +59,15 @@ export default function ShowResults() {
         })
     }, [getResult])
 
-
-
-    function laureatesDisplay(items) {
-        return (
-            <div>
-                {items && items.map(({ id, surname, firstname, motivation, share }, idc) => {
-                    return (
-                        <div key={`${firstname}${id}${idc}`}>
-                            <div className="ResultsTable">
-                                <div className="ResultsBody">
-                                    <div className="ResultsRow" >
-                                        <div className="ResultsCell">{id} </div>
-                                        <div className="ResultsCell">{idc + 1} / {share}</div>
-                                        <div className="ResultsCell">{firstname} {surname ? surname : ""}</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="ResultsTable">
-                                <div className="ResultsBody">
-                                    <div className="ResultRow">
-                                        <div className="ResultsCell">{motivation}</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    );
-                })}
-            </div>
-
-        );
-    }
-
     function prizeDisplay(data) {
         const { prizes, laureates } = data;
         if (prizes) {
-
 
             return (
                 <div>
                     {prizes &&
                         <div>
-                            <div className="Shrink">
+                            <div className="Shrink Capital">
                                 <div className="Flex-grow">
                                     <ShowDataRecursive obj={data} order={prizesOrders} expand={false} />
                                 </div>
@@ -168,7 +82,7 @@ export default function ShowResults() {
                 <>
                     {laureates &&
                         <div>
-                            <div className="Shrink">
+                            <div className="Shrink Capital">
                                 <div className="Flex-grow">
                                     <ShowDataRecursive obj={data} order={laureatesOrders} />
                                 </div>

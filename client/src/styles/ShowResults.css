@@ -20,8 +20,9 @@
     display: table;
     table-layout: fixed;
     border-collapse: collapse;
-    width: 100%;
-    border:1px solid black;
+    width: 125vh;
+    /* width: 100%; */
+    /* border:1px solid black; */
     
 }
 
@@ -35,11 +36,11 @@
 
 .ResultsCell {
     display: table-cell;
-    padding: 5px 10px;
+    padding: 2px 10px;
     text-align: left;
     /* white-space: nowrap; */
     /* vertical-align: middle; */
-    word-wrap: break-word;
+    /* word-wrap: break-word; */
 }
 
 .Extend {
@@ -67,4 +68,18 @@
 
 .Flex-grow {
     flex-grow:1;
+}
+
+.BreakWord-Wrap {
+    word-wrap:break-word
+}
+
+.DivLine {
+    flex: 1; 
+    height: 1px; background-color: black;
+}
+
+.DivBorder {
+    border:1px solid red;
+    border-radius: 25px;
 }

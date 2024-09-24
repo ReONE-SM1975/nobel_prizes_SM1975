@@ -115,47 +115,80 @@ export default function ShowDataRecursive({ obj = {}, order = {}, expand = false
 
     function handleRescursive() {
         const list = [];
-        const theOrder = order[currentTitle]
+
         if (order[currentTitle].length) {
-            console.log("order[currentTitle].length:", order[currentTitle].length)
-            console.log("order[currentTitle]:", order[currentTitle])
-            let j = 0
+
+            let j = 0;
             for (const eachObject of obj[currentTitle]) {
-                //for (let i = 0; i < order[currentTitle].length; i++) {
-                //let j = 0;
-                // for (const eachObject of obj[currentTitle]) {
+                let tempList = [];
+
                 for (let i = 0; i < order[currentTitle].length; i++) {
-                    console.log(`eachObject[order[currentTitle][i]] : `, eachObject[order[currentTitle][i]])
-                    if (eachObject[order[currentTitle][i]] && typeof order[currentTitle][i] === "string") {
-                        list.push(<ul><li key={`${currentTitle}-${i}-${j}`}><div className="ResultsCell AlignLeft Capital"><span>{order[currentTitle][i]}{" : "}</span></div><div className="ResultsCell AlignLeft">{eachObject[order[currentTitle][i]]}</div></li></ul>)
+
+                    if (eachObject[order[currentTitle][i]] &&
+                        typeof order[currentTitle][i] === "string") {
+                        tempList.push(
+                            <ul>
+                                <li key={`${currentTitle}-${i}-${j}`}>
+                                    <div className="ResultsCell">
+                                        <span className="Shrink Capital">{order[currentTitle][i]}{": "}
+                                        </span>
+                                    </div>
+                                    <div className="ResultsCell BreakWord-Wrap">{eachObject[order[currentTitle][i]]}</div>
+                                </li>
+                            </ul>)
                     } else if (isObject(order[currentTitle][i])) {
                         const nextOrderKey = Object.keys(order[currentTitle][i])[0]
-                        console.log("isObject(currentOrders[i]):", order[currentTitle][i])
+
                         if (eachObject[nextOrderKey]) {
-                            list.push(<ul><li key={`${currentTitle}-${i}-${j}`}><div className="Capital Shrink"><ShowDataRecursive obj={{ [nextOrderKey]: eachObject[nextOrderKey] }} order={order[currentTitle][i]} toExpand={false} /></div></li></ul>)
+                            tempList.push(
+                                <ul>
+                                    <li key={`${currentTitle}-${i}-${j}`}>
+                                        <div className="Capital Shrink"><ShowDataRecursive obj={{ [nextOrderKey]: eachObject[nextOrderKey] }} order={order[currentTitle][i]} toExpand={false} />
+                                        </div>
+                                    </li>
+                                </ul>)
                         }
                     }
                     j++;
+
                 }
+                list.push(<div className="DivBorder">{tempList}</div>)
 
             }
         } else {
             let i = 0;
             for (const eachObject of obj[currentTitle]) {
                 let j = 0;
+                let tempList = [];
                 for (const eachKey in eachObject) {
-                    if (eachObject[eachKey] && typeof eachObject[eachKey] === "string") {
-                        list.push(<li key={`${currentTitle}-${i}-${j}`}><div className="ResultsCell AlignLeft Capital"><span>{eachKey}{" : "}</span></div><div className="ResultsCell">{eachObject[eachKey]}</div></li>)
+                    if (eachObject[eachKey] &&
+                        typeof eachObject[eachKey] === "string") {
+                        tempList.push(
+                            <ul>
+                                <li key={`${currentTitle}-${i}-${j}`}>
+                                    <div className="ResultsCell AlignLeft Capital">
+                                        <span>{eachKey}{": "}</span>
+                                    </div>
+                                    <div className="ResultsCell">{eachObject[eachKey]}</div>
+                                </li>
+                            </ul>)
 
                     } else if (Array.isArray(eachObject[eachKey])) {
                         const nextOrderKey = eachKey
-                        list.push(<li key={`${currentTitle}-${i}-${j}`}><div className="ResultsCell AlignLeft"><ShowDataRecursive obj={{ [nextOrderKey]: eachObject[nextOrderKey] }} order={{}} /></div></li>)
+                        tempList.push(
+                            <ul>
+                                <li key={`${currentTitle}-${i}-${j}`}>
+                                    <div className="ResultsCell AlignLeft">
+                                        <ShowDataRecursive obj={{ [nextOrderKey]: eachObject[nextOrderKey] }} order={{}} />
+                                    </div>
+                                </li>
+                            </ul>)
                     }
                     j++;
 
                 }
                 i++;
-
+                list.push(<div className="DivBorder">{tempList}</div>)
             }
         }
         console.log(list)
@@ -167,7 +200,7 @@ export default function ShowDataRecursive({ obj = {}, order = {}, expand = false
                 <div className="ResultsBody">
                     <div className="ResultsRow">
                         <div className="ResultsCell">
-                            <span id={`id-${currentTitle}`}>{currentTitle}{" : "}</span><br />
+                            <span id={`id-${currentTitle}`}>{currentTitle}{": "}</span><br />
                             <Button id={`id-${currentTitle}`} onClick={handleToExpand} text={toExpand ? <div>Collaspe</div> : <div>Expand</div>} /><br />
                             {toExpand && handleRescursive()}
                         </div>
