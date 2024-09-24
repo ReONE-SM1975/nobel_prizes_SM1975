@@ -17,8 +17,8 @@ export default function DropDownDataList ({className, list, options=[], name, id
             />
             <datalist id={list}>
                     {
-                        options.map(option => 
-                            <option value={`${option}`} ></option>
+                        options.map((option,idx) => 
+                            <option key={`${option}${idx}`} value={`${option}`}></option>
                         )
                     }
                     </datalist>

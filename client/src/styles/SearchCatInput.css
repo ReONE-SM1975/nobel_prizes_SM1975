@@ -1,0 +1,9 @@
+.Cat_Hints {
+    color:red;
+    font-size:calc(0.1vh + 2vmin)
+}
+.Cat_Options {
+    color: red;
+    font-size: calc(0.2vh + 2vmin);
+    font-style:italic;
+}

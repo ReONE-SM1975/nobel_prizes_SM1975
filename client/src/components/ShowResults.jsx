@@ -1,89 +1,99 @@
-import React, {useState,useEffect} from "react";
-//import axios from "axios"
+import React, { useState, useEffect, useContext } from "react";
+import ShowDataRecursive from "../components/ShowDataRecursive";
 import "../styles/ShowResults.css";
+import { PARENTSCONS, CHILDCONS, SPECIAL } from "../constants/constants";
 
-const resultTexts = (resultNum = 0) => {
-    resultNum = isNaN(parseInt(resultNum)) ? 0 : parseInt(resultNum);
-    let single = "";
-    if (resultNum !== 1){
-        single = "s"
-    }
-    return ["Found ", `${resultNum}`, ` result${single}.`];
-}
+import { ResultContext } from "../context/ResultContext"
 
-export default function ShowResults({data=[]}){
-    const [displayData, setDisplayData] = useState(data);
+export default function ShowResults() {
+    const [displayData, setDisplayData] = useState([]);
     const [searchFound, setSearchFound] = useState(0);
-    
-    useEffect(()=>{
-        setDisplayData(data)
-        setSearchFound(resultTexts(data.length))
-    },[data]); 
-    
-    function laureatesDisplay (items) {
-        return (
-            <div>
-                { items && items.map(({id, surname, firstname, motivation, share}, idc) => {
-                    return (
-                        <div key={`${firstname}${id}${idc}`}>
-                            <div className="ResultsTable">
-                                <div className="ResultsBody">
-                                    <div className="ResultsRow" >
-                                        <div className="ResultsCell">{id} </div>
-                                        <div className="ResultsCell">{idc + 1} / {share}</div>
-                                        <div className="ResultsCell">{firstname} {surname ? surname : ""}</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="ResultsTable">
-                                <div className="ResultsBody">
-                                    <div className="ResultRow">
-                                        <div className="ResultsCell">{motivation}</div>     
-                                    </div>
-                                </div>
-                            </div>
-                        </div>            
-                    );
-                }) }
-            </div>
-            
-        );
+
+    const { getResult } = useContext(ResultContext)
+
+    const { LAUREATES, PRIZES, AFFILIATIONS } = PARENTSCONS
+    const { ID, YEAR, CATEGORY, MOTIVATION, NAME, CITY, COUNTRY, SHARE, OVERALLMOTIVATION } = CHILDCONS
+    const { FIRSTNAME, SURNAME } = SPECIAL
+
+    const laureatesOrders = {
+        [LAUREATES]: [ID, FIRSTNAME, SURNAME,
+            {
+                [PRIZES]: [YEAR, CATEGORY, MOTIVATION,
+                    {
+                        [AFFILIATIONS]: [NAME, CITY, COUNTRY]
+                    }
+                ]
+            }
+        ]
     }
 
-    function prizeDisplay (prizes) {
-        return (
-            <div>{/* parent div */}
-                    { prizes && prizes.map((prize,idx) => { 
-                        return (
-                        <div key={idx}>
-                            <div className="ResultsTable">
-                                <div className="ResultsBody">
-                                    <div className="ResultsRow" >
-                                        <div className="ResultsCell"><h3>{`[${idx + 1}]`}</h3></div>
-                                        <div className="ResultsCell"><h3>{`${prize.year} `}</h3></div>
-                                        <div className="ResultsCell Capital"><h3>{`${prize.category}`}</h3></div>
-                                    </div>
+    const prizesOrders = {
+        [PRIZES]: [CATEGORY, YEAR, OVERALLMOTIVATION,
+            {
+                [LAUREATES]: [MOTIVATION, ID, FIRSTNAME, SURNAME, SHARE]
+            }
+        ]
+    }
+
+    const resultTexts = (resultNum = 0) => {
+        resultNum = isNaN(parseInt(resultNum)) ? 0 : parseInt(resultNum);
+        let single = "";
+        if (resultNum !== 1) {
+            single = "s"
+        }
+        return ["Found ", `${resultNum}`, ` result${single}.`];
+    }
+
+    useEffect(() => {
+        setDisplayData(getResult)
+        setSearchFound(() => {
+            console.log("showResult function searchFound:", getResult)
+            const { prizes, laureates } = getResult
+            if (prizes) {
+                return resultTexts(prizes.length)
+            } else if (laureates) {
+                return resultTexts(laureates.length)
+            } else {
+                return resultTexts(0)
+            }
+        })
+    }, [getResult])
+
+    function prizeDisplay(data) {
+        const { prizes, laureates } = data;
+        if (prizes) {
+
+            return (
+                <div>
+                    {prizes &&
+                        <div>
+                            <div className="Shrink Capital">
+                                <div className="Flex-grow">
+                                    <ShowDataRecursive obj={data} order={prizesOrders}
+                                        expand={false} />
+                                </div>
+
+                            </div>
+                        </div>}
+                </div>
+
+            );
+        } else if (laureates) {
+            return (
+                <>
+                    {laureates &&
+                        <div>
+                            <div className="Shrink Capital">
+                                <div className="Flex-grow">
+                                    <ShowDataRecursive obj={data} order={laureatesOrders} />
                                 </div>
                             </div>
-                        { prize.overallMotivation ? 
-                            <div className="ResultsTable">
-                                <div className="ResultsBody">
-                                    <div className="ResultsRow">
-                                        <div className="ResultsCell Extend"><h3>{prize.overallMotivation && `${prize.overallMotivation}`}</h3></div>
-                                    </div>
-                                </div>
-                            </div>: ""}
-                   
-                        {prize.laureates && laureatesDisplay(prize.laureates)}
-                    </div>
-                    
-                );})
-            }
-            </div>
-            
-        );
+                        </div>}
+                </>
+            )
+        }
     }
-    
+
 
 
 
@@ -91,15 +101,15 @@ export default function ShowResults({data=[]}){
         <div className="ShowResults">
             <div className="ShowResults__body">
                 <div className="ResultsHeader">
-                    {`${searchFound[0]}`}
-                    <span className="ResultNumber">{`${searchFound[1]}`}</span>
-                    {`${searchFound[2]}`}
+                    {searchFound && `${searchFound[0]}`}
+                    <span className="ResultNumber">{searchFound && `${searchFound[1]}`}</span>
+                    {searchFound && `${searchFound[2]}`}
                 </div>
-                
-                    { displayData && prizeDisplay(displayData)}
-                
-                
-                
+
+                {displayData && prizeDisplay(displayData)}
+
+
+
             </div>
         </div>
     )
