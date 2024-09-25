@@ -8,114 +8,66 @@ from rest_framework.response import Response
 import requests
 import json
 
-CONS = {
-    "LAUREATES":"laureates",
-    "PRIZES":"prizes",
-}
-PRIZES = {
-    "CATEGORY":"category",
-    "LAUREATES":"laureates",
-    "MOTIVATION":"motivation",
-    "OVERALLMOTIVATION":"overallMotivation",
-    "YEAR":"year",
-    "YEARTO":"yearTo",
-    "AFFILIATIONS":"affiliation"
-}
-CATEGORY = {
-    "CHEMISTRY": "chemistry",
-    "ECONOMICS": "economics",
-    "LITERATURE": "literature",
-    "MEDICINE": "medicine",
-    "PEACE": "peace",
-    "PHYSICS": "physics",
-}
-LAUREATES = {
-    "AFFILIATIONS":"affiliations",
-    "BORN":"born",
-    "BORNCOUNTRY":"bornCountry",
-    "BORNCOUNTRYCODE":"bornCountryCode",
-    "BORNCITY": "bornCity",
-    "BORNDATE":"bornDate",
-    "BORNDATETO":"bornDateTo",
-    "DIED":"died",
-    "DIEDCITY":"diedCity",
-    "DIEDCOUNTRY":"diedCountry",
-    "DIEDCOUNTRYCODE":"diedCountryCode",
-    "DIEDDATE":"diedDate",
-    "DIEDDATETO":"diedDateTo",
-    "ID" : "id",
-    "KEYWORD":"keyword",
-    "GENDER":"gender",
-    "MOTIVATION":"motivation",
-    "SHARE":"share",
-}
-AFFILIATIONS = {
-    "NAME":"name",
-    "CITY":"city",
-    "COUNTRY":"country",
-}
-OTHERS = {
-    "FIRSTNAME":"firstname",
-    "SURNAME": "surname",
-    "KEYWORD": "keyword",
-    "ID":"id",
-    "IDTO":"idTo",
-}
-URL = {
-    "URL":"https://api.nobelprize.org/v1/",
-    "PRIZEJSON":"prize.json",
-    "LAUREATEJSON":"laureate.json",
-    "COUNTRYJSON":"country.json",
-}
+from .constants import PARENTSCONS, CHILDCONS_T1, CHILDCONS_T2, CHILDCONS_T3, CHILDCONS_T4, SPECIAL, CATEGORYLIST, URL
+
+PRIZES, LAUREATES, AFFILIATIONS = PARENTSCONS.values()
+BORN, BORNCOUNTRY, BORNCOUNTRYCODE, BORNCITY, BORNDATE  = CHILDCONS_T1.values()
+CATEGORY, CITY, COUNTRY, DIED, DIEDCITY, DIEDCOUNTRY,  = CHILDCONS_T2.values()
+DIEDCOUNTRYCODE, DIEDDATE, GENDER, ID = CHILDCONS_T3.values()
+MOTIVATION, NAME, OVERALLMOTIVATION, SHARE, YEAR, YEARTO = CHILDCONS_T4.values()
+CHEMISTRY, ECONOMICS, LITERATURE, MEDICINE, PEACE, PHYSICS = CATEGORYLIST.values()
+FULLNAME, KEYWORD, FIRSTNAME, SURNAME, IDTO = SPECIAL.values()
+URL, PRIZESJSON, LAUREATESJSON, COUNTRYJSON = URL.values()
+
 # Create your views here.
 def writePrizes(year, category, overallmotivation, laureates=[]):
     return {
-        "year": str(year),
-        "category": str(category),
-        "overallMotivation": str(overallmotivation),
-        "laureates": list(laureates),
+        YEAR : str(year),
+        CATEGORY : str(category),
+        OVERALLMOTIVATION : str(overallmotivation),
+        LAUREATES : list(laureates),
     }
 
 def writePrizesLaureates(id, firstname, surname, motivation, share):
     return {
-        "id":str(id),
-        "firstname":str(firstname),
-        "surname":str(surname),
-        "motivation":str(motivation),
-        "share":str(share),
+        ID :str(id),
+        FIRSTNAME :str(firstname),
+        SURNAME :str(surname),
+        MOTIVATION :str(motivation),
+        SHARE :str(share),
     }
 
 def writeLaureates(id,firstname,surname,born,died,borncountry,borncountrycode,borncity,diedcountry,diedcountrycode,diedcity,gender,prizes=[]):
     return {
-        "id":str(id),
-        "firstname":str(firstname),
-        "surname":str(surname),
-        "born":str(born),
-        "died":str(died),
-        "bornCountry":str(borncountry),
-        "bornCountryCode":str(borncountrycode),
-        "bornCity":str(borncity),
-        "diedCountry":str(diedcountry),
-        "diedCountryCode":str(diedcountrycode),
-        "diedCity":str(diedcity),
-        "gender":str(gender),
-        "prizes":list(prizes),
+        ID :str(id),
+        FIRSTNAME :str(firstname),
+        SURNAME :str(surname),
+        BORN :str(born),
+        DIED :str(died),
+        BORNCOUNTRY :str(borncountry),
+        BORNCOUNTRYCODE :str(borncountrycode),
+        BORNCITY :str(borncity),
+        DIEDCOUNTRY :str(diedcountry),
+        DIEDCOUNTRYCODE :str(diedcountrycode),
+        DIEDCITY :str(diedcity),
+        GENDER :str(gender),
+        PRIZES :list(prizes),
     }
 
 def writeLaureatesPrizes(year,category,share,motivation,affiliations=[]):
     return {
-        "year":str(year),
-        "category":str(category),
-        "share":str(share),
-        "motivation":str(motivation),
-        "affiliations":list(affiliations),
+        YEAR :str(year),
+        CATEGORY :str(category),
+        SHARE :str(share),
+        MOTIVATION :str(motivation),
+        AFFILIATIONS :list(affiliations),
     }
 
 def writeLaureatesPrizesAffiliations(name,city,country):
     return {
-        "name":str(name),
-        "city":str(city),
-        "country":str(country),
+        NAME :str(name),
+        CITY :str(city),
+        COUNTRY :str(country),
     }
 
 def destructing(my_dict, *keys):
@@ -157,7 +109,7 @@ def get_randomWinner(request):
         char = "&"
         for key in payload:
             text.append(f"{key}={payload[key]}")
-        response = requests.get(f"https://api.nobelprize.org/v1/prize.json?{char.join(text)}")
+        response = requests.get(f"{URL}{PRIZESJSON}?{char.join(text)}")
         return Response(response.json())
     message = {
         "message" : "payload is empty",
@@ -171,9 +123,9 @@ def searchofficial(request):
     payload = request.data
     if (payload):
         print("payload",payload, dict(payload))
-        query_prize = ["year", "yearTo", "category"]
-        query_laureates = ["city","country","affiliation", "keyword"]
-        query_others = ["firstname", "surname","id", "idTo"]
+        query_prize = [YEAR, YEARTO, CATEGORY]
+        query_laureates = [CITY, COUNTRY , AFFILIATIONS, KEYWORD]
+        query_others = [FIRSTNAME, SURNAME , ID , IDTO]
         result = {
             "prizes":[]
         }
@@ -182,9 +134,10 @@ def searchofficial(request):
         laureatesquery = []
         othersquery = []
         char = "&"
-        url = "https://api.nobelprize.org/v1/"
-        prizesjson = "prize.json"
-        laureatesjson = "laureate.json"
+        url = URL
+        prizesjson = PRIZESJSON
+        laureatesjson = LAUREATESJSON
+        countryjson = COUNTRYJSON
         
         for key in dict(payload):
             # bug: empty value should make list empty
