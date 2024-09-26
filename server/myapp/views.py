@@ -122,18 +122,17 @@ def get_randomWinner(request):
 def searchofficial(request):
     payload = request.data
     if (payload):
-        print("payload",payload, dict(payload))
+        # print("payload",payload, dict(payload))
         query_prize = [YEAR, YEARTO, CATEGORY]
         query_laureates = [CITY, COUNTRY , AFFILIATIONS, KEYWORD]
         query_others = [FIRSTNAME, SURNAME , ID , IDTO]
-        result = {
-            "prizes":[]
-        }
+        result = {}
         ids_group = []
         prizesquery = []
         laureatesquery = []
         othersquery = []
         char = "&"
+        space = "%20"
         url = URL
         prizesjson = PRIZESJSON
         laureatesjson = LAUREATESJSON
@@ -150,9 +149,9 @@ def searchofficial(request):
             elif key in query_others and payload[key]:
                 othersquery.append(key)
                 
-        print("prizesquery:",prizesquery)
-        print("laureatesquery:",laureatesquery)
-        print("othersquery:",othersquery)
+        # print("prizesquery:",prizesquery)
+        # print("laureatesquery:",laureatesquery)
+        # print("othersquery:",othersquery)
         
         if prizesquery:
             response = requests.get(f"{url}{prizesjson}?{char.join(prizesquery)}")
@@ -163,9 +162,10 @@ def searchofficial(request):
                 try:
                     data = response.json()
                     datalist = data.keys()
-                    print("data keys: ", datalist)
+                    # print("data keys: ", datalist)
                     if "prizes" in datalist and len(data["prizes"]):
-                        print("prizes length:",len(data["prizes"]))
+                        # print("prizes length:",len(data["prizes"]))
+                        result[PRIZES] = []
                         for item in data["prizes"]:
                             itemlist = item.keys()
                             if "laureates" in itemlist and len(item["laureates"]):
