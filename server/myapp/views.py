@@ -163,28 +163,28 @@ def searchofficial(request):
                     data = response.json()
                     datalist = data.keys()
                     # print("data keys: ", datalist)
-                    if "prizes" in datalist and len(data["prizes"]):
+                    if PRIZES in datalist and len(data[PRIZES]):
                         # print("prizes length:",len(data["prizes"]))
                         result[PRIZES] = []
-                        for item in data["prizes"]:
+                        for item in data[PRIZES]:
                             itemlist = item.keys()
-                            if "laureates" in itemlist and len(item["laureates"]):
-                                year=item["year"]
-                                category=item["category"]
+                            if LAUREATES in itemlist and len(item[LAUREATES]):
+                                year=item[YEAR]
+                                category=item[CATEGORY]
                                 overallmotivation = ""
-                                if "overallMotivation" in itemlist:
-                                    overallmotivation = item["overallMotivation"]
+                                if OVERALLMOTIVATION in itemlist:
+                                    overallmotivation = item[OVERALLMOTIVATION]
                                 #laureates = []
-                                if "laureates" in itemlist and len(item["laureates"]):
-                                    for laur in item["laureates"]:
+                                if LAUREATES in itemlist and len(item[LAUREATES]):
+                                    for laur in item[LAUREATES]:
                                         laurlist = laur.keys()
-                                        id = laur["id"]
-                                        firstname = laur["firstname"]
+                                        id = laur[ID]
+                                        firstname = laur[FIRSTNAME]
                                         surname = ""
-                                        if "surname" in laurlist:
-                                            surname = laur["surname"]
-                                        motivation = laur["motivation"]
-                                        share = laur["share"]
+                                        if SURNAME in laurlist:
+                                            surname = laur[SURNAME]
+                                        motivation = laur[MOTIVATION]
+                                        share = laur[SHARE]
                                         
                                         testpass = 0
                                         for ele in othersquery:
@@ -192,18 +192,18 @@ def searchofficial(request):
                                                 testpass += 1
                                         if testpass == len(othersquery):
                                             temp = {
-                                                "id":id,
-                                                "firstname":firstname,
-                                                "surname": surname,
-                                                "motivation":motivation,
-                                                "share":share,
+                                                ID:id,
+                                                FIRSTNAME:firstname,
+                                                SURNAME: surname,
+                                                MOTIVATION:motivation,
+                                                SHARE:share,
                                             }
-                                            result["prizes"].append(
+                                            result[PRIZES].append(
                                                 {
-                                                    "year":year,
-                                                    "category":category,
-                                                    "overallMotivation":overallmotivation,
-                                                    "laureates":[temp]
+                                                    YEAR:year,
+                                                    CATEGORY:category,
+                                                    OVERALLMOTIVATION:overallmotivation,
+                                                    LAUREATES:[temp]
                                                 }
                                             )
                         return Response(result)                    
