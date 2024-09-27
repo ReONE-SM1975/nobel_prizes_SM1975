@@ -128,8 +128,11 @@ def searchofficial(request):
         query_others = [FIRSTNAME, SURNAME , ID , IDTO]
         result = {}
         ids_group = []
+        ids_query = []
         prizesquery = []
+        prizesObjs = []
         laureatesquery = []
+        laureatesObjs = []
         othersquery = []
         char = "&"
         space = "%20"
@@ -142,10 +145,10 @@ def searchofficial(request):
             # bug: empty value should make list empty
             if key in query_prize and payload[key]:
                 prizesquery.append(f"{key}={payload[key]}")
-                
+                prizesObjs.append([key,payload[key]])
             elif key in query_laureates and payload[key]:
                 laureatesquery.append(f"{key}={payload[key]}")
-                
+                laureatesObjs.append([key, payload[key]]) 
             elif key in query_others and payload[key]:
                 othersquery.append(key)
                 
@@ -156,16 +159,16 @@ def searchofficial(request):
         if prizesquery:
             response = requests.get(f"{url}{prizesjson}?{char.join(prizesquery)}")
             status = response.status_code
+            data = response.json()
+            datalist = data.keys()
             if not laureatesquery and not othersquery:
-                return Response(response.json())
+                return Response(data)
             elif othersquery and not laureatesquery:
                 try:
-                    data = response.json()
-                    datalist = data.keys()
+                    result[PRIZES] = []
                     # print("data keys: ", datalist)
                     if PRIZES in datalist and len(data[PRIZES]):
                         # print("prizes length:",len(data["prizes"]))
-                        result[PRIZES] = []
                         for item in data[PRIZES]:
                             itemlist = item.keys()
                             if LAUREATES in itemlist and len(item[LAUREATES]):
@@ -217,18 +220,34 @@ def searchofficial(request):
                         "status":status
                         })
                 
-            # elif laureatesquery and not othersquery:
+            elif laureatesquery: 
+                result[LAUREATES] = []
 
-            # elif laureatesquery and othersquery:
+                if PRIZES in datalist and len(data[PRIZES]):
+                    for item in data[PRIZES]:
+                        itemlist = item.keys()
+                        if LAUREATES in itemlist and len(item[LAUREATES]):
+                            for laur in item[LAUREATES]:
+                                ids_group.append(laur[ID])
+                                ids_query.append(f"id={laur[ID]}")
+                    response = requests.get(f"{url}{laureatesjson}")    
+                    pass
+                # if not othersquery:
+                    
+                # elif othersquery:
         
-        # elif not prizesquery:
+        elif not prizesquery:
             
-            # if not laureatesquery and not othersquery:
+            if not laureatesquery and not othersquery:
+                response = requests.get(f"{url}{laureatesjson}")
+                return Response(response.json())
                 # return Response({"error": "payload and official page query not matching or no payload matches found"})    
             
             # elif not laureatesquery and othersquery:
             
-            # elif laureatesquery and othersquery:   
+            elif laureatesquery and othersquery: 
+                response = requests.get(f"{url}{laureatesjson}{char.join(laureatesquery)}")
+                return Response(response.json())
 
             
         return Response({"message":"You have provided non prize query search", "payload":str(request.data),"request":str(request)})

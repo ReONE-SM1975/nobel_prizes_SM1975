@@ -1,7 +1,7 @@
 PARENTSCONS = {
     "LAUREATES":"laureates",
     "PRIZES":"prizes",
-    "AFFILIATIONS":"affiliation",
+    "AFFILIATIONS":"affiliations",
 }
 CHILDCONS_T1 = {
     "BORN": "born",

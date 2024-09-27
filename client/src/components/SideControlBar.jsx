@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 
-import {ResultContext} from "../context/ResultContext"
+import { ResultContext } from "../context/ResultContext"
 
 import Button from "../components/Button";
 import SearchYearInput from "./SearchYearInput";
@@ -22,7 +22,7 @@ export default function SideControlBar() {
         "surname": "",
         "country": "",
         "city": "",
-        "affiliation": "",
+        "affiliations": "",
         "id": "",
         "idTo": "",
         "keyword": "",
