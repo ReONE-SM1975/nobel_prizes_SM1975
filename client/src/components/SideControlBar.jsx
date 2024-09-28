@@ -86,8 +86,8 @@ export default function SideControlBar() {
                     <label htmlFor="city" className="SearchLabel">City:</label>
                     <SearchBasicInput id="city" name="city" className="SearchTextBar" onChange={setSearchData} blocktype={['digit', 'period']} /><br />
 
-                    <label htmlFor="affiliation" className="SearchLabel">Affiliation:</label>
-                    <SearchBasicInput id="affiliation" name="affiliation" className="SearchTextBar" onChange={setSearchData} /><br />
+                    <label htmlFor="affiliations" className="SearchLabel">Affiliation:</label>
+                    <SearchBasicInput id="affiliations" name="affiliations" className="SearchTextBar" onChange={setSearchData} /><br />
 
                     <label htmlFor="keyword" className="SearchLabel">Keyword:</label>
                     <SearchBasicInput id="keyword" name="keyword" className="SearchTextBar" onChange={setSearchData} /><br />

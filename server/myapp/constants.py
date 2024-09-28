@@ -4,6 +4,7 @@ PARENTSCONS = {
     "AFFILIATIONS":"affiliations",
 }
 CHILDCONS_T1 = {
+    "AFFILIATION" : "affiliation",
     "BORN": "born",
     "BORNCOUNTRY": "bornCountry",
     "BORNCOUNTRYCODE": "bornCountryCode",

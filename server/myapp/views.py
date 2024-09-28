@@ -11,13 +11,13 @@ import json
 from .constants import PARENTSCONS, CHILDCONS_T1, CHILDCONS_T2, CHILDCONS_T3, CHILDCONS_T4, SPECIAL, CATEGORYLIST, URL
 
 PRIZES, LAUREATES, AFFILIATIONS = PARENTSCONS.values()
-BORN, BORNCOUNTRY, BORNCOUNTRYCODE, BORNCITY, BORNDATE  = CHILDCONS_T1.values()
+AFFILIATION, BORN, BORNCOUNTRY, BORNCOUNTRYCODE, BORNCITY, BORNDATE  = CHILDCONS_T1.values()
 CATEGORY, CITY, COUNTRY, DIED, DIEDCITY, DIEDCOUNTRY,  = CHILDCONS_T2.values()
 DIEDCOUNTRYCODE, DIEDDATE, GENDER, ID = CHILDCONS_T3.values()
 MOTIVATION, NAME, OVERALLMOTIVATION, SHARE, YEAR, YEARTO = CHILDCONS_T4.values()
 CHEMISTRY, ECONOMICS, LITERATURE, MEDICINE, PEACE, PHYSICS = CATEGORYLIST.values()
 FULLNAME, KEYWORD, FIRSTNAME, SURNAME, IDTO = SPECIAL.values()
-URL, PRIZESJSON, LAUREATESJSON, COUNTRYJSON = URL.values()
+URL, PRIZEJSON, LAUREATEJSON, COUNTRYJSON = URL.values()
 
 # Create your views here.
 def writePrizes(year, category, overallmotivation, laureates=[]):
@@ -109,7 +109,7 @@ def get_randomWinner(request):
         char = "&"
         for key in payload:
             text.append(f"{key}={payload[key]}")
-        response = requests.get(f"{URL}{PRIZESJSON}?{char.join(text)}")
+        response = requests.get(f"{URL}{PRIZEJSON}?{char.join(text)}")
         return Response(response.json())
     message = {
         "message" : "payload is empty",
@@ -137,8 +137,8 @@ def searchofficial(request):
         char = "&"
         space = "%20"
         url = URL
-        prizesjson = PRIZESJSON
-        laureatesjson = LAUREATESJSON
+        prizesjson = PRIZEJSON
+        laureatesjson = LAUREATEJSON
         countryjson = COUNTRYJSON
         
         for key in dict(payload):
@@ -147,8 +147,13 @@ def searchofficial(request):
                 prizesquery.append(f"{key}={payload[key]}")
                 prizesObjs.append([key,payload[key]])
             elif key in query_laureates and payload[key]:
-                laureatesquery.append(f"{key}={payload[key]}")
-                laureatesObjs.append([key, payload[key]]) 
+                # 'affiliations' in laureates query is 'affiliation'. 'affiliations' is the return response key. query is 'affiliation'
+                if key == AFFILIATIONS:
+                    laureatesquery.append(f"{AFFILIATION}={payload[key]}")
+                    laureatesObjs.append([AFFILIATION, payload[key]])
+                else :
+                    laureatesquery.append(f"{key}={payload[key]}")
+                    laureatesObjs.append([key, payload[key]]) 
             elif key in query_others and payload[key]:
                 othersquery.append(key)
                 
@@ -239,15 +244,21 @@ def searchofficial(request):
         elif not prizesquery:
             
             if not laureatesquery and not othersquery:
-                response = requests.get(f"{url}{laureatesjson}")
+                
+                response = requests.get(f"{url}{laureatesjson}?gender=All&{laureatesquery}")
                 return Response(response.json())
                 # return Response({"error": "payload and official page query not matching or no payload matches found"})    
             
             # elif not laureatesquery and othersquery:
             
-            elif laureatesquery and othersquery: 
-                response = requests.get(f"{url}{laureatesjson}{char.join(laureatesquery)}")
-                return Response(response.json())
+            elif laureatesquery and not othersquery: 
+                try :
+                    print("laureatesquery:",laureatesquery)
+                    query = char.join(laureatesquery) if len(laureatesquery) > 1 else laureatesquery
+                    response = requests.get(f"{URL}{LAUREATEJSON}?gender=All&{char.join(laureatesquery)}")
+                    return Response(response.json())
+                except Exception as e:
+                    return Response({"error":str(e),"payload":str(request.data),"request":str(request),"laureatesquery":str(laureatesquery)})
 
             
         return Response({"message":"You have provided non prize query search", "payload":str(request.data),"request":str(request)})
