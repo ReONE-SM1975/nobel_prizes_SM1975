@@ -154,9 +154,9 @@ def searchofficial(request):
                 othersquery.append(key)
         if laureatesquery:
             laureatesquery[:0] =["gender=All"]       
-        # print("prizesquery:",prizesquery)
-        # print("laureatesquery:",laureatesquery)
-        # print("othersquery:",othersquery)
+        print("prizesquery:",prizesquery)
+        print("laureatesquery:",laureatesquery)
+        print("othersquery:",othersquery)
         
         if prizesquery:
             response = requests.get(f"{URL}{PRIZEJSON}?{char.join(prizesquery)}")
@@ -251,8 +251,7 @@ def searchofficial(request):
             elif laureatesquery and not othersquery: 
                 try :
                     print("laureatesquery:",laureatesquery)
-                    query = char.join(laureatesquery) if len(laureatesquery) > 1 else laureatesquery
-                    response = requests.get(f"{URL}{LAUREATEJSON}?gender=All&{char.join(laureatesquery)}")
+                    response = requests.get(f"{URL}{LAUREATES}?{char.join(laureatesquery)}")
                     return Response(response.json())
                 except Exception as e:
                     return Response({"error":str(e),"payload":str(request.data),"request":str(request),"laureatesquery":str(laureatesquery)})
