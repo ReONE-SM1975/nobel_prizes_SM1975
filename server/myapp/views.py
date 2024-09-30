@@ -88,17 +88,17 @@ def hello_world(request):
 
 @api_view(['GET'])
 def get_allPrizes(request):
-    response = requests.get('https://api.nobelprize.org/v1/prize.json')
+    response = requests.get(f'{URL}{PRIZEJSON}')
     return Response(response.json())
 
 @api_view(['GET'])
 def get_allLaureate(request):
-    response = requests.get('https://api.nobelprize.org/v1/laureate.json')
+    response = requests.get(f'{URL}{LAUREATEJSON}')
     return Response(response.json())
 
 @api_view(['GET'])
 def get_allCountries(request):
-    response = requests.get('https://api.nobelprize.org/v1/country.json')
+    response = requests.get(f'{URL}{COUNTRYJSON}')
     return Response(response.json())
 
 @api_view(['POST'])
@@ -136,10 +136,6 @@ def searchofficial(request):
         othersquery = []
         char = "&"
         space = "%20"
-        url = URL
-        prizesjson = PRIZEJSON
-        laureatesjson = LAUREATEJSON
-        countryjson = COUNTRYJSON
         
         for key in dict(payload):
             # bug: empty value should make list empty
@@ -156,13 +152,14 @@ def searchofficial(request):
                     laureatesObjs.append([key, payload[key]]) 
             elif key in query_others and payload[key]:
                 othersquery.append(key)
-                
+        if laureatesquery:
+            laureatesquery[:0] =["gender=All"]       
         # print("prizesquery:",prizesquery)
         # print("laureatesquery:",laureatesquery)
         # print("othersquery:",othersquery)
         
         if prizesquery:
-            response = requests.get(f"{url}{prizesjson}?{char.join(prizesquery)}")
+            response = requests.get(f"{URL}{PRIZEJSON}?{char.join(prizesquery)}")
             status = response.status_code
             data = response.json()
             datalist = data.keys()
@@ -235,7 +232,7 @@ def searchofficial(request):
                             for laur in item[LAUREATES]:
                                 ids_group.append(laur[ID])
                                 ids_query.append(f"id={laur[ID]}")
-                    response = requests.get(f"{url}{laureatesjson}")    
+                    responselaur = requests.get(f"{URL}{LAUREATEJSON}?{char.join(laureatesquery)}")    
                     pass
                 # if not othersquery:
                     
@@ -245,8 +242,8 @@ def searchofficial(request):
             
             if not laureatesquery and not othersquery:
                 
-                response = requests.get(f"{url}{laureatesjson}?gender=All&{laureatesquery}")
-                return Response(response.json())
+                responselur = requests.get(f"{URL}{LAUREATEJSON}?{char.join(laureatesquery)}")
+                return Response(responselur.json())
                 # return Response({"error": "payload and official page query not matching or no payload matches found"})    
             
             # elif not laureatesquery and othersquery:
