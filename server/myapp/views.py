@@ -152,22 +152,60 @@ def searchofficial(request):
                     laureatesObjs.append([key, payload[key]]) 
             elif key in query_others and payload[key]:
                 othersquery.append(key)
-        if laureatesquery:
-            laureatesquery[:0] =["gender=All"]       
+        
         print("prizesquery:",prizesquery)
         print("laureatesquery:",laureatesquery)
         print("othersquery:",othersquery)
         
-        if prizesquery:
-            response = requests.get(f"{URL}{PRIZEJSON}?{char.join(prizesquery)}")
-            status = response.status_code
-            data = response.json()
-            datalist = data.keys()
-            if not laureatesquery and not othersquery:
-                return Response(data)
-            elif othersquery and not laureatesquery:
-                try:
-                    result[PRIZES] = []
+        if laureatesquery:
+            laureatesquery[:0] =["gender=All"]
+            try:
+                response = requests.get(f"{URL}{LAUREATEJSON}?{char.join(laureatesquery)}")
+                data = response.json()
+                datalist = data.keys()
+                result[LAUREATES] = []
+                if not prizesquery and not othersquery:
+                    return Response(response.json())
+                elif not prizesquery and othersquery:
+                    testNum = len(othersquery)
+                    if LAUREATES in data and len(data[LAUREATES]):
+                        for item in data[LAUREATES]:
+                            templaur = {
+                                ID: item[ID],
+                                FIRSTNAME:item[FIRSTNAME],
+                                SURNAME:item[SURNAME],
+                                BORN:item[BORN]
+                            }
+                            temppriz = {}
+                            tempaffi = {}
+                        pass
+                elif prizesquery and not othersquery:
+                    testNum = len(prizesquery)
+                    pass
+                elif prizesquery and othersquery:
+                    test1Num = len(prizesquery)
+                    test2Num = len(othersquery)
+                    pass
+        
+
+            except Exception as e:
+                return Response({
+                    "message": "laureates query logic error(s)",
+                    "payload": str(payload.data),
+                    "error": str(e),
+                    "status": str(response.status_code),
+                })
+        elif not laureatesquery:
+            try :
+                result[PRIZES] = []
+                response = requests.get(f"{URL}{PRIZEJSON}?{char.join(prizesquery)}")
+                status = response.status_code
+                data = response.json()
+                datalist = data.keys()
+                if prizesquery and not othersquery:
+                    return Response(data)
+                elif prizesquery and othersquery:
+                    
                     # print("data keys: ", datalist)
                     if PRIZES in datalist and len(data[PRIZES]):
                         # print("prizes length:",len(data["prizes"]))
@@ -215,52 +253,18 @@ def searchofficial(request):
                                 
                     else: 
                         return Response(result)
-                except Exception as e:
+                elif not prizesquery and not othersquery:
                     return Response({
-                        "message":"[o]prizes [o]others [x]laureates", 
-                        "error":str(e),
-                        "status":status
-                        })
-                
-            elif laureatesquery: 
-                result[LAUREATES] = []
-
-                if PRIZES in datalist and len(data[PRIZES]):
-                    for item in data[PRIZES]:
-                        itemlist = item.keys()
-                        if LAUREATES in itemlist and len(item[LAUREATES]):
-                            for laur in item[LAUREATES]:
-                                ids_group.append(laur[ID])
-                                ids_query.append(f"id={laur[ID]}")
-                    responselaur = requests.get(f"{URL}{LAUREATEJSON}?{char.join(laureatesquery)}")    
-                    pass
-                # if not othersquery:
-                    
-                # elif othersquery:
-        
-        elif not prizesquery:
-            
-            if not laureatesquery and not othersquery:
-                
-                responselur = requests.get(f"{URL}{LAUREATEJSON}?{char.join(laureatesquery)}")
-                return Response(responselur.json())
-                # return Response({"error": "payload and official page query not matching or no payload matches found"})    
-            
-            # elif not laureatesquery and othersquery:
-            
-            elif laureatesquery and not othersquery: 
-                try :
-                    print("laureatesquery:",laureatesquery)
-                    response = requests.get(f"{URL}{LAUREATES}?{char.join(laureatesquery)}")
-                    return Response(response.json())
-                except Exception as e:
-                    return Response({"error":str(e),"payload":str(request.data),"request":str(request),"laureatesquery":str(laureatesquery)})
-
-            
-        return Response({"message":"You have provided non prize query search", "payload":str(request.data),"request":str(request)})
-
+                        "message" : "no search provided or scripts logic has error(s)"
+                    })
+            except Exception as e:
+                return Response({
+                    "message":"prizesquery logic error(s)", 
+                    "error":str(e),
+                    "status":str(status)
+                    })     
     return Response({
-                    "message" : "payload has error or empty",
+                    "message" : "payload is emnpty or code has error(s)",
                     "payload" : str(request.data),
                     "request" : str(request),
                     })
