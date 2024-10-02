@@ -20,6 +20,18 @@ FULLNAME, KEYWORD, FIRSTNAME, SURNAME, IDTO = SPECIAL.values()
 URL, PRIZEJSON, LAUREATEJSON, COUNTRYJSON = URL.values()
 
 # Create your views here.
+def tempDict(data, key):
+    datalist = data.keys()
+    tempDict = {}
+    if key in datalist and len(data[key]):
+        for item in data[key]:
+            for itemKey in item:
+                if type(item[itemKey], str):
+                    tempDict[itemKey] = item[itemKey]
+                elif type(item[itemKey], list):
+                    tempDict[itemKey] = []
+    return tempDict
+    
 def writePrizes(year, category, overallmotivation, laureates=[]):
     return {
         YEAR : str(year),
