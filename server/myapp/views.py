@@ -21,6 +21,10 @@ URL, PRIZEJSON, LAUREATEJSON, COUNTRYJSON = URL.values()
 
 # Create your views here.
 def tempDict(data, key):
+    # purpose of the fn is to prepare a backbone for potential matching data, then
+    # check if the payload[key] matches with response.data.json()
+    # if there are more than one test, it should not repeate the same result
+    # payload[key] are linear, while respnse.data.json are data[key] = [{},{}]
     datalist = data.keys()
     tempDict = {}
     if key in datalist and len(data[key]):
