@@ -31,10 +31,10 @@ def tempDict(data, key):
         for item in data[key]:
             for itemKey in item:
                 if type(item[itemKey], str):
-                    tempDict[itemKey] = item[itemKey]
+                    tempDict[itemKey] = str(item[itemKey])
                 elif type(item[itemKey], list):
-                    tempDict[itemKey] = []
-    return tempDict
+                    tempDict[itemKey] = list([])
+    return dict(tempDict)
     
 def writePrizes(year, category, overallmotivation, laureates=[]):
     return {
@@ -217,54 +217,66 @@ def searchofficial(request):
                 response = requests.get(f"{URL}{PRIZEJSON}?{char.join(prizesquery)}")
                 status = response.status_code
                 data = response.json()
-                datalist = data.keys()
+                # datalist = data.keys()
                 if prizesquery and not othersquery:
                     return Response(data)
                 elif prizesquery and othersquery:
                     
                     # print("data keys: ", datalist)
-                    if PRIZES in datalist and len(data[PRIZES]):
+                    #if PRIZES in datalist and len(data[PRIZES]):
                         # print("prizes length:",len(data["prizes"]))
-                        for item in data[PRIZES]:
-                            itemlist = item.keys()
-                            if LAUREATES in itemlist and len(item[LAUREATES]):
-                                year=item[YEAR]
-                                category=item[CATEGORY]
-                                overallmotivation = ""
-                                if OVERALLMOTIVATION in itemlist:
-                                    overallmotivation = item[OVERALLMOTIVATION]
-                                #laureates = []
-                                if LAUREATES in itemlist and len(item[LAUREATES]):
-                                    for laur in item[LAUREATES]:
-                                        laurlist = laur.keys()
-                                        id = laur[ID]
-                                        firstname = laur[FIRSTNAME]
-                                        surname = ""
-                                        if SURNAME in laurlist:
-                                            surname = laur[SURNAME]
-                                        motivation = laur[MOTIVATION]
-                                        share = laur[SHARE]
+                        #for item in data[PRIZES]:
+                            
+                        #    itemlist = item.keys()
+                        #    if LAUREATES in itemlist and len(item[LAUREATES]):
+                                
+                        #        year=item[YEAR]
+                        #        category=item[CATEGORY]
+                        #        overallmotivation = ""
+                        #        if OVERALLMOTIVATION in itemlist:
+                        #            overallmotivation = item[OVERALLMOTIVATION]
+                                
+                        #        if LAUREATES in itemlist and len(item[LAUREATES]):
+                                    
+                        #            for laur in item[LAUREATES]:
                                         
-                                        testpass = 0
-                                        for ele in othersquery:
-                                            if payload[ele] == laur[ele]:
-                                                testpass += 1
-                                        if testpass == len(othersquery):
-                                            temp = {
-                                                ID:id,
-                                                FIRSTNAME:firstname,
-                                                SURNAME: surname,
-                                                MOTIVATION:motivation,
-                                                SHARE:share,
-                                            }
-                                            result[PRIZES].append(
-                                                {
-                                                    YEAR:year,
-                                                    CATEGORY:category,
-                                                    OVERALLMOTIVATION:overallmotivation,
-                                                    LAUREATES:[temp]
-                                                }
-                                            )
+                        #                laurlist = laur.keys()
+                        #                id = laur[ID]
+                        #                firstname = laur[FIRSTNAME]
+                        #                surname = ""
+                        #                if SURNAME in laurlist:
+                        #                    surname = laur[SURNAME]
+                        #                motivation = laur[MOTIVATION]
+                        #                share = laur[SHARE]
+                                        #
+                    
+                    for item in data[PRIZES]:
+                        
+                        for laur in item[LAUREATES]:
+                            testpass = 0
+                            for ele in othersquery:
+                                if payload[ele] == laur[ele]:
+                                    testpass += 1
+                            if testpass == len(othersquery):
+                                tempPrizes = tempDict(data,PRIZES)
+                                tempLaur = tempDict(dict({LAUREATES: item[LAUREATES]}), LAUREATES)
+                                tempPrizes[LAUREATES].append(tempLaur)
+                                result[PRIZES].append(tempPrizes)
+                                            #temp = {
+                                            #    ID:id,
+                                            #    FIRSTNAME:firstname,
+                                            #    SURNAME: surname,
+                                            #    MOTIVATION:motivation,
+                                            #    SHARE:share,
+                                            #}
+                                            #result[PRIZES].append(
+                                            #    {
+                                            #        YEAR:year,
+                                            #        CATEGORY:category,
+                                            #        OVERALLMOTIVATION:overallmotivation,
+                                            #        LAUREATES:[temp]
+                                            #    }
+                                            #)
                         return Response(result)                    
                                 
                     else: 
