@@ -186,12 +186,10 @@ def searchofficial(request):
                     testNum = len(othersquery)
                     if LAUREATES in data and len(data[LAUREATES]):
                         for item in data[LAUREATES]:
-                            templaur = {
-                                ID: item[ID],
-                                FIRSTNAME:item[FIRSTNAME],
-                                SURNAME:item[SURNAME],
-                                BORN:item[BORN]
-                            }
+                            for laur in item:
+                                for priz in laur:
+                                    pass
+                            templaur = tempDict(data, LAUREATES)
                             temppriz = {}
                             tempaffi = {}
                         pass
