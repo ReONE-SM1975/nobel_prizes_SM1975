@@ -35,6 +35,22 @@ def tempDict(data, key):
                 elif type(item[itemKey], list):
                     tempDict[itemKey] = list([])
     return dict(tempDict)
+
+def searchLaureates(payload):
+    result = []
+    search = []
+    laurKey = [CITY, COUNTRY, AFFILIATION, KEYWORD]
+    # if city true, search cityborn and citydied - 2
+    # if country true, search bornCountry and bornCountry - 2
+    # if affiliation true, search affiliation - 1
+    # if keyword true, search motivation - 1
+    
+    # if city and country true, search - 4
+    # if city and affiliation true, search affiliation with cityborn and affilation with citydied -2
+    # if city and keyword true, search motivation with cityborn and motivation and citydied - 2
+        
+    pass
+        
     
 def writePrizes(year, category, overallmotivation, laureates=[]):
     return {
@@ -138,6 +154,7 @@ def get_randomWinner(request):
 def searchofficial(request):
     payload = request.data
     if (payload):
+        allqueryKeys = [x for x in payload if payload[x]]
         # print("payload",payload, dict(payload))
         query_prize = [YEAR, YEARTO, CATEGORY]
         query_laureates = [CITY, COUNTRY , AFFILIATIONS, KEYWORD]
@@ -163,9 +180,19 @@ def searchofficial(request):
                 if key == AFFILIATIONS:
                     laureatesquery.append(f"{AFFILIATION}={payload[key]}")
                     laureatesObjs.append([AFFILIATION, payload[key]])
-                else :
-                    laureatesquery.append(f"{key}={payload[key]}")
-                    laureatesObjs.append([key, payload[key]]) 
+                elif key == CITY:
+                    laureatesquery.append(f"{BORNCITY}={payload[key]}")
+                    laureatesObjs.append([BORNCITY, payload[key]])
+                    laureatesquery.append(f"{DIEDCITY}={payload[key]}")
+                    laureatesObjs.append([DIEDCITY, payload[key]])
+                elif key == COUNTRY:
+                    laureatesquery.append(f"{BORNCOUNTRY}={payload[key]}")
+                    laureatesObjs.append([BORNCOUNTRY, payload[key]])
+                    laureatesquery.append(f"{DIEDCOUNTRY}={payload[key]}")
+                    laureatesObjs.append([DIEDCOUNTRY, payload[key]])
+                elif key == KEYWORD:
+                    laureatesquery.append(f"{MOTIVATION}={payload[key]}")
+                    laureatesObjs.append([MOTIVATION, payload[key]]) 
             elif key in query_others and payload[key]:
                 othersquery.append(key)
         
