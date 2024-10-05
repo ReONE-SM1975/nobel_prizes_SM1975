@@ -39,6 +39,7 @@ def tempDict(data, key):
 def searchLaureates(payload):
     result = []
     search = []
+    temp = []
     groupList = payload.keys()
     laurKey = [CITY, COUNTRY, AFFILIATION, KEYWORD]
     # if city true, search cityborn and citydied - 2
@@ -49,6 +50,27 @@ def searchLaureates(payload):
     # if city and country true, search - 4
     # if city and affiliation true, search affiliation with cityborn and affilation with citydied -2
     # if city and keyword true, search motivation with cityborn and motivation and citydied - 2
+    for key in payload:
+        if (payload[key]):
+            if key == KEYWORD:
+                temp.append(f"{MOTIVATION}={payload[key]}")
+                # if AFFILIATION in groupList:
+
+            elif key == CITY:
+                temp.append(f"{CITY}={payload[key]}")
+            elif key == COUNTRY:
+                temp.append(f"{COUNTRY}={payload[key]}")
+            elif key == AFFILIATIONS:
+                temp.append(f"{AFFILIATION}={payload[key]}")
+    def createSearch(item):
+        if len(search):
+            for i in range(0,len(search), 1):
+                search[i] = [search[i]] + [item]
+    
+
+             
+
+    
     if (CITY in groupList and len(payload[CITY])):
         
         temp = [ [], [] ]
