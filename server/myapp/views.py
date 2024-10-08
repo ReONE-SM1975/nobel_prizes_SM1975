@@ -50,6 +50,20 @@ def searchLaureates(payload):
     # if city and country true, search - 4
     # if city and affiliation true, search affiliation with cityborn and affilation with citydied -2
     # if city and keyword true, search motivation with cityborn and motivation and citydied - 2
+    if (payload[CITY]) or payload[COUNTRY] :
+        #if payload[CITY] and payload[COUNTRY]:
+            #searchSet1 = [f"{}"]        
+            #temp.append()
+        pass
+    elif (COUNTRY in groupList and len(payload[COUNTRY])):
+        temp = [[], []]
+    elif (CITY in groupList and COUNTRY in groupList and len(payload[CITY]) and len(payload[COUNTRY])):
+        temp = [[], [], [], []]
+    elif (AFFILIATIONS in groupList):
+        temp = [[]]
+    elif (KEYWORD in groupList):
+        temp = [[]]
+    
     for key in payload:
         if (payload[key]):
             if key == KEYWORD:
@@ -71,17 +85,7 @@ def searchLaureates(payload):
              
 
     
-    if (CITY in groupList and len(payload[CITY])):
-        
-        temp = [ [], [] ]
-    elif (COUNTRY in groupList and len(payload[COUNTRY])):
-        temp = [[], []]
-    elif (CITY in groupList and COUNTRY in groupList and len(payload[CITY]) and len(payload[COUNTRY])):
-        temp = [[], [], [], []]
-    elif (AFFILIATIONS in groupList):
-        temp = [[]]
-    elif (KEYWORD in groupList):
-        temp = [[]]
+    
     pass
         
     
