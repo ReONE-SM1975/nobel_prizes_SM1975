@@ -37,11 +37,7 @@ def tempDict(data, key):
     return dict(tempDict)
 
 def searchLaureates(payload):
-    result = []
-    search = []
-    temp = []
-    groupList = payload.keys()
-    laurKey = [CITY, COUNTRY, AFFILIATION, KEYWORD]
+    
     # if city true, search cityborn and citydied - 2
     # if country true, search bornCountry and bornCountry - 2
     # if affiliation true, search affiliation - 1
@@ -50,44 +46,24 @@ def searchLaureates(payload):
     # if city and country true, search - 4
     # if city and affiliation true, search affiliation with cityborn and affilation with citydied -2
     # if city and keyword true, search motivation with cityborn and motivation and citydied - 2
-    if (payload[CITY]) or payload[COUNTRY] :
-        #if payload[CITY] and payload[COUNTRY]:
-            #searchSet1 = [f"{}"]        
-            #temp.append()
-        pass
-    elif (COUNTRY in groupList and len(payload[COUNTRY])):
-        temp = [[], []]
-    elif (CITY in groupList and COUNTRY in groupList and len(payload[CITY]) and len(payload[COUNTRY])):
-        temp = [[], [], [], []]
-    elif (AFFILIATIONS in groupList):
-        temp = [[]]
-    elif (KEYWORD in groupList):
-        temp = [[]]
+    fixedqueries = []
+    finalqueries = []
     
-    for key in payload:
-        if (payload[key]):
-            if key == KEYWORD:
-                temp.append(f"{MOTIVATION}={payload[key]}")
-                # if AFFILIATION in groupList:
-
-            elif key == CITY:
-                temp.append(f"{CITY}={payload[key]}")
-            elif key == COUNTRY:
-                temp.append(f"{COUNTRY}={payload[key]}")
-            elif key == AFFILIATIONS:
-                temp.append(f"{AFFILIATION}={payload[key]}")
-    def createSearch(item):
-        if len(search):
-            for i in range(0,len(search), 1):
-                search[i] = [search[i]] + [item]
+    if payload[KEYWORD]:
+        fixedqueries.append(f"{MOTIVATION}={payload[KEYWORD]}")
     
-
-             
-
+    if payload[AFFILIATIONS]:
+        fixedqueries.append(f"{AFFILIATION}={payload[AFFILIATIONS]}")
     
-    
-    pass
-        
+    if payload[CITY]:
+        finalqueries.append(f"{BORNCITY}={payload[CITY]}&{"&".join(fixedqueries)}")
+        finalqueries.append(f"{DIEDCITY}={payload[CITY]}&{"&".join(fixedqueries)}")
+    if payload[COUNTRY]:
+        finalqueries.append(f"{BORNCOUNTRY}={payload[CITY]}&{"&".join(fixedqueries)}")
+        finalqueries.append(f"{DIEDCOUNTRY}={payload[CITY]}&{"&".join(fixedqueries)}")
+    if len(finalqueries):
+        return finalqueries
+    return fixedqueries
     
 def writePrizes(year, category, overallmotivation, laureates=[]):
     return {
@@ -214,22 +190,26 @@ def searchofficial(request):
                 prizesObjs.append([key,payload[key]])
             elif key in query_laureates and payload[key]:
                 # 'affiliations' in laureates query is 'affiliation'. 'affiliations' is the return response key. query is 'affiliation'
-                if key == AFFILIATIONS:
-                    laureatesquery.append(f"{AFFILIATION}={payload[key]}")
-                    laureatesObjs.append([AFFILIATION, payload[key]])
-                elif key == CITY:
-                    laureatesquery.append(f"{BORNCITY}={payload[key]}")
-                    laureatesObjs.append([BORNCITY, payload[key]])
-                    laureatesquery.append(f"{DIEDCITY}={payload[key]}")
-                    laureatesObjs.append([DIEDCITY, payload[key]])
-                elif key == COUNTRY:
-                    laureatesquery.append(f"{BORNCOUNTRY}={payload[key]}")
-                    laureatesObjs.append([BORNCOUNTRY, payload[key]])
-                    laureatesquery.append(f"{DIEDCOUNTRY}={payload[key]}")
-                    laureatesObjs.append([DIEDCOUNTRY, payload[key]])
-                elif key == KEYWORD:
-                    laureatesquery.append(f"{MOTIVATION}={payload[key]}")
-                    laureatesObjs.append([MOTIVATION, payload[key]]) 
+                laureatesquery = searchLaureates(payload)
+                    
+                    
+                    
+                # if key == AFFILIATIONS:
+                #     laureatesquery.append(f"{AFFILIATION}={payload[key]}")
+                #     laureatesObjs.append([AFFILIATION, payload[key]])
+                # elif key == CITY:
+                #     laureatesquery.append(f"{BORNCITY}={payload[key]}")
+                #     laureatesObjs.append([BORNCITY, payload[key]])
+                #     laureatesquery.append(f"{DIEDCITY}={payload[key]}")
+                #     laureatesObjs.append([DIEDCITY, payload[key]])
+                # elif key == COUNTRY:
+                #     laureatesquery.append(f"{BORNCOUNTRY}={payload[key]}")
+                #     laureatesObjs.append([BORNCOUNTRY, payload[key]])
+                #     laureatesquery.append(f"{DIEDCOUNTRY}={payload[key]}")
+                #     laureatesObjs.append([DIEDCOUNTRY, payload[key]])
+                # elif key == KEYWORD:
+                #     laureatesquery.append(f"{MOTIVATION}={payload[key]}")
+                #     laureatesObjs.append([MOTIVATION, payload[key]]) 
             elif key in query_others and payload[key]:
                 othersquery.append(key)
         
@@ -238,12 +218,17 @@ def searchofficial(request):
         print("othersquery:",othersquery)
         
         if laureatesquery:
-            laureatesquery[:0] =["gender=All"]
+            # laureatesquery[:0] =["gender=All"]
             try:
-                response = requests.get(f"{URL}{LAUREATEJSON}?{char.join(laureatesquery)}")
-                data = response.json()
-                datalist = data.keys()
+                responses = []
                 result[LAUREATES] = []
+                for res in laureatesquery:
+                    response = requests.get(f"{URL}{LAUREATEJSON}?gender=All&{char.join(res)}")
+                    data = response.json()
+                    # datalist = data.keys()
+                    responses.append(data)
+                # more logic insert here for laureates
+                
                 if not prizesquery and not othersquery:
                     return Response(response.json())
                 elif not prizesquery and othersquery:
