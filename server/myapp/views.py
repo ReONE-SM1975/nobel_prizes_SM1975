@@ -191,25 +191,8 @@ def searchofficial(request):
             elif key in query_laureates and payload[key]:
                 # 'affiliations' in laureates query is 'affiliation'. 'affiliations' is the return response key. query is 'affiliation'
                 laureatesquery = searchLaureates(payload)
-                    
-                    
-                    
-                # if key == AFFILIATIONS:
-                #     laureatesquery.append(f"{AFFILIATION}={payload[key]}")
-                #     laureatesObjs.append([AFFILIATION, payload[key]])
-                # elif key == CITY:
-                #     laureatesquery.append(f"{BORNCITY}={payload[key]}")
-                #     laureatesObjs.append([BORNCITY, payload[key]])
-                #     laureatesquery.append(f"{DIEDCITY}={payload[key]}")
-                #     laureatesObjs.append([DIEDCITY, payload[key]])
-                # elif key == COUNTRY:
-                #     laureatesquery.append(f"{BORNCOUNTRY}={payload[key]}")
-                #     laureatesObjs.append([BORNCOUNTRY, payload[key]])
-                #     laureatesquery.append(f"{DIEDCOUNTRY}={payload[key]}")
-                #     laureatesObjs.append([DIEDCOUNTRY, payload[key]])
-                # elif key == KEYWORD:
-                #     laureatesquery.append(f"{MOTIVATION}={payload[key]}")
-                #     laureatesObjs.append([MOTIVATION, payload[key]]) 
+                
+                
             elif key in query_others and payload[key]:
                 othersquery.append(key)
         
@@ -218,7 +201,7 @@ def searchofficial(request):
         print("othersquery:",othersquery)
         
         if laureatesquery:
-            # laureatesquery[:0] =["gender=All"]
+            
             try:
                 responses = []
                 result[LAUREATES] = []
