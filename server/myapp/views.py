@@ -49,11 +49,12 @@ def searchLaureates(payload, key):
     fixedqueries = []
     finalqueries = []
     chars = "&"
-    
-    if key == KEYWORD and len(payload[KEYWORD]):
+    if key == None:
+        return fixedqueries
+    elif key == KEYWORD and len(payload[KEYWORD]):
         fixedqueries.append(f"{MOTIVATION}={payload[KEYWORD]}")
     
-    if key == AFFILIATIONS and len(payload[AFFILIATIONS]):
+    elif key == AFFILIATIONS and len(payload[AFFILIATIONS]):
         fixedqueries.append(f"{AFFILIATION}={payload[AFFILIATIONS]}")
     # logic needed separated due to function only itterated for each key
     if len(fixedqueries):
