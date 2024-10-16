@@ -219,7 +219,7 @@ def searchofficial(request):
                     # datalist = data.keys()
                     responses.append(data)
                 # more logic insert here for laureates
-                print(responses)
+                # print(responses)
                 if not prizesquery and not othersquery:
                     return Response(response.json())
                 elif not prizesquery and othersquery:
