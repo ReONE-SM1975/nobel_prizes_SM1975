@@ -36,35 +36,28 @@ def tempDict(data, key):
                     tempDict[itemKey] = list([])
     return dict(tempDict)
 
-def searchLaureates(payload, key):
-    
-    # if city true, search cityborn and citydied - 2
-    # if country true, search bornCountry and bornCountry - 2
-    # if affiliation true, search affiliation - 1
-    # if keyword true, search motivation - 1
-    
-    # if city and country true, search - 4
-    # if city and affiliation true, search affiliation with cityborn and affilation with citydied -2
-    # if city and keyword true, search motivation with cityborn and motivation and citydied - 2
+def createLaureatesSearch(payload):
+    keyPool = []
     fixedqueries = []
     finalqueries = []
     chars = "&"
-    if key == None:
-        return fixedqueries
-    elif key == KEYWORD and len(payload[KEYWORD]):
-        fixedqueries.append(f"{MOTIVATION}={payload[KEYWORD]}")
-    
-    elif key == AFFILIATIONS and len(payload[AFFILIATIONS]):
-        fixedqueries.append(f"{AFFILIATION}={payload[AFFILIATIONS]}")
+    for key in payload:
+        if payload[key]:
+            keyPool.append(key)
+            if key == KEYWORD:
+                fixedqueries.append(f"{MOTIVATION}={payload[key]}")
+            elif key == AFFILIATIONS:
+                fixedqueries.append(f"{AFFILIATION}={payload[AFFILIATIONS]}")
+    if len(fixedqueries) and CITY in keyPool:
+        finalqueries.append(f"{BORNCITY}={payload[CITY]}&{chars.join(fixedqueries)}")
+        finalqueries.append(f"{DIEDCITY}={payload[CITY]}&{chars.join(fixedqueries)}")
+    if len(fixedqueries) and COUNTRY in keyPool:
+        finalqueries.append(f"{BORNCOUNTRY}={payload[CITY]}&{chars.join(fixedqueries)}")
+        finalqueries.append(f"{DIEDCOUNTRY}={payload[CITY]}&{chars.join(fixedqueries)}")
+        
     # logic needed separated due to function only itterated for each key
-    if len(fixedqueries):
-        if payload[CITY]:
-            finalqueries.append(f"{BORNCITY}={payload[CITY]}&{chars.join(fixedqueries)}")
-            finalqueries.append(f"{DIEDCITY}={payload[CITY]}&{chars.join(fixedqueries)}")
-        if payload[COUNTRY]:
-            finalqueries.append(f"{BORNCOUNTRY}={payload[CITY]}&{chars.join(fixedqueries)}")
-            finalqueries.append(f"{DIEDCOUNTRY}={payload[CITY]}&{chars.join(fixedqueries)}")
-    elif not len(fixedqueries):
+    
+    if not len(fixedqueries):
         if payload[CITY]:
             finalqueries.append(f"{BORNCITY}={payload[CITY]}")
             finalqueries.append(f"{DIEDCITY}={payload[CITY]}")
@@ -200,13 +193,15 @@ def searchofficial(request):
                 prizesObjs.append([key,payload[key]])
             elif key in query_laureates and payload[key]:
                 # 'affiliations' in laureates query is 'affiliation'. 'affiliations' is the return response key. query is 'affiliation'
-                laureatesquery.append(searchLaureates(payload, key))
+                
+                # laureatesquery.append(createLaureatesSearch(payload))
                 laureatesObjs.append([key, payload[key]])
                 
                 
             elif key in query_others and payload[key]:
                 othersquery.append(key)
-        
+        if CITY or COUNTRY or KEYWORD or AFFILIATIONS in allqueryKeys:
+            laureatesquery.append(createLaureatesSearch(payload))
         print("prizesquery:",prizesquery)
         print("prizesObjs:",prizesObjs)
         print("laureatesquery:",laureatesquery)
