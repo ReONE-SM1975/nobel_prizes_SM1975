@@ -67,6 +67,11 @@ def createLaureatesSearch(payload):
     if len(finalqueries):
         return finalqueries
     return fixedqueries
+
+def removeDuplicated(thekey, data):
+    unique_result = set(frozenset(d.items()) for d in data[thekey])
+    data[thekey] = [dict(ds) for ds in unique_result]
+    return data
     
 def writePrizes(year, category, overallmotivation, laureates=[]):
     return {
