@@ -52,8 +52,8 @@ def createLaureatesSearch(payload):
         finalqueries.append(f"{BORNCITY}={payload[CITY]}&{chars.join(fixedqueries)}")
         finalqueries.append(f"{DIEDCITY}={payload[CITY]}&{chars.join(fixedqueries)}")
     if len(fixedqueries) and COUNTRY in keyPool:
-        finalqueries.append(f"{BORNCOUNTRY}={payload[CITY]}&{chars.join(fixedqueries)}")
-        finalqueries.append(f"{DIEDCOUNTRY}={payload[CITY]}&{chars.join(fixedqueries)}")
+        finalqueries.append(f"{BORNCOUNTRY}={payload[COUNTRY]}&{chars.join(fixedqueries)}")
+        finalqueries.append(f"{DIEDCOUNTRY}={payload[COUNTRY]}&{chars.join(fixedqueries)}")
         
     # logic needed separated due to function only itterated for each key
     
@@ -62,8 +62,8 @@ def createLaureatesSearch(payload):
             finalqueries.append(f"{BORNCITY}={payload[CITY]}")
             finalqueries.append(f"{DIEDCITY}={payload[CITY]}")
         if payload[COUNTRY]:
-            finalqueries.append(f"{BORNCOUNTRY}={payload[CITY]}")
-            finalqueries.append(f"{DIEDCOUNTRY}={payload[CITY]}")
+            finalqueries.append(f"{BORNCOUNTRY}={payload[COUNTRY]}")
+            finalqueries.append(f"{DIEDCOUNTRY}={payload[COUNTRY]}")
     if len(finalqueries):
         return finalqueries
     return fixedqueries
