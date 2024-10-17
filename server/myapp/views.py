@@ -218,10 +218,13 @@ def searchofficial(request):
                     data = response.json()
                     # datalist = data.keys()
                     responses.append(data)
+                    
                 # more logic insert here for laureates
                 # print(responses)
                 if not prizesquery and not othersquery:
-                    return Response(response.json())
+                    # return Response(response.json())
+                    # return Response(result)
+                    return Response(responses)
                 elif not prizesquery and othersquery:
                     testNum = len(othersquery)
                     if LAUREATES in data and len(data[LAUREATES]):
@@ -245,7 +248,7 @@ def searchofficial(request):
             except Exception as e:
                 return Response({
                     "message": "laureates query logic error(s)",
-                    "payload": str(payload.data),
+                    "payload": str(payload),
                     "error": str(e),
                     "status": str(response.status_code),
                 })
