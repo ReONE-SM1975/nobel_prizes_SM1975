@@ -216,20 +216,27 @@ def searchofficial(request):
         if laureatesquery:
             
             try:
-                responses = []
+                # responses = []
                 result[LAUREATES] = []
                 for res in laureatesquery:
                     response = requests.get(f"{URL}{LAUREATEJSON}?gender=All&{char.join(res)}")
                     data = response.json()
                     # datalist = data.keys()
-                    responses.append(data)
+                    if result.get(LAUREATES) and len(result[LAUREATES]):
+                        if data.get(LAUREATES):
+                            result[LAUREATES] = [result[LAUREATES]] + [data[LAUREATES]]
+                    else:
+                        if data.get(LAUREATES):
+                            result[LAUREATES] = [data[LAUREATES]]
+                    # responses.append(data)
                     
                 # more logic insert here for laureates
                 # print(responses)
                 if not prizesquery and not othersquery:
                     # return Response(response.json())
-                    # return Response(result)
-                    return Response(responses)
+                    
+                    return Response(removeDuplicated(LAUREATES, result))
+                    # return Response(responses)
                 elif not prizesquery and othersquery:
                     testNum = len(othersquery)
                     if LAUREATES in data and len(data[LAUREATES]):
