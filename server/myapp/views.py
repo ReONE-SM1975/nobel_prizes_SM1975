@@ -8,6 +8,10 @@ from rest_framework.response import Response
 import requests
 import json
 
+from asgiref.sync import sync_to_async
+import aiohttp
+import asyncio 
+
 from .constants import PARENTSCONS, CHILDCONS_T1, CHILDCONS_T2, CHILDCONS_T3, CHILDCONS_T4, SPECIAL, CATEGORYLIST, URL
 
 PRIZES, LAUREATES, AFFILIATIONS = PARENTSCONS.values()
@@ -67,6 +71,9 @@ def createLaureatesSearch(payload):
     if len(finalqueries):
         return finalqueries
     return fixedqueries
+
+async def fetch_url(url):
+    return await requests.get(url)
 
 def removeDuplicated(thekey, data):
     unique_result = set(frozenset(d.items()) for d in data[thekey])
