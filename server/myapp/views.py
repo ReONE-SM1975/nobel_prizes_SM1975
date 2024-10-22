@@ -73,7 +73,17 @@ def createLaureatesSearch(payload):
     return fixedqueries
 
 async def fetch_url(url):
-    return await requests.get(url)
+    try:
+        response = await requests.get(url)
+        return Response(response)
+    except Exception as e:
+        error = {
+            "message": "error in fetch_url",
+            "error":e,
+            "response":response.status_code
+        }
+        return Response(error)
+        
 
 def removeDuplicated(thekey, data):
     unique_result = set(frozenset(d.items()) for d in data[thekey])
@@ -196,7 +206,7 @@ def searchofficial(request):
         laureatesObjs = []
         othersquery = []
         char = "&"
-        space = "%20"
+        space = "%20;"
         
         for key in dict(payload):
             # bug: empty value should make list empty
@@ -226,16 +236,20 @@ def searchofficial(request):
                 # responses = []
                 result[LAUREATES] = []
                 for res in laureatesquery:
-                    response = requests.get(f"{URL}{LAUREATEJSON}?gender=All&{char.join(res)}")
+                    response = fetch_url(f"{URL}{LAUREATEJSON}?gender=All&{char.join(res)}")
                     data = response.json()
+                    #r esponse = requests.get(f"{URL}{LAUREATEJSON}?gender=All&{char.join(res)}")
+                    # data = response.json()
                     # datalist = data.keys()
                     if result.get(LAUREATES) and len(result[LAUREATES]):
                         if data.get(LAUREATES):
                             result[LAUREATES] = [result[LAUREATES]] + [data[LAUREATES]]
+                            # fixme: handle duplicated result
                     else:
                         if data.get(LAUREATES):
                             result[LAUREATES] = [data[LAUREATES]]
                     # responses.append(data)
+                print(result)
                     
                 # more logic insert here for laureates
                 # print(responses)
@@ -269,7 +283,7 @@ def searchofficial(request):
                     "message": "laureates query logic error(s)",
                     "payload": str(payload),
                     "error": str(e),
-                    "status": str(response.status_code),
+                    # "status": str(data.status_code),
                 })
         elif not laureatesquery:
             try :
