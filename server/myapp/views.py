@@ -72,17 +72,20 @@ def createLaureatesSearch(payload):
         return finalqueries
     return fixedqueries
 
-async def fetch_url(url):
-    try:
-        response = await requests.get(url)
-        return Response(response)
-    except Exception as e:
-        error = {
-            "message": "error in fetch_url",
-            "error":e,
-            "response":response.status_code
-        }
-        return Response(error)
+async def fetch_url(session, url):
+    # try:
+    #     response = await requests.get(url)
+    #     return Response(response)
+    # except Exception as e:
+    #     error = {
+    #         "message": "error in fetch_url",
+    #         "error":e,
+    #         "response":response.status_code
+    #     }
+    #     return Response(error)
+    with aiohttp.Timeout(10):
+        async with session.get(url) as response:
+            return await response.json()
         
 
 def removeDuplicated(thekey, data):
@@ -189,7 +192,7 @@ def get_randomWinner(request):
     return Response(message)
 
 @api_view(['POST'])
-def searchofficial(request):
+async def searchofficial(request):
     payload = request.data
     if (payload):
         allqueryKeys = [x for x in payload if payload[x]]
@@ -235,29 +238,34 @@ def searchofficial(request):
             try:
                 # responses = []
                 result[LAUREATES] = []
-                for res in laureatesquery:
-                    response = fetch_url(f"{URL}{LAUREATEJSON}?gender=All&{char.join(res)}")
-                    data = response.json()
+                async with aiohttp.ClientSession() as session:
+                    tasks = [fetch_url(session, f"{URL}{LAUREATEJSON}?gender=All&{char.join(res)}") for res in laureatesquery]
+                    results = await asyncio.gather(*tasks)
+                # for res in laureatesquery:
+                #     response = fetch_url(f"{URL}{LAUREATEJSON}?gender=All&{char.join(res)}")
+                #     data = response.json()
+                #     print("laureates result:",data)
                     #r esponse = requests.get(f"{URL}{LAUREATEJSON}?gender=All&{char.join(res)}")
                     # data = response.json()
                     # datalist = data.keys()
-                    if result.get(LAUREATES) and len(result[LAUREATES]):
-                        if data.get(LAUREATES):
-                            result[LAUREATES] = [result[LAUREATES]] + [data[LAUREATES]]
+                    # if result.get(LAUREATES) and len(result[LAUREATES]):
+                    #     if data.get(LAUREATES):
+                    #         result[LAUREATES] = [result[LAUREATES]] + [data[LAUREATES]]
                             # fixme: handle duplicated result
-                    else:
-                        if data.get(LAUREATES):
-                            result[LAUREATES] = [data[LAUREATES]]
+                    # else:
+                    #     if data.get(LAUREATES):
+                    #         result[LAUREATES] = [data[LAUREATES]]
                     # responses.append(data)
-                print(result)
+                print("laureates query results async",results.json())
                     
                 # more logic insert here for laureates
                 # print(responses)
                 if not prizesquery and not othersquery:
                     # return Response(response.json())
                     
-                    return Response(removeDuplicated(LAUREATES, result))
+                    #return Response(removeDuplicated(LAUREATES, results))
                     # return Response(responses)
+                    return Response(results.json())
                 elif not prizesquery and othersquery:
                     testNum = len(othersquery)
                     if LAUREATES in data and len(data[LAUREATES]):
