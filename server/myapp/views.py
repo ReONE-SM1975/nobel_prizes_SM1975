@@ -12,7 +12,7 @@ from asgiref.sync import sync_to_async
 import aiohttp
 import asyncio 
 
-from .models import 
+from .models import Category, Country, City, Affiliation, AdminUser, Winner, Laureates
 
 from .constants import PARENTSCONS, CHILDCONS_T1, CHILDCONS_T2, CHILDCONS_T3, CHILDCONS_T4, SPECIAL, CATEGORYLIST, URL
 
@@ -160,6 +160,17 @@ def hello_world(request):
         data 
         #safe=False
         )
+
+@api_view(['GET'])
+def initial_startup(request):
+    # Check if database is empty, filled
+    return 
+
+@api_view(['GET'])
+def all_Winner(request):
+
+    return
+
 
 @api_view(['GET'])
 def get_allPrizes(request):
