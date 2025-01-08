@@ -12,6 +12,8 @@ from asgiref.sync import sync_to_async
 import aiohttp
 import asyncio 
 
+from .models import 
+
 from .constants import PARENTSCONS, CHILDCONS_T1, CHILDCONS_T2, CHILDCONS_T3, CHILDCONS_T4, SPECIAL, CATEGORYLIST, URL
 
 PRIZES, LAUREATES, AFFILIATIONS = PARENTSCONS.values()
