@@ -164,7 +164,27 @@ def hello_world(request):
 @api_view(['GET'])
 def initial_startup(request):
     # Check if database is empty, filled
+    category = Category.objects.all()
+    country = Country.objects.all()
+    city = City.objects.all()
+    affiliation = Affiliation.objects.all()
+    adminuser = AdminUser.objects.all()
+    winner = Winner.objects.all()
+    laureates = Laureates.objects.all()
+    
+    serialize_category = [{"name":item.name} for item in category]
     return 
+
+def writeToModel(table, **keys_objs):
+    try:
+        for key, value in keys_objs.items():
+            instance = table(key, value)
+            instance.save()
+        return Response(f'write to {table} completed')
+    except Exception as e:
+        return Response({"error":e, "table":table, "keys_objects":keys_objs})
+        
+
 
 @api_view(['GET'])
 def all_Winner(request):
