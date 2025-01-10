@@ -173,6 +173,12 @@ def initial_startup(request):
     laureates = Laureates.objects.all()
     
     serialize_category = [{"name":item.name} for item in category]
+    serialize_country = [{"country_code":item.country_code, "fullname":item.fullname} for item in country]
+    serialize_city = [{"name":item.name} for item in city]
+    serialize_affiliation = [{"name":item.name, "city":item.city, "country":item.country} for item in affiliation]
+    serialize_adminuser = [{"admin_name":item.admin_name, "admin_email":item.admin_email, "uuid_token":item.uuid_token} for item in adminuser]
+    serialize_winner = [{"firstname":item.firstname, "lastname":item.lastname, "abbrevative":item.abbrevative, "countryborn":item.countryborn, "countrydied":item.countrydied, "cityborn":item.cityborn, "citydied":item.citydied, "dateofbirth":item.dateofbirth, "dateofdeath":item.dateofdeath, "gender":item.gender} for item in winner]
+    serializer_laureates = [{"winner": item.winner, "category":item.category, "rewardyear":item.rewardyear, "sharewith":item.sharewith, "motivation":item.motivation, "overallmotivation":item.overallmotivation} for item in laureates]
     return 
 
 def writeToModel(table, **keys_objs):
