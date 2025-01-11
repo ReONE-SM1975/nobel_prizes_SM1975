@@ -161,7 +161,15 @@ def hello_world(request):
         #safe=False
         )
 
-@api_view(['GET'])
+def read_category_table():
+    category = Category.objects.all()
+    return [{"name": x.name} for x in category]
+
+def read_country_table():
+    country = Country.objects.all()
+    return [{"country_code": x.country_code, "fullname": x.fullname} for x in country]
+
+@api_view(['GET', 'POST'])
 def initial_startup(request):
     # Check if database is empty, filled
     category = Category.objects.all()
