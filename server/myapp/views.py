@@ -161,6 +161,10 @@ def hello_world(request):
         #safe=False
         )
 
+def read_table(model, fields):
+    objects = model.objects.all()
+    return [{field: getattr(obj, field) for field in fields} for obj in objects]
+
 def read_category_table():
     category = Category.objects.all()
     return [{"name": x.name} for x in category]
@@ -171,6 +175,19 @@ def read_country_table():
 
 @api_view(['GET', 'POST'])
 def initial_startup(request):
+    if request.method == "GET" :
+        response_data = {
+            "winner" : read_table(Winner, ["firstname",  "lastname", "abbrevative", "countryborn", "countrydied", "cityborn", "citydied", "dateofbirth", "dateofdeath", "gender"]),
+            "laureates" : read_table(Laureates, ["winner", "category", "sharewith", "motivation", "overallmotivation"]),
+            "affiliation": read_table(Affiliation, ["name", "city", "country"]),
+            "city": read_table(City, ["name"]),
+            "Country" : read_table(Country, ["country+code", "fullname"]),
+            "category" : read_table(Category, ["name"])
+        }
+        return Response(response_data.json())
+    elif request.method == "POST" :
+        return 
+        
     # Check if database is empty, filled
     category = Category.objects.all()
     country = Country.objects.all()
