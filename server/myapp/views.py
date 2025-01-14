@@ -165,14 +165,6 @@ def read_table(model, fields):
     objects = model.objects.all()
     return [{field: getattr(obj, field) for field in fields} for obj in objects]
 
-def read_category_table():
-    category = Category.objects.all()
-    return [{"name": x.name} for x in category]
-
-def read_country_table():
-    country = Country.objects.all()
-    return [{"country_code": x.country_code, "fullname": x.fullname} for x in country]
-
 @api_view(['GET', 'POST'])
 def initial_startup(request):
     if request.method == "GET" :
