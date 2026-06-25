@@ -1,0 +1,24 @@
+version: 2
+updates:
+  #- package-ecosystem: "github-actions"
+  # directory: "/"
+  # schedule:
+  #   interval: "weekly"
+  - package-ecosystem: "npm"
+    directory: "/client"
+    schedule:
+      interval: "weekly"
+    groups:
+      react-core:
+        patterns:
+          - "react"
+          - "react-dom"
+          - "@types/react"
+          - "@types/react-dom"
+      testing-library:
+        patterns:
+          - "@testing-library/*"
+  - package-ecosystem: "pip"
+    directory: "/server"
+    schedule:
+      interval: "weekly"
