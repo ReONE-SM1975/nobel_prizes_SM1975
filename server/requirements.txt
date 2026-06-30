@@ -8,7 +8,7 @@ django-cors-headers==4.9.0
 django-environ==0.11.2
 django-extensions==3.2.3
 djangorestframework==3.17.1
-idna==3.7
+idna==3.18
 MarkupSafe==3.0.3
 psycopg2-binary==2.9.9
 pycparser==2.22
