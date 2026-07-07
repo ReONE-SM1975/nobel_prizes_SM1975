@@ -1,6 +1,6 @@
 asgiref==3.11.1
 certifi==2024.6.2
-cffi==1.16.0
+cffi==2.1.0
 charset-normalizer==3.3.2
 cryptography==42.0.7
 Django==6.0.6
