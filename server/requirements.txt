@@ -1,5 +1,5 @@
 asgiref==3.11.1
-certifi==2024.6.2
+certifi==2026.6.17
 cffi==1.16.0
 charset-normalizer==3.3.2
 cryptography==42.0.7
