@@ -6,7 +6,7 @@ cryptography==49.0.0
 Django==6.0.6
 django-cors-headers==4.9.0
 django-environ==0.11.2
-django-extensions==3.2.3
+django-extensions==4.1
 djangorestframework==3.17.1
 idna==3.18
 MarkupSafe==3.0.3
