@@ -12,7 +12,7 @@ idna==3.18
 MarkupSafe==3.0.3
 psycopg2-binary==2.9.9
 pycparser==3.0
-pyOpenSSL==26.3.0
+pyOpenSSL==26.4.0
 requests==2.34.2
 sqlparse==0.5.5
 typing_extensions==4.12.0
